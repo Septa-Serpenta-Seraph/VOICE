@@ -1,0 +1,102 @@
+{
+  "/s/": {
+    "moments": {
+      "centroid_hz": 7086.6,
+      "spread_hz": 901.9,
+      "skew": 0.818
+    },
+    "passed": true,
+    "notes": [],
+    "voiced": false
+  },
+  "/z/": {
+    "moments": {
+      "centroid_hz": 6308.5,
+      "spread_hz": 1813.2,
+      "skew": 0.746
+    },
+    "passed": true,
+    "notes": [],
+    "voiced": true
+  },
+  "/\u0283/": {
+    "moments": {
+      "centroid_hz": 4201.0,
+      "spread_hz": 1175.8,
+      "skew": 1.491
+    },
+    "passed": true,
+    "notes": [],
+    "voiced": false
+  },
+  "/\u0292/": {
+    "moments": {
+      "centroid_hz": 3889.2,
+      "spread_hz": 1660.1,
+      "skew": 3.762
+    },
+    "passed": true,
+    "notes": [],
+    "voiced": true
+  },
+  "/f/": {
+    "moments": {
+      "centroid_hz": 3481.4,
+      "spread_hz": 1850.8,
+      "skew": 1.365
+    },
+    "passed": true,
+    "notes": [
+      "diffuse/aspiration \u2014 no centroid target"
+    ],
+    "voiced": false
+  },
+  "/v/": {
+    "moments": {
+      "centroid_hz": 3502.7,
+      "spread_hz": 2048.5,
+      "skew": 2.196
+    },
+    "passed": true,
+    "notes": [
+      "diffuse/aspiration \u2014 no centroid target"
+    ],
+    "voiced": true
+  },
+  "/\u03b8/": {
+    "moments": {
+      "centroid_hz": 5472.4,
+      "spread_hz": 2417.0,
+      "skew": 0.798
+    },
+    "passed": true,
+    "notes": [
+      "diffuse/aspiration \u2014 no centroid target"
+    ],
+    "voiced": false
+  },
+  "/\u00f0/": {
+    "moments": {
+      "centroid_hz": 5408.7,
+      "spread_hz": 2527.7,
+      "skew": 0.95
+    },
+    "passed": true,
+    "notes": [
+      "diffuse/aspiration \u2014 no centroid target"
+    ],
+    "voiced": true
+  },
+  "/h/": {
+    "moments": {
+      "centroid_hz": 11922.6,
+      "spread_hz": 6915.9,
+      "skew": 0.024
+    },
+    "passed": true,
+    "notes": [
+      "diffuse/aspiration \u2014 no centroid target"
+    ],
+    "voiced": false
+  }
+}
