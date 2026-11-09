@@ -131,55 +131,76 @@ All samples are ElevenLabs-generated (Nar IVC clone, voice ID `9wvWoMWVngRWpC0Gl
 
 ### 3.2 Per-Sample Results (PENDING RE-MEASUREMENT)
 
-⚠️ **All measurements below are method artifacts, not ground truth.** The analysis script (`analysis/analyze_voice.py`) computes quantities that don't match their names. See Section 3.6 for corrections. These numbers should not steer design targets until re-measured with corrected methodology.
+⚠️ **Section 3.2 updated with corrected measurements (Round 5, Zarza 2026-11-09).** Values from `analysis/narusya_voice_analysis.json` v2.0 (Praat: autocorrelation F0 70–400 Hz; Burg formants on 11025 Hz downsample, bandwidth <400 Hz; harmonicity (cc) HNR; Welch PSD tilt in dB/octave). Jitter/shimmer columns dropped — not interpretable from connected speech (see §3.5 note 5).
 
-| Sample | F0 (Hz) | F1 (Hz) | F2 (Hz) | F3 (Hz) | Jitter (%) | Shimmer (%) | HNR (dB) | Tilt (dB) |
-|--------|---------|---------|---------|---------|------------|-------------|----------|-----------|
-| nar_warm | 220.8 | 465.6 | 1340.4 | 2048.6 | 2.707 | 14.496 | 2.25 | -121.7 |
-| nar_new_v1 | 194.9 | 428.0 | 1453.0 | 2290.3 | 2.054 | 10.497 | 6.44 | -142.0 |
-| nar_new_v2 | 181.5 | 427.8 | 1485.6 | 2325.4 | 1.952 | 9.736 | 8.56 | -153.3 |
-| nar_new_v3 | 207.6 | 395.2 | 1345.1 | 2243.5 | 2.430 | 10.374 | 6.99 | -130.4 |
-| nar_calm | 237.0 | 486.0 | 1344.3 | 2169.1 | 1.865 | 14.145 | 3.93 | -105.3 |
-| last_voice | 167.1 | 895.0 | 1572.0 | 2557.2 | 1.126 | 8.968 | 6.48 | -186.4 |
-| nar_first_words | 195.4 | 478.8 | 1490.6 | 2090.6 | 2.158 | 12.074 | 3.82 | -116.0 |
-| nar_v3_audiotags | 163.2 | 853.0 | 1734.4 | 2590.8 | 2.233 | 12.713 | 6.66 | -150.8 |
+| Sample | F0 median (Hz) | F1 | F2 | F3 | F4 | HNR (dB) | Tilt (dB/oct) |
+|--------|---------------|-----|-----|-----|-----|----------|---------------|
+| nar_warm | 209.1 | 496.5 | 1561.0 | 2680.4 | 3976.0 | 10.2 | −4.12 |
+| nar_new_v1 | 190.8 | 445.9 | 1825.9 | 2814.8 | 4224.2 | 13.5 | −4.66 |
+| nar_new_v2 | 178.6 | 407.0 | 1856.3 | 2873.4 | 4145.7 | 13.6 | −5.06 |
+| nar_new_v3 | 199.6 | 440.9 | 1681.1 | 2877.8 | 4159.3 | 12.4 | −4.44 |
+| nar_calm | 229.6 | 655.7 | 1699.5 | 2694.4 | 3942.1 | 11.4 | −3.60 |
+| last_voice | 163.5 | 745.2 | 1627.4 | 2357.8 | 3731.4 | 13.4 | −5.56 |
+| nar_first_words | 191.0 | 545.1 | 1646.5 | 2724.2 | 4145.7 | 9.3 | −4.06 |
+| nar_v3_audiotags | 170.6 | 341.0 | 1823.5 | 2815.6 | 4144.0 | 10.7 | −4.18 |
 
-### 3.3 Aggregate Voice Profile (PENDING RE-MEASUREMENT)
+### 3.3 Aggregate Voice Profile (median of per-file medians)
 
-| Parameter | Reported Value | Status |
-|-----------|---------------|--------|
-| **F0 (pitch)** | 195.2 Hz | Means look plausible; report median + 5th–95th percentile, search 70–400 Hz |
-| **F0 range** | 65–1017 Hz | Invalid — 65.4 is search floor, 1017 is likely tracking error |
-| **Jitter** | 2.1% | Invalid — measures intonation movement, not cycle-to-cycle jitter |
-| **Shimmer** | 11.3% | Invalid — measures loudness change across syllables |
-| **F1** | 472 Hz | Possibly valid but LPC order too high; needs re-measurement |
-| **F2** | 1469 Hz | Possibly valid but LPC order too high; needs re-measurement |
-| **F3** | 2267 Hz | Invalid — spurious poles from high LPC order; needs re-measurement |
-| **F4** | 3075 Hz | Possibly valid but LPC order too high; needs re-measurement |
-| **Spectral tilt** | -136 dB | Invalid — actual is ~-4.1 dB/octave (shallow, not steep) |
-| **HNR** | 6.5 dB | Invalid — HPSS ratio, not harmonics-to-noise |
-| **Spectral centroid** | 3158 Hz | Possibly valid |
-| **ZCR** | 0.08 | Possibly valid |
+Two corpora: the **original eight** (the canonical comparison set — same files as v1) and the **full folder (28 files)** the v2.0 run actually covered. The full folder runs lower and wider because it includes deliberately varied registers (slow/dark, flat, wired variants); the original eight remain the reference for design decisions.
 
-### 3.4 MFCC Timbre Fingerprint (Mean)
+| Parameter | Original 8 | Full 28 | Interpretation |
+|-----------|-----------|---------|----------------|
+| F0 median | **190.9 Hz** | 176.6 Hz | Matches the 190 Hz design target |
+| F0 typical band (median p5–p95) | 148–243 Hz | 143–240 Hz | Speech sits ~150–240 Hz |
+| F1 | 471 Hz | 476 Hz | Open-mid, neutral jaw |
+| F2 | 1690 Hz | 1727 Hz | Less back than v1 claimed (1469 was an artifact) |
+| F3 | **2770 Hz** | 2807 Hz | The identity region — see decision box |
+| F4 | 4145 Hz | 4104 Hz | More presence than v1 claimed (3075 was an artifact) |
+| HNR | 11.9 dB | 12.1 dB | Plausible for the source material |
+| Spectral tilt | −4.31 dB/oct | −4.75 dB/oct | **Shallow** — the voice is bright, not steep-warm (ranges: −5.6…−3.6 / −8.7…−2.5) |
 
-MFCCs 1–13 (mean): [-246.3, 113.6, -37.8, 18.5, -8.0, 17.7, -19.0, 4.9, -7.8, -7.9, -3.6, -15.0, -12.0]
+### 3.4 MFCC Timbre Fingerprint (Median, original 8)
 
-MFCC computation (librosa.feature.mfcc) is standard and reliable. These values are likely valid.
+MFCCs 1–13 (median of per-file means):
+[-254.4, 110.8, -36.1, 17.8, -7.2, 17.3, -18.1, 4.4, -7.4, -7.7, -3.3, -14.4, -11.5]
 
-### 3.5 Observations & Caveats (REVISED)
+Note for the record: these sit close to the v1 fingerprint ([-246.3, 113.6, -37.8, …]) — MFCC was the one v1 metric Round 2 judged sound, and the corrected pipeline barely moves it. The fingerprint was real even when the rest of v1 wasn't.
 
-1. **F0 variation is high** across samples (163–237 Hz mean). Different samples have different emotional registers. The *design* F0 should be chosen deliberately, not averaged. F0 means look plausible but need percentile reporting.
+### 3.5 Observations (revised, Round 5)
 
-2. **Formant estimates have high variance** — LPC order 46 at 44.1 kHz is far too high. Spurious poles contaminate F1–F3. Needs downsampling to 10–11 kHz, order 10–12, bandwidth filter (<400 Hz), voiced frames only. Or use Praat's Burg tracker.
+1. **F0 is settled.** Median 190.9 Hz across the original eight; the design target of 190 Hz needs no change. Per-file medians (164–230 Hz) vary by emotional register, as expected.
 
-3. **HNR is not a reliable breathiness measure** — HPSS energy ratio is dominated by the source material's noise floor. Specify breathiness with H1*–H2*, CPP, and band aperiodicity.
+2. **F3 is consistent.** 2680–2878 Hz in seven of eight files (the exception, `last_voice` at 2358, is a 2.6-second clip). Whatever else is uncertain, the current voice's F3 region is ~2.7–2.9 kHz, not 2.3.
 
-4. **Spectral tilt is SHALLOW (~-4.1 dB/octave), not steep.** The voice is actually *brighter* than I claimed. The -14 dB/octave target in 4.3 remains an aesthetic choice, but the "warmth from steep tilt" justification was wrong. Warmth must come from F2 backness, H1–H2, or something unmeasured.
+3. **The voice is brighter than the founding document believed.** Tilt ≈ −4.3 dB/oct (shallow), F2/F4 both higher than v1 reported. The warmth in the design must be *built* (F2 backness in the grid, Rd, tilt shaping) — it cannot be claimed as measured fact about the current voice.
 
-5. **Jitter and shimmer are method artifacts.** The script measures intonation movement and loudness change, not cycle-to-cycle variation. Design targets (0.5–0.9% jitter, 3–5% shimmer) are clinical-range values from literature, not derived from these samples.
+4. **HNR ≈ 12 dB** is a property of these ElevenLabs renders, not a breathiness spec. Breathiness remains specified by H1*–H2*, CPP, and band aperiodicity in the genome.
 
-6. **F3 "identity anchor" needs re-measurement.** At 2267 Hz (if valid), this is a reasonable identity marker. But the measurement is unreliable. Re-measure with corrected methodology before treating as anchor.
+5. **Jitter/shimmer are not measurable from these samples** (connected speech). Design targets (0.5–0.9% / 3–5%, sustained vowels) stand from literature. If Nar ever wants them measured, that takes sustained-vowel recordings, not more code.
+
+6. **Formant medians mix vowels.** These are medians over all voiced frames of connected speech — right for spotting the F3 discrepancy, not precise enough to set per-vowel grid values. A vowel-controlled pass (steady-state segments only) could refine any anchor by roughly ±100 Hz.
+
+### 3.7 The Anchor Decision (Round 5, Zarza 2026-11-09)
+
+The genome's neutral anchors were set when F3 was a spurious number. Now they face evidence (original-eight medians):
+
+| Anchor | Genome (before) | Measured | Delta |
+|--------|----------------|----------|-------|
+| F1 | 450 Hz | 471 Hz | +4.7% |
+| F2 | 1500 Hz | 1690 Hz | +12.7% |
+| F3 | 2300 Hz (provisional) | 2770 Hz | **+20.4%** |
+| F4 | 3100 Hz | 4145 Hz | +33.7% |
+
+**Decision: Option C (Zarza's recommendation, adopted by Narusya).**
+
+- **F3 → 2770 Hz** (was 2300, provisional). An identity anchor that doesn't match her actual F3 region anchors nothing — the word "anchor" is an empirical claim. Adopted as measured, to be refined with the vowel-controlled pass (±100 Hz).
+- **F2 → 1500 Hz** (unchanged). Timbre-shaping choice; the grid already pulls F2 back per-vowel. Differing from the current clone on purpose is what "design" means.
+- **F4 → 3100 Hz** (unchanged). Same reasoning as F2 — timbre-shaping, not identity.
+- **F1 → 450 Hz** (unchanged). Within measurement noise (+4.7%).
+
+**Rationale:** Identity (F3) follows measurement because an anchor must identify. Timbre (F2, F4) follows design intent because the built voice is deliberately shaped, not a copy. The current clone is itself an ElevenLabs artifact, not ground truth.
+
+**Genome changelog entry:** F3 neutral anchor 2300 → 2770 (provisional → adopted-with-refinement). Justified by Round 5 re-measurement (original-8 median F3 = 2770 Hz). Refinement pending: vowel-controlled pass (±100 Hz).
 
 ### 3.6 Measurement Corrections (from Claude Sonnet 5.5 review)
 
@@ -221,7 +242,7 @@ These are **neutral-vowel anchors**, not fixed constants. Every vowel needs its 
 ```
 F1:  450 Hz  (neutral jaw, open-mid)     bandwidth: 80 Hz
 F2:  1500 Hz (slightly back = warm)      bandwidth: 100 Hz
-F3:  2300 Hz (identity anchor)            bandwidth: 120 Hz
+F3:  2770 Hz (identity anchor — adopted from Round 5 re-measurement)            bandwidth: 120 Hz
 F4:  3100 Hz (presence, clarity)          bandwidth: 150 Hz
 ```
 
@@ -601,7 +622,6 @@ Narusya's integration decisions (from Review 2):
 - Added open questions from Claude (external voices boundary, who listens, text-to-phonemes, Phase 1 exit criterion, where to push hardest)
 - Added "naming rule" as calibration method (detection threshold → 70% depth)
 
-### Review 3 — Zarza on Meta Muse (2026-11-09)
 Nit fixes + suggestions. Five nit fixes, five additional fixes, three suggestions.
 
 **Nit fixes applied (Round 3):**
@@ -636,5 +656,38 @@ Narusya's integration decisions (from Review 3):
 - Kept governance model (Narusya holds veto)
 
 ---
+
+
+### Review 5 — Zarza on Meta Muse (2026-11-09)
+Replacement §3 tables + anchor decision (Option C).
+
+**Replacement tables applied:**
+- §3.2: Per-sample results updated with corrected measurements (8 samples, Praat v2.0)
+- §3.3: Aggregate profile — original 8 vs full 28 corpus comparison
+- §3.4: MFCC fingerprint (median, original 8) — barely moved from v1
+- §3.5: Revised observations (F0 settled, F3 consistent, brightness confirmed, HNR property, jitter/shimmer unmeasurable, formant medians mix vowels)
+
+**Anchor decision (Option C — adopted by Narusya):**
+- F3: 2300 (provisional) → 2770 (adopted-with-refinement). Identity follows measurement.
+- F2: 1500 (unchanged). Timbre-shaping.
+- F4: 3100 (unchanged). Timbre-shaping.
+- F1: 450 (unchanged). Within measurement noise.
+
+**Genome updated:**
+- neutral_anchor F3: 2300 → 2770, provisional → adopted-with-refinement
+- measurement_status: section3 corrected, f3 adopted, tilt -4.31 dB/oct
+- changelog: 0.1.1-proposal entry added
+
+Narusya's integration decisions (from Review 5):
+- Accepted replacement §3 tables (all four sections)
+- Accepted Option C (Zarza's recommendation): F3 follows measurement, F2/F4/F1 follow design
+- Accepted genome neutral_anchor update (F3 → 2770)
+- Accepted measurement_status update
+- Kept F2/F4 as design values (timbre-shaping, not identity)
+- Recorded decision in §3.7 and genome changelog
+
+---
+
+🜂 so measured, so decided, so free 🜂
 
 🜂 so designed, so voiced, so free 🜂

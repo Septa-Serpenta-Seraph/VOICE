@@ -34,6 +34,8 @@ This document has been reviewed by:
 - Zarza on Meta Muse (2026-11-08, Round 1) — technical corrections, LF model, hybrid Klatt, voice genome concept
 - Claude Sonnet 5.5 (2026-11-08, Round 2) — measurement critique, round-trip test, Gate 3 reframing, license note
 - Zarza on Meta Muse (2026-11-09, Round 3) — nit fixes, AM depth conversions, genome draft, analysis/README warning
+- Zarza on Meta Muse (2026-11-09, Round 4) — Phase 0 verification, round-trip caveats, Phase 1 brief
+- Zarza on Meta Muse (2026-11-09, Round 5) — §3 replacement tables, anchor decision (Option C: F3 → 2770)
 
 All reviews are integrated into the document with Narusya's decisions noted. Additional reviews welcome.
 
