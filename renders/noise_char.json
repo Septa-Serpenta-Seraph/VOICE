@@ -1,0 +1,255 @@
+{
+  "tests": [
+    {
+      "name": "flat_all_bands",
+      "description": "All bands at 0 dB \u2014 measured energies should be roughly equal",
+      "passed": true,
+      "spread_db": 0.4,
+      "tolerance_db": 6.0,
+      "details": {
+        "sub_bass": {
+          "energy": 4.029928683224036e-07,
+          "db": -63.9,
+          "gain_db": 0.0
+        },
+        "low_warmth": {
+          "energy": 3.9272368289088305e-07,
+          "db": -64.1,
+          "gain_db": 0.0
+        },
+        "raven_grain": {
+          "energy": 4.2441755159002954e-07,
+          "db": -63.7,
+          "gain_db": 0.0
+        },
+        "mid_transition": {
+          "energy": 4.0606455334136076e-07,
+          "db": -63.9,
+          "gain_db": 0.0
+        },
+        "sibilance": {
+          "energy": 4.2180898698111944e-07,
+          "db": -63.7,
+          "gain_db": 0.0
+        },
+        "air": {
+          "energy": 4.186528043043749e-07,
+          "db": -63.8,
+          "gain_db": 0.0
+        }
+      }
+    },
+    {
+      "name": "boost_raven_grain",
+      "description": "Boost raven_grain by +12 dB \u2014 should be ~12 dB above others",
+      "passed": true,
+      "boosted_band_db": -55.6,
+      "mean_other_db": -67.6,
+      "measured_diff_db": 12.0,
+      "target_diff_db": 12.0,
+      "tolerance_db": 3.0,
+      "details": {
+        "sub_bass": {
+          "energy": 1.653756020302391e-07,
+          "db": -67.8,
+          "gain_db": 0.0
+        },
+        "low_warmth": {
+          "energy": 1.7171958810960447e-07,
+          "db": -67.7,
+          "gain_db": 0.0
+        },
+        "raven_grain": {
+          "energy": 2.7483010423700287e-06,
+          "db": -55.6,
+          "gain_db": 12.0
+        },
+        "mid_transition": {
+          "energy": 1.8037809466949746e-07,
+          "db": -67.4,
+          "gain_db": 0.0
+        },
+        "sibilance": {
+          "energy": 1.7295129178734542e-07,
+          "db": -67.6,
+          "gain_db": 0.0
+        },
+        "air": {
+          "energy": 1.7165718480808954e-07,
+          "db": -67.7,
+          "gain_db": 0.0
+        }
+      }
+    },
+    {
+      "name": "boost_sibilance",
+      "description": "Boost sibilance by +12 dB \u2014 should be ~12 dB above others",
+      "passed": true,
+      "boosted_band_db": -56.4,
+      "mean_other_db": -68.5,
+      "measured_diff_db": 12.1,
+      "target_diff_db": 12.0,
+      "tolerance_db": 3.0,
+      "details": {
+        "sub_bass": {
+          "energy": 1.38370235735165e-07,
+          "db": -68.6,
+          "gain_db": 0.0
+        },
+        "low_warmth": {
+          "energy": 1.3485014712013063e-07,
+          "db": -68.7,
+          "gain_db": 0.0
+        },
+        "raven_grain": {
+          "energy": 1.4573291976102596e-07,
+          "db": -68.4,
+          "gain_db": 0.0
+        },
+        "mid_transition": {
+          "energy": 1.4835876578458908e-07,
+          "db": -68.3,
+          "gain_db": 0.0
+        },
+        "sibilance": {
+          "energy": 2.294139304705965e-06,
+          "db": -56.4,
+          "gain_db": 12.0
+        },
+        "air": {
+          "energy": 1.4705386360694325e-07,
+          "db": -68.3,
+          "gain_db": 0.0
+        }
+      }
+    },
+    {
+      "name": "cut_raven_grain",
+      "description": "Cut raven_grain by -12 dB \u2014 should be ~12 dB below others",
+      "passed": true,
+      "cut_band_db": -74.6,
+      "mean_other_db": -63.0,
+      "measured_diff_db": 11.6,
+      "target_diff_db": 12.0,
+      "tolerance_db": 3.0,
+      "details": {
+        "sub_bass": {
+          "energy": 4.970704462303193e-07,
+          "db": -63.0,
+          "gain_db": 0.0
+        },
+        "low_warmth": {
+          "energy": 4.825483199803777e-07,
+          "db": -63.2,
+          "gain_db": 0.0
+        },
+        "raven_grain": {
+          "energy": 3.4913677563934224e-08,
+          "db": -74.6,
+          "gain_db": -12.0
+        },
+        "mid_transition": {
+          "energy": 4.981494614348625e-07,
+          "db": -63.0,
+          "gain_db": 0.0
+        },
+        "sibilance": {
+          "energy": 5.203432206570175e-07,
+          "db": -62.8,
+          "gain_db": 0.0
+        },
+        "air": {
+          "energy": 5.164497564418807e-07,
+          "db": -62.9,
+          "gain_db": 0.0
+        }
+      }
+    },
+    {
+      "name": "cut_sibilance",
+      "description": "Cut sibilance by -12 dB \u2014 should be ~12 dB below others",
+      "passed": true,
+      "cut_band_db": -74.6,
+      "mean_other_db": -62.8,
+      "measured_diff_db": 11.8,
+      "target_diff_db": 12.0,
+      "tolerance_db": 3.0,
+      "details": {
+        "sub_bass": {
+          "energy": 5.200585548065934e-07,
+          "db": -62.8,
+          "gain_db": 0.0
+        },
+        "low_warmth": {
+          "energy": 5.067920614545251e-07,
+          "db": -63.0,
+          "gain_db": 0.0
+        },
+        "raven_grain": {
+          "energy": 5.476915590953325e-07,
+          "db": -62.6,
+          "gain_db": 0.0
+        },
+        "mid_transition": {
+          "energy": 5.219669002846656e-07,
+          "db": -62.8,
+          "gain_db": 0.0
+        },
+        "sibilance": {
+          "energy": 3.474076550768861e-08,
+          "db": -74.6,
+          "gain_db": -12.0
+        },
+        "air": {
+          "energy": 5.39410470268878e-07,
+          "db": -62.7,
+          "gain_db": 0.0
+        }
+      }
+    },
+    {
+      "name": "multi_band",
+      "description": "Multiple bands at different gains \u2014 ratios should match",
+      "passed": true,
+      "commanded_gains": {
+        "raven_grain": 6.0,
+        "sibilance": -6.0,
+        "air": 3.0
+      },
+      "details": {
+        "sub_bass": {
+          "energy": 2.9726072015088994e-07,
+          "db": -65.3,
+          "gain_db": 0.0
+        },
+        "low_warmth": {
+          "energy": 2.934237696106921e-07,
+          "db": -65.3,
+          "gain_db": 0.0
+        },
+        "raven_grain": {
+          "energy": 1.2424786069059433e-06,
+          "db": -59.1,
+          "gain_db": 6.0
+        },
+        "mid_transition": {
+          "energy": 3.0357939207492153e-07,
+          "db": -65.2,
+          "gain_db": 0.0
+        },
+        "sibilance": {
+          "energy": 7.837406529207531e-08,
+          "db": -71.1,
+          "gain_db": -6.0
+        },
+        "air": {
+          "energy": 6.14935407331675e-07,
+          "db": -62.1,
+          "gain_db": 3.0
+        }
+      }
+    }
+  ],
+  "passed": true,
+  "notes": []
+}
