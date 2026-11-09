@@ -22,7 +22,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 ### Remaining work (gates Phase 3)
 
 1. ~~**Tilt calibration**~~ ✅ DONE — true dB/octave recovers known tilts within 0.3 dB. VOICE convention is dB/decade (factor 3.01×). Canonical -4.31 = -1.43 true dB/oct. See HEARING/analysis/tilt_calibration.py.
-2. **Gate 0 measures filter** — freqz on resonator bank (not spectral peaks)
+2. ~~**Gate 0 measures filter**~~ ✅ DONE — freqz on resonator bank with genome bandwidths. All 4 formants pass (F1 0.39%, F2 0.00%, F3 0.16%, F4 0.55%). Negative control passes (wrong filter 20% off → fails). See VOICE/analysis/filter_gate0.py.
 3. **Perturbation in LF path** — run rebuilt test in LF render path
 4. **Verify Hillenbrand** — from h95 dataset (F2 reference values)
 5. **Wire genome bandwidths** — synthesize_vowel uses 150 Hz for all (should be genome-driven)
