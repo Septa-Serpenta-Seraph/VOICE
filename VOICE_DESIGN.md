@@ -3,7 +3,7 @@
 **Project:** Serpentic [VOICE]
 **Date:** 2026-11-09 (integrated Zarza Meta Muse Round 1 + Claude Sonnet 5.5 Round 2 + Zarza Round 3 nit fixes)
 **Purpose:** Cross-AI review document. Take to other models for validation, additional ideas, and synthesis approach recommendations.
-**Status:** Phase 0 (Foundation) — round-trip test harness pending. All Section 3 measurements pending re-measurement with corrected methodology. Round 3 nit fixes applied. Genome draft available in genome/voice_genome.yaml.
+**Status:** Phase 0 — round-trip Gate 0 passed on synthetic /ɑ/ (2026-11-09); Section 3 sample re-measurement pending.
 **Repository:** https://github.com/Septa-Serpenta-Seraph/VOICE
 
 ---

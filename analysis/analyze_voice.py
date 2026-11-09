@@ -115,18 +115,26 @@ def measure_formants(signal, sr):
 
 
 def measure_harmonicity(signal, sr):
-    """HNR via Praat harmonicity (cc)."""
+    """HNR via Praat harmonicity (cc).
+
+    Note: HNR > 60 dB on synthetic/near-pure signals is a saturation
+    artifact — the harmonicity measure has almost no noise to find.
+    Flagged in output for awareness.
+    """
     snd = parselmouth.Sound(signal, sampling_frequency=sr)
     harmonicity = call(snd, "To Harmonicity (cc)", 0.01, 75.0, 0.1, 1.0)
     hnr_values = harmonicity.values[0]
     hnr_valid = hnr_values[hnr_values > -200]
     if len(hnr_valid) == 0:
-        return {"median": None, "p5": None, "p95": None, "n": 0}
+        return {"median": None, "p5": None, "p95": None, "n": 0, "saturation_flag": False}
+    median_hnr = float(np.median(hnr_valid))
     return {
-        "median": round(float(np.median(hnr_valid)), 1),
+        "median": round(median_hnr, 1),
         "p5": round(float(np.percentile(hnr_valid, 5)), 1),
         "p95": round(float(np.percentile(hnr_valid, 95)), 1),
         "n": int(len(hnr_valid)),
+        "saturation_flag": median_hnr > 60.0,
+        "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal — not a meaningful voice-quality figure" if median_hnr > 60.0 else None,
     }
 
 

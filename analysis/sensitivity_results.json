@@ -1,0 +1,12 @@
+{
+  "test": "Phase 0 Sensitivity",
+  "baseline": {
+    "f0": 190.5,
+    "f3": 2346.1
+  },
+  "f0_spread_hz": 40.3,
+  "f3_spread_hz": 198.1,
+  "f0_detectable": true,
+  "f3_detectable": true,
+  "passed": true
+}

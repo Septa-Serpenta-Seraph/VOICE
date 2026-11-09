@@ -47,7 +47,9 @@
       "median": 136.1,
       "p5": 128.4,
       "p95": 139.0,
-      "n": 98
+      "n": 98,
+      "saturation_flag": true,
+      "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
     },
     "jitter_shimmer": {
       "jitter_local_pct": 0.0,

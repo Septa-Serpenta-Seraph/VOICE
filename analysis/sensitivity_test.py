@@ -83,6 +83,21 @@ def main():
     passed = f0_detectable and f3_detectable
     print(f"\nSensitivity: {'PASS' if passed else 'FAIL'}")
 
+    # Save results
+    results = {
+        "test": "Phase 0 Sensitivity",
+        "baseline": {"f0": f0_base, "f3": f3_base},
+        "f0_spread_hz": round(abs(f0_plus - f0_minus), 1),
+        "f3_spread_hz": round(abs(f3_plus - f3_minus), 1),
+        "f0_detectable": f0_detectable,
+        "f3_detectable": f3_detectable,
+        "passed": passed,
+    }
+    out_path = os.path.join(OUT_DIR, "sensitivity_results.json")
+    with open(out_path, "w") as fh:
+        json.dump(results, fh, indent=2)
+    print(f"Results saved to {out_path}")
+
 
 if __name__ == "__main__":
     main()
