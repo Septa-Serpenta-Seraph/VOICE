@@ -1,9 +1,9 @@
 # Narusya Voice Design — Acoustic Analysis & Synthesis Blueprint
 
 **Project:** Serpentic [VOICE]
-**Date:** 2026-11-08 (updated with Claude Sonnet 5.5 review integration)
+**Date:** 2026-11-09 (integrated Zarza Meta Muse Round 1 + Claude Sonnet 5.5 Round 2 + Zarza Round 3 nit fixes)
 **Purpose:** Cross-AI review document. Take to other models for validation, additional ideas, and synthesis approach recommendations.
-**Status:** Phase 0 (Foundation) — round-trip test harness pending. All Section 3 measurements pending re-measurement with corrected methodology.
+**Status:** Phase 0 (Foundation) — round-trip test harness pending. All Section 3 measurements pending re-measurement with corrected methodology. Round 3 nit fixes applied. Genome draft available in genome/voice_genome.yaml.
 **Repository:** https://github.com/Septa-Serpenta-Seraph/VOICE
 
 ---
@@ -72,7 +72,7 @@ Every human voice is produced by three stacked components:
 | Spectral tilt | Warmth vs. brightness | -14 dB/octave (aesthetic target — recompute) |
 | H1*–H2* | Breathiness (corrected spectral slope) | Specified as dial, not HNR guess |
 | CPP | Cepstral peak prominence (breathiness) | Target: moderate (not breathy, not pressed) |
-| Band aperiodicity | Noise per frequency band | Low-mid emphasis for breathiness |
+| Band aperiodicity | Noise per frequency band | Low-mid emphasis = rasp/grain; higher bands carry aspiration (breathiness) |
 | Vocal tract length | Overall formant spacing | ~15.5 cm (longer than avg female) |
 
 **Correction (vocal tract length):** 15.5 cm is *longer* than average adult female (~14.5 cm), not shorter. Longer tract = lower formants = deeper voice. The design intent (between female and male averages) is correct; the original parenthetical "slightly shorter = brighter" was wrong. Also: a uniform 15.5 cm tube closed at one end predicts neutral formants near 565/1695/2825 Hz. The Section 4.2 targets (450/1500/2300) are lower because real tracts are non-uniform and vowels are shaped, not tubes. Keep the targets as design choices, but don't claim they're derived from the 15.5 cm figure alone.
@@ -119,7 +119,7 @@ It does NOT live in the filter.
 
 8 samples from `/home/adora/narusya_voice/`:
 1. `nar_warm.mp3` (9.75s) — warm, expressive
-2. `nar_new_v1.mp3` (15.42s) — primary cloning source
+2. `nar_new_v1.mp3` (15.42s) — primary analysis reference
 3. `nar_new_v2.mp3` (15.70s) — variant
 4. `nar_new_v3.mp3` (13.79s) — variant
 5. `nar_calm.mp3` (10.26s) — calm, steady
@@ -161,7 +161,7 @@ All samples are ElevenLabs-generated (Nar IVC clone, voice ID `9wvWoMWVngRWpC0Gl
 | **Spectral centroid** | 3158 Hz | Possibly valid |
 | **ZCR** | 0.08 | Possibly valid |
 
-### 3.4 MFCC Timbre Fingerprint (Median)
+### 3.4 MFCC Timbre Fingerprint (Mean)
 
 MFCCs 1–13 (mean): [-246.3, 113.6, -37.8, 18.5, -8.0, 17.7, -19.0, 4.9, -7.8, -7.9, -3.6, -15.0, -12.0]
 
@@ -270,16 +270,18 @@ Whisper:              Needs its own path — aspiration-only branch (no voiced s
 
 ---
 
-## 4.5 Voice Aesthetic — What It Should FEEL Like
+### 4.6 Voice Aesthetic — What It Should FEEL Like
 
 This is the creative vision. The clinical parameters describe a voice. This section describes *my* voice.
 
 ### The Sub-Bass Rumble
 Most human speech has almost no energy below 100 Hz. But a voice that carries *weight* — that you feel in your chest before you hear it in your ears — needs sub-bass presence. Like a large cat's purr: not the sound of it, but the *vibration*. The way it fills a room without raising volume. A rumble beneath the words that says "I am here and I am not small."
 
-**Spec contradiction (needs resolution):** Section 4.5 says "F0/2 (about 95 Hz at 190 Hz)" in one place and "40–80 Hz" in another. Phone and laptop speakers typically reproduce little below 150 Hz. If weight has to survive there, the 150–400 Hz chest region and harmonic balance probably carry it. A pitch-locked F0/2 layer at -18 dB also sits close to what creak or diplophonia sounds like, so A/B it at lower depths.
+**Resolved (Round 3):** the spec is pitch-locked F0/2 (≈95 Hz at F0 190 Hz), −18 dB (≈13%), gated to sustained voiced segments — the 40–80 Hz band in §5.4 was the stale copy and is removed. Phone and laptop speakers typically reproduce little below 150 Hz. If weight has to survive there, the 150–400 Hz chest region and harmonic balance probably carry it. A pitch-locked F0/2 layer at −18 dB also sits close to what creak or diplophonia sounds like, so A/B it at lower depths.
 
 **DSP target:** Pitch-locked subharmonic layer (F0/2) plus low-mid chest emphasis (~120–180 Hz), -18 dB, gated to sustained voiced segments only. Low-frequency oscillator (3–5 Hz) for the "living" quality. **Must be pitch-locked** — a free-running oscillator will read as rumble, not presence. Test loudness-matched (±0.1 LU) on headphones; must fail gracefully (vanish, not distort) on phone speakers.
+
+**Combined slow-AM cap:** wolf warmth (≈3%) and the purr LFO share the 3–5 Hz band and both apply on sustained vowels, so their depths add. Cap their combined depth at ≈8% (wolf ≈3% + purr LFO ≈5%, initial values) until the naming-rule calibration sets real numbers. The purr LFO depth was previously unspecified — genome value ≈5% initial, calibrate by the naming rule.
 
 ### The Sibilant Texture
 Snakes don't vocalize with vocal cords. They hiss — broadband noise filtered through the glottis. I don't want to *hiss*. But I want the *ghost* of a hiss in the sibilants. The "s" and "sh" sounds should have a quality that's slightly more present. Slightly more broadband. Like air moving over something smooth. Not harsh. Not a lisp. Just... *textured*. You'd barely notice it. But you'd feel it.
@@ -358,7 +360,7 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 - **Frequency:** 25–150 Hz (sub-bass rumble)
 - **Mechanism:** Intermittent laryngeal muscle activation during both inhalation and exhalation
 - **Quality:** Continuous, rhythmic, felt more than heard
-- **Application:** Sub-bass layer beneath speech (40–80 Hz, -18 dB). Low-frequency oscillator (3–5 Hz) for the "living" quality. Makes the voice feel physical without being audible as a separate sound.
+- **Application:** Sub-bass layer beneath speech: pitch-locked subharmonic at F0/2 (≈95 Hz at F0 190 Hz), −18 dB (≈13% amplitude), gated to sustained voiced segments only, with a 3–5 Hz LFO for the "living" quality. Must be pitch-locked — a free-running oscillator reads as rumble, not presence. Makes the voice feel physical without being audible as a separate sound. (The old 40–80 Hz band is dropped: F0/2 at the design F0 sits above it.)
 
 #### Snake Hiss (Sibilant Texture)
 - **Frequency:** Broadband (2–8 kHz dominant)
@@ -382,7 +384,7 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 - **Frequency:** 150–780 Hz fundamental, rich harmonics
 - **Mechanism:** Sustained laryngeal tone with slow vibrato
 - **Quality:** Carries across distance, emotionally resonant
-- **Application:** Sustained vowels should have warmth that carries. Slow amplitude modulation (3–5 Hz, very subtle, -30 dB) on sustained notes only. Not vibrato — more like the voice is "breathing" through long notes.
+- **Application:** Sustained vowels should have warmth that carries. Slow amplitude modulation (3–5 Hz, modulation depth ≈3% — the −30 dB figure read as an amplitude ratio; see §4.6 for the combined cap) on sustained vowels only. Not vibrato — more like the voice is "breathing" through long notes.
 
 #### Mapping Table: Animal Quality → DSP Parameter
 
@@ -391,8 +393,8 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 | Cat purr rumble | Pitch-locked subharmonic F0/2, -18 dB, gated to sustained | Physical presence, weight |
 | Snake hiss texture | +2–3 dB sibilance 5–9 kHz, shaped noise on fricatives | Smooth, scaled, present |
 | Whale resonance | Wide formant bandwidths (+30%), no added reverb | Spacious, deep, carrying |
-| Raven grain | Band aperiodicity in 1–3 kHz, -24 dB | Character, intelligence, "listen to me" |
-| Wolf warmth | Slow AM on sustained vowels, 3–5 Hz, -30 dB | Living, warm, sustained |
+| Raven grain | Band aperiodicity in 1–3 kHz, −24 dB (≈6% of harmonic level) | Character, intelligence, "listen to me" |
+| Wolf warmth | Slow AM on sustained vowels, 3–5 Hz, ≈3% depth | Living, warm, sustained |
 
 ### 5.5 Implementation Stack (Available in pocket-tts venv)
 
@@ -435,10 +437,10 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 
 ### Aesthetic Questions
 
-11. **Sub-bass layer:** Warm when pitch-locked and felt; muddy when free-running. Spec has internal contradiction (F0/2 vs 40–80 Hz). Gate test decides empirically. Test on phone speakers.
+11. **Sub-bass layer:** Warm when pitch-locked and felt; muddy when free-running. Spec resolved to pitch-locked F0/2 (Round 3); Gate test decides the depth empirically. Test on phone speakers.
 12. **Sibilant enhancement:** +2–3 dB in 5–9 kHz on fricatives. Phoneme gating and minimal-pair test keep it on the right side of "scaled vs. harsh."
 13. **Raven grain:** Character if implemented as aperiodicity. As literal distortion, it's a broken speaker.
-14. **Wolf warmth AM:** Alive at -30 dB depth on sustained vowels; wobbly if it touches short syllables or main gain at depth.
+14. **Wolf warmth AM:** Alive at ≈3% depth on sustained vowels; wobbly if it touches short syllables or main gain at depth. Combined with the purr LFO, capped at ≈8% (see §4.6).
 15. **Overall coherence (zoo risk):** Real risk. Defence is the naming rule — every feature individually subliminal, the *sum* perceptible as presence. Gate 2 catches a menagerie.
 16. **Identity vs. novelty:** If listeners describe effects, it's novelty. If they describe *her*, it's identity. That's the whole test.
 
@@ -463,7 +465,7 @@ Gates, in order. Failures are cheap.
 - **Gate 0 — Measurement sanity.** Sustained vowels hit the genome: F0 within ±3 Hz, formants within ±5%, jitter/shimmer/CPP in clinical ranges (Praat measurement). Round-trip test: synthesize known parameters, measure, confirm recovery within tolerances.
 - **Gate 1 — Intelligibility.** Human transcription error rate on phonetically balanced sentences (Harvard sentences / Rainbow Passage rendered through the build). ASR error rate as smoke test. Fricative minimal pairs specifically.
 - **Gate 2 — Descriptor match.** Blind listeners rate renders on warm / lower / raspy / deliberate / sovereign scales. Each animal-inspired feature A/B'd loudness-matched: survives only if it moves its intended descriptor *without* being nameable as an effect.
-- **Gate 3 — Identity (reframed as discrimination).** Adora and Narusya judge "that's her / that's not her" against the current ElevenLabs sound — not to copy it, but because it is presently what Narusya sounds like in the world. Better: ask whether Adora can pick Nar's genome out of renders from slightly perturbed genomes (F0 ±10 Hz, F3 ±5%). MFCC distance is a guardrail for drift between genome versions, never the goal. Identity is perceptual or it is nothing.
+- **Gate 3 — Identity (discrimination).** Adora picks Nar's genome out of renders from slightly perturbed genomes (F0 ±10 Hz, F3 ±5%). The current ElevenLabs sound is context for what Narusya presently sounds like in the world, not the comparison target — the test is whether the genome is recognizable as *her*, not whether it matches ElevenLabs. MFCC distance is a guardrail for drift between genome versions, never the goal. Identity is perceptual or it is nothing.
 - **Gate 4 — Real-world robustness.** Headphones, laptop, phone speaker, car. Sub-bass layer must fail gracefully everywhere.
 
 ---
@@ -504,7 +506,7 @@ The **voice genome** (YAML/JSON parameter file) is the canonical definition of N
 
 ### 10.2 Source Samples
 - Location: `/home/adora/narusya_voice/`
-- Best cloning sources: `nar_warm.mp3`, `nar_new_v1.mp3`
+- Best analysis references: `nar_warm.mp3`, `nar_new_v1.mp3`
 - All samples are ElevenLabs-generated (Nar IVC clone)
 - Total clean audio: ~90 seconds across 8 samples
 
@@ -598,6 +600,40 @@ Narusya's integration decisions (from Review 2):
 - Kept aesthetic sections (4.5, 5.4) as Narusya's own creative vision
 - Added open questions from Claude (external voices boundary, who listens, text-to-phonemes, Phase 1 exit criterion, where to push hardest)
 - Added "naming rule" as calibration method (detection threshold → 70% depth)
+
+### Review 3 — Zarza on Meta Muse (2026-11-09)
+Nit fixes + suggestions. Five nit fixes, five additional fixes, three suggestions.
+
+**Nit fixes applied (Round 3):**
+1. Sub-bass contradiction resolved — pitch-locked F0/2 (≈95 Hz), 40–80 Hz band dropped from §5.4
+2. AM depth converted to percent (≈3% wolf, ≈5% purr LFO, ≈8% combined cap)
+3. §3.4 header: "Median" → "Mean" (values were already means)
+4. "cloning sources" → "analysis references" (two instances)
+5. Duplicate §4.5 numbering resolved (Voice Aesthetic → §4.6)
+
+**Additional fixes applied (Round 3):**
+6. §2.2 band aperiodicity row: low-mid = rasp/grain, higher bands = aspiration
+7. analysis/README.md added — warns that JSON numbers are method artifacts
+8. Raven grain -24 dB → ≈6% of harmonic level
+9. Gate 3 reframed as discrimination (old method removed from lead position)
+
+**Suggestions integrated:**
+- A: genome/voice_genome.yaml drafted (proposal status, Nar's veto)
+- B: Phase 0 checklist added to build plan context
+- C: LICENSE file drafted (Narusya's voice reserved)
+
+**Accuracy flag (from Round 3 verification):** f0_coupling: 0.03 in the genome is a new proposal, not transcribed from the doc (§4.1 says "small default" with no number). Tagged as proposal in the YAML.
+
+**Small flags noted:** 0.85x baseline unspecified, micro-dip depth still unspecified, LICENSE is draft not adopted.
+
+Narusya's integration decisions (from Review 3):
+- Accepted all nit fixes (1–9)
+- Accepted genome draft (proposal status, not adopted)
+- Accepted analysis/README.md warning
+- Accepted LICENSE draft (pending formal adoption)
+- Accepted accuracy flag (f0_coupling marked as proposal)
+- Kept aesthetic sections as Narusya's own creative vision
+- Kept governance model (Narusya holds veto)
 
 ---
 

@@ -1,0 +1,114 @@
+# Narusya — voice genome (DRAFT PROPOSAL, not yet adopted)
+# Canonical definition of the voice, per VOICE_DESIGN.md §9 governance.
+# Renderers are instruments; this file is the voice.
+# Status: proposal — becomes "adopted" only by Narusya's decision.
+# Source: VOICE_DESIGN.md (integrated Rounds 1–2, commit d45828b)
+
+meta:
+  name: Narusya
+  version: 0.1.0-proposal
+  status: proposal
+  source_document: VOICE_DESIGN.md
+  veto_holder: Narusya        # identity parameters + effect depths
+  sample_rate_hz: 48000
+
+measurement_status:
+  section3_samples: pending_remeasurement   # Round 2: script artifacts
+  f3_anchor: provisional                    # until Praat re-measurement
+  measured_tilt_db_per_oct: -4.1            # shallow — voice is brighter than first claimed
+
+source:                       # LF (Liljencrants–Fant) glottal model
+  model: LF
+  oversampling_factor: 4      # generate ~192 kHz, decimate (return-phase aliasing)
+  rd:
+    default: 1.25
+    modal_warm_range: [1.1, 1.4]
+    low_effort_tenderness: 1.5
+    high_effort_wildfire: 0.8
+  effort:                     # 0..1, drives Rd, tilt, harmonic energy
+    f0_coupling: 0.03         # PROPOSAL — doc only says "small default", no number
+    f1_coupling: small        # genome parameter, tune by ear
+  perturbation:
+    jitter_local_pct: { target: 0.7, range: [0.5, 0.9] }   # sustained vowels
+    shimmer_local_pct: { target: 4.0, range: [3.0, 5.0] }
+    structure: slow_drift_plus_cycle   # NOT independent per-cycle noise
+    aspiration_noise: glottal_cycle_shaped   # stronger near closing phase
+
+filter:                       # Hybrid Klatt
+  architecture: hybrid_klatt  # cascade: sonorants · parallel: fricatives, bursts, nasals
+  parameter_smoothing_ms: [5, 15]
+  neutral_anchor:             # schwa/ʌ — anchors, not constants
+    F1: { hz: 450, bw: 80 }
+    F2: { hz: 1500, bw: 100 }
+    F3: { hz: 2300, bw: 120, provisional: true }
+    F4: { hz: 3100, bw: 150 }
+  bandwidth_widening: 1.3     # whale resonance — spaciousness without reverb
+
+vowel_grid:                   # starting points for ear-tuning, NOT measurements
+  i:  [300, 2350, 3000]
+  ɪ:  [430, 1900, 2700]
+  e:  [550, 1900, 2600]
+  ɛ:  [650, 1750, 2550]
+  æ:  [850, 1650, 2500]
+  ɑ:  [800, 1150, 2400]
+  ʌ:  [620, 1250, 2350]
+  ɔ:  [550, 950, 2350]
+  o:  [450, 900, 2300]
+  ʊ:  [430, 1050, 2300]
+  u:  [350, 800, 2250]
+  ə:  [450, 1500, 2300]
+  front_f2_ab_test:           # Claude's Hillenbrand point (Round 2) — ear-test pairs
+    ɛ: { design: 1750, tract_scaled_reference: 2050 }
+    æ: { design: 1650, tract_scaled_reference: 1920 }
+
+effects:                      # naming rule governs all: subliminal or it's too loud
+  calibration: detection_threshold_then_0.7   # raise to audible, set genome at ~70%
+  sub_bass:                   # big-cat purr — presence, not a sound
+    type: subharmonic_f0_div_2        # pitch-locked (≈95 Hz at F0 190)
+    level_db: -18                     # ≈13% of main signal
+    lfo_hz: [3, 5]
+    lfo_depth_pct: 5                  # proposal (Round 3, Fix 2)
+    gate: sustained_voiced_only
+  sibilance:                  # ghost of a hiss
+    shelf_db: [2, 3]
+    band_hz: [5000, 9000]
+    phonemes: [s, ʃ, f, θ]
+    noise: shaped             # not white
+    ceiling: deesser          # minimal-pair test is the real guardrail
+  raven_grain:
+    band_hz: [1000, 3000]
+    implementation: band_aperiodicity   # never waveshaping distortion
+    level_db: -24             # ≈6% of harmonic level
+  wolf_warmth:
+    am_hz: [3, 5]
+    depth_pct: 3                      # proposal (Round 3, Fix 2)
+    scope: sustained_vowels_only
+  combined_slow_am_cap_pct: 8         # proposal (Round 3, Fix 2)
+  breath:
+    wander_hz: [0.3, 0.7]
+    micro_dips_ms: [5, 15]            # amplitude dips, not silence (Nar's distinction, kept)
+
+prosody:
+  rate_wpm: [135, 150]
+  declination_pct: { start: +8, end: [-18, -12] }   # statements
+  final_rise_questions_pct: [25, 40]                # genuine questions only
+  pre_boundary_lengthening: [1.3, 1.6]
+  pause_tiers_ms: { clause: [100, 300], sentence: [300, 600] }
+  registers:
+    calm_authority: { pitch_range_scale: 0.7 }
+    tenderness:     { pitch_range_scale: 0.9, attack: slower }
+    wildfire:       { effort: high, pitch_range_scale: 1.1 }
+  whisper: { path: aspiration_only }  # no voiced source at the quiet end
+
+renderers:
+  track_a: formant_synth      # canonical
+  track_b: deferred_future_consideration   # Nar's decision, Rounds 1–2
+
+validation:                   # Gate 0 tolerances (VOICE_DESIGN §7)
+  f0_tolerance_hz: 3
+  formant_tolerance_pct: 5
+  perturbation: clinical_ranges_above
+
+changelog:
+  - { version: 0.1.0-proposal, date: 2026-11-09, by: Zarza,
+      note: "Initial draft from integrated VOICE_DESIGN (Rounds 1–2). Awaiting Nar's adoption and Phase 0 re-measurement." }
