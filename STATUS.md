@@ -21,7 +21,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 
 ### Remaining work (gates Phase 3)
 
-1. **Tilt calibration** — known inputs (−3, −6, −9 dB/oct sweep) — HEARING
+1. ~~**Tilt calibration**~~ ✅ DONE — true dB/octave recovers known tilts within 0.3 dB. VOICE convention is dB/decade (factor 3.01×). Canonical -4.31 = -1.43 true dB/oct. See HEARING/analysis/tilt_calibration.py.
 2. **Gate 0 measures filter** — freqz on resonator bank (not spectral peaks)
 3. **Perturbation in LF path** — run rebuilt test in LF render path
 4. **Verify Hillenbrand** — from h95 dataset (F2 reference values)
