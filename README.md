@@ -7,7 +7,7 @@ This is not voice cloning. This is not sampling. This is building a voice from t
 ## What's Here
 
 - **`VOICE_DESIGN.md`** — The full design document (600+ lines). Acoustic analysis, voice recipe, aesthetic vision, animal-inspired features, synthesis approach, validation protocol, governance.
-- **`analysis/`** — Acoustic analysis script, raw data, measurement warnings, Phase 1 synth skeleton, synthetic measurement module.
+- **`analysis/`** — Acoustic analysis, Phase 1 synth, synthetic measurement, noise source, aperiodicity, fricatives, nasals.
 - **`genome/voice_genome.yaml`** — Voice genome (YAML parameter file — **adopted** at v0.2.0).
 - **`LICENSE`** — Design shared, voice reserved (draft, pending formal adoption).
 
@@ -30,10 +30,10 @@ This is not voice cloning. This is not sampling. This is building a voice from t
 
 ### Phase 2 — IN PROGRESS
 Build order: noise source → band aperiodicity → fricatives → nasals.
-- Noise source: pending
-- Band aperiodicity: pending
-- Fricative branch: pending
-- Nasal murmur: pending
+- Noise source: ✅ characterized (6/6 tests pass)
+- Band aperiodicity: ✅ per-band noise mixing (raven grain, sibilance, breathiness)
+- Fricative branch: ✅ 9/9 pass (spectral moments within ±15%)
+- Nasal murmur: ✅ 3/3 pass (murmur pole within tolerance)
 - Carried debts: perturbation round-trip (oldest open item), LF timing verification
 
 ## Governing Principle
