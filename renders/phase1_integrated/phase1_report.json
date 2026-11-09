@@ -1,0 +1,819 @@
+{
+  "source": "simple",
+  "genome_status": "proposal",
+  "vowels": {
+    "i": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          },
+          "F2": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          },
+          "F3": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          },
+          "F4": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          }
+        },
+        "hnr": {
+          "median": 96.0,
+          "p5": 78.9,
+          "p95": 106.7,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.564,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -3.83,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u026a": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 476.4,
+            "p5": 476.4,
+            "p95": 476.4,
+            "n": 193
+          },
+          "F2": {
+            "median": 1892.7,
+            "p5": 1892.7,
+            "p95": 1892.7,
+            "n": 193
+          },
+          "F3": {
+            "median": 3095.9,
+            "p5": 3095.9,
+            "p95": 3095.9,
+            "n": 193
+          },
+          "F4": {
+            "median": 3622.1,
+            "p5": 3622.1,
+            "p95": 3622.2,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 96.5,
+          "p5": 82.4,
+          "p95": 118.8,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.511,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -3.89,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "e": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 582.9,
+            "p5": 582.9,
+            "p95": 582.9,
+            "n": 193
+          },
+          "F2": {
+            "median": 1894.0,
+            "p5": 1894.0,
+            "p95": 1894.0,
+            "n": 193
+          },
+          "F3": {
+            "median": 3062.6,
+            "p5": 3062.6,
+            "p95": 3062.6,
+            "n": 193
+          },
+          "F4": {
+            "median": 3630.8,
+            "p5": 3630.8,
+            "p95": 3630.9,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 97.0,
+          "p5": 79.8,
+          "p95": 109.1,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.455,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -3.42,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u025b": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 649.7,
+            "p5": 649.7,
+            "p95": 649.7,
+            "n": 193
+          },
+          "F2": {
+            "median": 1745.3,
+            "p5": 1745.3,
+            "p95": 1745.3,
+            "n": 193
+          },
+          "F3": {
+            "median": 3033.1,
+            "p5": 3033.1,
+            "p95": 3033.1,
+            "n": 193
+          },
+          "F4": {
+            "median": 3593.8,
+            "p5": 3593.8,
+            "p95": 3593.9,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 99.1,
+          "p5": 79.7,
+          "p95": 112.9,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.445,
+          "n_cycles": 236
+        },
+        "tilt": {
+          "tilt_db_per_octave": -3.16,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u00e6": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 806.2,
+            "p5": 806.2,
+            "p95": 806.3,
+            "n": 193
+          },
+          "F2": {
+            "median": 1697.7,
+            "p5": 1697.7,
+            "p95": 1697.7,
+            "n": 193
+          },
+          "F3": {
+            "median": 2985.4,
+            "p5": 2985.4,
+            "p95": 2985.4,
+            "n": 193
+          },
+          "F4": {
+            "median": 3576.0,
+            "p5": 3575.9,
+            "p95": 3576.0,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 98.0,
+          "p5": 78.1,
+          "p95": 112.3,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.012,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -2.45,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u0251": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 845.8,
+            "p5": 845.8,
+            "p95": 845.9,
+            "n": 193
+          },
+          "F2": {
+            "median": 1273.5,
+            "p5": 1273.4,
+            "p95": 1273.5,
+            "n": 193
+          },
+          "F3": {
+            "median": 2919.6,
+            "p5": 2919.6,
+            "p95": 2919.6,
+            "n": 193
+          },
+          "F4": {
+            "median": 3529.6,
+            "p5": 3529.5,
+            "p95": 3529.6,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 97.5,
+          "p5": 75.1,
+          "p95": 133.2,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.259,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -3.68,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u028c": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 648.4,
+            "p5": 648.4,
+            "p95": 648.4,
+            "n": 193
+          },
+          "F2": {
+            "median": 1386.3,
+            "p5": 1386.3,
+            "p95": 1386.4,
+            "n": 193
+          },
+          "F3": {
+            "median": 2898.3,
+            "p5": 2898.3,
+            "p95": 2898.3,
+            "n": 193
+          },
+          "F4": {
+            "median": 3510.7,
+            "p5": 3510.7,
+            "p95": 3510.7,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 96.3,
+          "p5": 74.8,
+          "p95": 111.8,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.487,
+          "n_cycles": 238
+        },
+        "tilt": {
+          "tilt_db_per_octave": -4.11,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u0254": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          },
+          "F2": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          },
+          "F3": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          },
+          "F4": {
+            "median": null,
+            "p5": null,
+            "p95": null,
+            "n": 0
+          }
+        },
+        "hnr": {
+          "median": 90.8,
+          "p5": 73.9,
+          "p95": 138.7,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.487,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -5.12,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "o": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 956.0,
+            "p5": 955.9,
+            "p95": 956.0,
+            "n": 193
+          },
+          "F2": {
+            "median": 2774.5,
+            "p5": 2774.5,
+            "p95": 2774.5,
+            "n": 193
+          },
+          "F3": {
+            "median": 3402.3,
+            "p5": 3402.3,
+            "p95": 3402.4,
+            "n": 193
+          },
+          "F4": {
+            "median": 4586.6,
+            "p5": 4586.4,
+            "p95": 4586.7,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 94.7,
+          "p5": 74.8,
+          "p95": 112.9,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.0,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -5.47,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u028a": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 1103.4,
+            "p5": 1103.4,
+            "p95": 1103.4,
+            "n": 193
+          },
+          "F2": {
+            "median": 2797.5,
+            "p5": 2797.5,
+            "p95": 2797.5,
+            "n": 193
+          },
+          "F3": {
+            "median": 3437.9,
+            "p5": 3437.9,
+            "p95": 3437.9,
+            "n": 193
+          },
+          "F4": {
+            "median": 4610.1,
+            "p5": 4609.9,
+            "p95": 4610.2,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 98.0,
+          "p5": 75.5,
+          "p95": 114.7,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.406,
+          "n_cycles": 238
+        },
+        "tilt": {
+          "tilt_db_per_octave": -5.2,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "u": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 845.2,
+            "p5": 845.2,
+            "p95": 845.2,
+            "n": 193
+          },
+          "F2": {
+            "median": 2718.7,
+            "p5": 2718.7,
+            "p95": 2718.7,
+            "n": 193
+          },
+          "F3": {
+            "median": 3387.1,
+            "p5": 3387.0,
+            "p95": 3387.1,
+            "n": 193
+          },
+          "F4": {
+            "median": 4577.6,
+            "p5": 4577.4,
+            "p95": 4577.7,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 96.3,
+          "p5": 75.1,
+          "p95": 112.7,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.012,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -5.96,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    },
+    "\u0259": {
+      "gate0_passed": false,
+      "measured": {
+        "f0": {
+          "median": 190.5,
+          "p5": 190.5,
+          "p95": 190.5,
+          "n_voiced": 113,
+          "n_total": 113
+        },
+        "formants": {
+          "F1": {
+            "median": 494.8,
+            "p5": 494.8,
+            "p95": 494.8,
+            "n": 193
+          },
+          "F2": {
+            "median": 1553.7,
+            "p5": 1553.7,
+            "p95": 1553.7,
+            "n": 193
+          },
+          "F3": {
+            "median": 2841.5,
+            "p5": 2841.5,
+            "p95": 2841.5,
+            "n": 193
+          },
+          "F4": {
+            "median": 3498.6,
+            "p5": 3498.5,
+            "p95": 3498.6,
+            "n": 193
+          }
+        },
+        "hnr": {
+          "median": 94.2,
+          "p5": 76.5,
+          "p95": 111.8,
+          "n": 123,
+          "saturation_flag": true,
+          "saturation_note": "HNR > 60 dB may indicate synthetic/near-pure signal \u2014 not a meaningful voice-quality figure"
+        },
+        "jitter_shimmer": {
+          "jitter_local_pct": 0.0,
+          "shimmer_local_pct": 0.591,
+          "n_cycles": 237
+        },
+        "tilt": {
+          "tilt_db_per_octave": -4.24,
+          "n_points": 166,
+          "freq_range_hz": [
+            100,
+            4000
+          ]
+        }
+      }
+    }
+  },
+  "ab_pairs": {
+    "\u025b_f2_design_1750.wav": {
+      "vowel": "\u025b",
+      "f2_hz": 1750
+    },
+    "\u025b_f2_reference_2050.wav": {
+      "vowel": "\u025b",
+      "f2_hz": 2050
+    },
+    "\u00e6_f2_design_1650.wav": {
+      "vowel": "\u00e6",
+      "f2_hz": 1650
+    },
+    "\u00e6_f2_reference_1920.wav": {
+      "vowel": "\u00e6",
+      "f2_hz": 1920
+    }
+  },
+  "perturbation_roundtrip": {
+    "known_jitter_pct": 0.7,
+    "measured_jitter_pct": 0.0,
+    "known_shimmer_pct": 4.0,
+    "measured_shimmer_pct": 0.259,
+    "recovered": false
+  },
+  "notes": [
+    "i: F1 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "i: F1 None vs 300 (\u00b15%)",
+    "i: F2 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "i: F2 None vs 2350 (\u00b15%)",
+    "i: F3 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "i: F3 None vs 3420 (\u00b15%)",
+    "i: F4 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "i: F4 None vs 3100 (\u00b15%)",
+    "i: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "i: shimmer 0.564% outside 3\u20135% (sustained-vowel target)",
+    "i: HNR 96.0 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u026a: F1 476.4 vs 430 (\u00b15%)",
+    "\u026a: F4 3622.1 vs 3100 (\u00b15%)",
+    "\u026a: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u026a: shimmer 0.511% outside 3\u20135% (sustained-vowel target)",
+    "\u026a: HNR 96.5 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "e: F1 582.9 vs 550 (\u00b15%)",
+    "e: F4 3630.8 vs 3100 (\u00b15%)",
+    "e: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "e: shimmer 0.455% outside 3\u20135% (sustained-vowel target)",
+    "e: HNR 97.0 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u025b: F4 3593.8 vs 3100 (\u00b15%)",
+    "\u025b: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u025b: shimmer 0.445% outside 3\u20135% (sustained-vowel target)",
+    "\u025b: HNR 99.1 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u00e6: F1 806.2 vs 850 (\u00b15%)",
+    "\u00e6: F4 3576.0 vs 3100 (\u00b15%)",
+    "\u00e6: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u00e6: shimmer 0.012% outside 3\u20135% (sustained-vowel target)",
+    "\u00e6: HNR 98.0 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u0251: F1 845.8 vs 800 (\u00b15%)",
+    "\u0251: F2 1273.5 vs 1150 (\u00b15%)",
+    "\u0251: F4 3529.6 vs 3100 (\u00b15%)",
+    "\u0251: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u0251: shimmer 0.259% outside 3\u20135% (sustained-vowel target)",
+    "\u0251: HNR 97.5 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u028c: F2 1386.3 vs 1250 (\u00b15%)",
+    "\u028c: F4 3510.7 vs 3100 (\u00b15%)",
+    "\u028c: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u028c: shimmer 0.487% outside 3\u20135% (sustained-vowel target)",
+    "\u028c: HNR 96.3 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u0254: F1 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "\u0254: F1 None vs 550 (\u00b15%)",
+    "\u0254: F2 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "\u0254: F2 None vs 950 (\u00b15%)",
+    "\u0254: F3 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "\u0254: F3 None vs 2770 (\u00b15%)",
+    "\u0254: F4 rests on n=0 frames \u2014 thin evidence, do not trust \u00b15% (Round 4 caveat 1)",
+    "\u0254: F4 None vs 3100 (\u00b15%)",
+    "\u0254: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u0254: shimmer 0.487% outside 3\u20135% (sustained-vowel target)",
+    "\u0254: HNR 90.8 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "o: F1 956.0 vs 450 (\u00b15%)",
+    "o: F2 2774.5 vs 900 (\u00b15%)",
+    "o: F3 3402.3 vs 2720 (\u00b15%)",
+    "o: F4 4586.6 vs 3100 (\u00b15%)",
+    "o: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "o: shimmer 0.0% outside 3\u20135% (sustained-vowel target)",
+    "o: HNR 94.7 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u028a: F1 1103.4 vs 430 (\u00b15%)",
+    "\u028a: F2 2797.5 vs 1050 (\u00b15%)",
+    "\u028a: F3 3437.9 vs 2720 (\u00b15%)",
+    "\u028a: F4 4610.1 vs 3100 (\u00b15%)",
+    "\u028a: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u028a: shimmer 0.406% outside 3\u20135% (sustained-vowel target)",
+    "\u028a: HNR 98.0 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "u: F1 845.2 vs 350 (\u00b15%)",
+    "u: F2 2718.7 vs 800 (\u00b15%)",
+    "u: F3 3387.1 vs 2670 (\u00b15%)",
+    "u: F4 4577.6 vs 3100 (\u00b15%)",
+    "u: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "u: shimmer 0.012% outside 3\u20135% (sustained-vowel target)",
+    "u: HNR 96.3 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)",
+    "\u0259: F1 494.8 vs 450 (\u00b15%)",
+    "\u0259: F4 3498.6 vs 3100 (\u00b15%)",
+    "\u0259: jitter 0.0% outside 0.5\u20130.9% (sustained-vowel target)",
+    "\u0259: shimmer 0.591% outside 3\u20135% (sustained-vowel target)",
+    "\u0259: HNR 94.2 dB is a synthetic saturation artifact, not a voice-quality number (Round 4 caveat 3)"
+  ]
+}

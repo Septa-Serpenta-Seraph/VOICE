@@ -48,18 +48,18 @@ filter:                       # Hybrid Klatt
   bandwidth_widening: 1.3     # whale resonance — spaciousness without reverb
 
 vowel_grid:                   # starting points for ear-tuning, NOT measurements
-  i:  [300, 2350, 3000]
-  ɪ:  [430, 1900, 2700]
-  e:  [550, 1900, 2600]
-  ɛ:  [650, 1750, 2550]
-  æ:  [850, 1650, 2500]
-  ɑ:  [800, 1150, 2400]
-  ʌ:  [620, 1250, 2350]
-  ɔ:  [550, 950, 2350]
-  o:  [450, 900, 2300]
-  ʊ:  [430, 1050, 2300]
-  u:  [350, 800, 2250]
-  ə:  [450, 1500, 2300]
+  i:  [300, 2350, 3420]
+  ɪ:  [430, 1900, 3120]
+  e:  [550, 1900, 3020]
+  ɛ:  [650, 1750, 2970]
+  æ:  [850, 1650, 2920]
+  ɑ:  [800, 1150, 2820]
+  ʌ:  [620, 1250, 2770]
+  ɔ:  [550, 950, 2770]
+  o:  [450, 900, 2720]
+  ʊ:  [430, 1050, 2720]
+  u:  [350, 800, 2670]
+  ə:  [450, 1500, 2720]
   front_f2_ab_test:           # Claude's Hillenbrand point (Round 2) — ear-test pairs
     ɛ: { design: 1750, tract_scaled_reference: 2050 }
     æ: { design: 1650, tract_scaled_reference: 1920 }
