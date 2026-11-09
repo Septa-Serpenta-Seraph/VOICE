@@ -1,0 +1,688 @@
+{
+  "source": "lf",
+  "genome_status": "adopted",
+  "vowels": {
+    "i": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 304.7,
+            "n": 1,
+            "energy_db": -31.7,
+            "peak_hz": 304.7,
+            "in_window": true,
+            "is_peak": false,
+            "target": 300,
+            "error_pct": 1.6
+          },
+          "F2": {
+            "median": 2273.4,
+            "n": 10,
+            "energy_db": -37.2,
+            "peak_hz": 2273.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2350,
+            "error_pct": 3.3
+          },
+          "F3": {
+            "median": 3421.9,
+            "n": 15,
+            "energy_db": -37.7,
+            "peak_hz": 3421.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3420,
+            "error_pct": 0.1
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -38.6,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u026a": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 421.9,
+            "n": 2,
+            "energy_db": -23.1,
+            "peak_hz": 421.9,
+            "in_window": true,
+            "is_peak": false,
+            "target": 430,
+            "error_pct": 1.9
+          },
+          "F2": {
+            "median": 1898.4,
+            "n": 8,
+            "energy_db": -32.5,
+            "peak_hz": 1898.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1900,
+            "error_pct": 0.1
+          },
+          "F3": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -34.6,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3120,
+            "error_pct": 2.3
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -34.6,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "e": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 562.5,
+            "n": 2,
+            "energy_db": -3.2,
+            "peak_hz": 562.5,
+            "in_window": true,
+            "is_peak": false,
+            "target": 550,
+            "error_pct": 2.3
+          },
+          "F2": {
+            "median": 1898.4,
+            "n": 8,
+            "energy_db": -25.6,
+            "peak_hz": 1898.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1900,
+            "error_pct": 0.1
+          },
+          "F3": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -26.0,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3020,
+            "error_pct": 0.9
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -26.0,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u025b": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 632.8,
+            "n": 3,
+            "energy_db": -28.6,
+            "peak_hz": 632.8,
+            "in_window": true,
+            "is_peak": false,
+            "target": 650,
+            "error_pct": 2.6
+          },
+          "F2": {
+            "median": 1710.9,
+            "n": 8,
+            "energy_db": -16.4,
+            "peak_hz": 1710.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1750,
+            "error_pct": 2.2
+          },
+          "F3": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -25.5,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2970,
+            "error_pct": 2.6
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -25.5,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u00e6": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 820.3,
+            "n": 4,
+            "energy_db": -24.5,
+            "peak_hz": 820.3,
+            "in_window": true,
+            "is_peak": false,
+            "target": 850,
+            "error_pct": 3.5
+          },
+          "F2": {
+            "median": 1710.9,
+            "n": 7,
+            "energy_db": -12.0,
+            "peak_hz": 1710.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1650,
+            "error_pct": 3.7
+          },
+          "F3": {
+            "median": 3046.9,
+            "n": 12,
+            "energy_db": -22.6,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2920,
+            "error_pct": 4.3
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -22.6,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u0251": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 773.4,
+            "n": 3,
+            "energy_db": -0.5,
+            "peak_hz": 773.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 800,
+            "error_pct": 3.3
+          },
+          "F2": {
+            "median": 1148.4,
+            "n": 5,
+            "energy_db": -7.9,
+            "peak_hz": 1148.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1150,
+            "error_pct": 0.1
+          },
+          "F3": {
+            "median": 2859.4,
+            "n": 12,
+            "energy_db": -26.4,
+            "peak_hz": 2859.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2820,
+            "error_pct": 1.4
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -26.7,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u028c": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 609.4,
+            "n": 2,
+            "energy_db": -20.6,
+            "peak_hz": 609.4,
+            "in_window": true,
+            "is_peak": false,
+            "target": 620,
+            "error_pct": 1.7
+          },
+          "F2": {
+            "median": 1312.5,
+            "n": 6,
+            "energy_db": -17.5,
+            "peak_hz": 1312.5,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1250,
+            "error_pct": 5.0
+          },
+          "F3": {
+            "median": 2648.4,
+            "n": 12,
+            "energy_db": -32.3,
+            "peak_hz": 2648.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2770,
+            "error_pct": 4.4
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -32.0,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u0254": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 562.5,
+            "n": 2,
+            "energy_db": -4.2,
+            "peak_hz": 562.5,
+            "in_window": true,
+            "is_peak": false,
+            "target": 550,
+            "error_pct": 2.3
+          },
+          "F2": {
+            "median": 960.9,
+            "n": 4,
+            "energy_db": -12.4,
+            "peak_hz": 960.9,
+            "in_window": true,
+            "is_peak": false,
+            "target": 950,
+            "error_pct": 1.2
+          },
+          "F3": {
+            "median": 2671.9,
+            "n": 12,
+            "energy_db": -35.9,
+            "peak_hz": 2671.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2770,
+            "error_pct": 3.5
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -35.4,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "o": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 445.3,
+            "n": 2,
+            "energy_db": -32.1,
+            "peak_hz": 445.3,
+            "in_window": true,
+            "is_peak": false,
+            "target": 450,
+            "error_pct": 1.0
+          },
+          "F2": {
+            "median": 937.5,
+            "n": 4,
+            "energy_db": -18.7,
+            "peak_hz": 937.5,
+            "in_window": true,
+            "is_peak": true,
+            "target": 900,
+            "error_pct": 4.2
+          },
+          "F3": {
+            "median": 2671.9,
+            "n": 11,
+            "energy_db": -37.2,
+            "peak_hz": 2671.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2720,
+            "error_pct": 1.8
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -39.6,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u028a": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 421.9,
+            "n": 2,
+            "energy_db": -23.8,
+            "peak_hz": 421.9,
+            "in_window": true,
+            "is_peak": false,
+            "target": 430,
+            "error_pct": 1.9
+          },
+          "F2": {
+            "median": 1101.6,
+            "n": 5,
+            "energy_db": -38.6,
+            "peak_hz": 1101.6,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1050,
+            "error_pct": 4.9
+          },
+          "F3": {
+            "median": 2648.4,
+            "n": 11,
+            "energy_db": -38.9,
+            "peak_hz": 2648.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2720,
+            "error_pct": 2.6
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -41.2,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "u": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 351.6,
+            "n": 1,
+            "energy_db": -9.0,
+            "peak_hz": 351.6,
+            "in_window": true,
+            "is_peak": false,
+            "target": 350,
+            "error_pct": 0.4
+          },
+          "F2": {
+            "median": 773.4,
+            "n": 3,
+            "energy_db": -16.6,
+            "peak_hz": 773.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 800,
+            "error_pct": 3.3
+          },
+          "F3": {
+            "median": 2671.9,
+            "n": 11,
+            "energy_db": -38.1,
+            "peak_hz": 2671.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2670,
+            "error_pct": 0.1
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -42.3,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    },
+    "\u0259": {
+      "gate0_passed": true,
+      "measured": {
+        "f0": {
+          "median": 187.5,
+          "error_hz": 2.5
+        },
+        "formants": {
+          "F1": {
+            "median": 445.3,
+            "n": 2,
+            "energy_db": -30.9,
+            "peak_hz": 445.3,
+            "in_window": true,
+            "is_peak": false,
+            "target": 450,
+            "error_pct": 1.0
+          },
+          "F2": {
+            "median": 1523.4,
+            "n": 7,
+            "energy_db": -27.0,
+            "peak_hz": 1523.4,
+            "in_window": true,
+            "is_peak": true,
+            "target": 1500,
+            "error_pct": 1.6
+          },
+          "F3": {
+            "median": 2671.9,
+            "n": 11,
+            "energy_db": -37.1,
+            "peak_hz": 2671.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 2720,
+            "error_pct": 1.8
+          },
+          "F4": {
+            "median": 3046.9,
+            "n": 13,
+            "energy_db": -39.3,
+            "peak_hz": 3046.9,
+            "in_window": true,
+            "is_peak": true,
+            "target": 3100,
+            "error_pct": 1.7
+          }
+        }
+      }
+    }
+  },
+  "ab_pairs": {
+    "\u025b_f2_design_1750.wav": {
+      "vowel": "\u025b",
+      "f2_hz": 1750
+    },
+    "\u025b_f2_reference_2050.wav": {
+      "vowel": "\u025b",
+      "f2_hz": 2050
+    },
+    "\u00e6_f2_design_1650.wav": {
+      "vowel": "\u00e6",
+      "f2_hz": 1650
+    },
+    "\u00e6_f2_reference_1920.wav": {
+      "vowel": "\u00e6",
+      "f2_hz": 1920
+    }
+  },
+  "perturbation_roundtrip": {},
+  "notes": [
+    "i: F1 304.7 Hz \u2014 weak peak (energy -31.7 dB below full spectrum peak)",
+    "\u026a: F1 421.9 Hz \u2014 weak peak (energy -23.1 dB below full spectrum peak)",
+    "e: F1 562.5 Hz \u2014 weak peak (energy -3.2 dB below full spectrum peak)",
+    "\u025b: F1 632.8 Hz \u2014 weak peak (energy -28.6 dB below full spectrum peak)",
+    "\u00e6: F1 820.3 Hz \u2014 weak peak (energy -24.5 dB below full spectrum peak)",
+    "\u028c: F1 609.4 Hz \u2014 weak peak (energy -20.6 dB below full spectrum peak)",
+    "\u0254: F1 562.5 Hz \u2014 weak peak (energy -4.2 dB below full spectrum peak)",
+    "\u0254: F2 960.9 Hz \u2014 weak peak (energy -12.4 dB below full spectrum peak)",
+    "o: F1 445.3 Hz \u2014 weak peak (energy -32.1 dB below full spectrum peak)",
+    "\u028a: F1 421.9 Hz \u2014 weak peak (energy -23.8 dB below full spectrum peak)",
+    "u: F1 351.6 Hz \u2014 weak peak (energy -9.0 dB below full spectrum peak)",
+    "\u0259: F1 445.3 Hz \u2014 weak peak (energy -30.9 dB below full spectrum peak)"
+  ],
+  "f4_sweep": [
+    {
+      "target_f4": 2900,
+      "measured_f4": 2906.2,
+      "error_pct": 0.2,
+      "is_peak": true,
+      "energy_db": 0.0
+    },
+    {
+      "target_f4": 3000,
+      "measured_f4": 3000.0,
+      "error_pct": 0.0,
+      "is_peak": true,
+      "energy_db": 0.0
+    },
+    {
+      "target_f4": 3100,
+      "measured_f4": 3093.8,
+      "error_pct": 0.2,
+      "is_peak": true,
+      "energy_db": 0.0
+    },
+    {
+      "target_f4": 3200,
+      "measured_f4": 3210.9,
+      "error_pct": 0.3,
+      "is_peak": true,
+      "energy_db": 0.0
+    },
+    {
+      "target_f4": 3300,
+      "measured_f4": 3304.7,
+      "error_pct": 0.1,
+      "is_peak": true,
+      "energy_db": 0.0
+    }
+  ]
+}

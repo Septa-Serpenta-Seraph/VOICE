@@ -7,8 +7,8 @@ Integrated 2026-11-09 from Zarza's phase1_synth_skeleton.py draft.
 What changed from Zarza's draft:
   - Cascade → parallel resonator bank (Phase 1 testing showed parallel
     recovers formants much better: F3 16-32% error → 0.5-4.6%)
-  - Added LF source option (unverified, per Zarza's caveat)
   - Simple pulse-train source is the verified baseline (--source simple)
+  - LF timing VERIFIED against Fant 1985 / Doval 2006 (lf_timing_verify.py)
   - All values genome-driven (no hardcoded numbers)
   - Effects stubs raise NotImplementedError (no silent partial effects)
   - Formant frame count warning (n < 10) is loud, not silent
@@ -16,7 +16,7 @@ What changed from Zarza's draft:
   - Front-F2 A/B pairs for Adora's ears
 
 Caveats (Zarza's, carried forward):
-  - LF timing is an approximation, not verified against Fant 1985
+  - LF timing VERIFIED against Fant 1985 (Doval 2006 re-parameterization)
   - Effects are stubs only (Phase 2 work)
   - Micro-dip depth is still unspecified (duration only, 5-15 ms)
 """
@@ -65,20 +65,57 @@ def load_genome(path):
 # ══════════════════════════════════════════════════════════════════════════
 
 def lf_timing_from_rd(rd, f0):
-    """Rd -> LF timing (Tp, Te, Ta). APPROXIMATION — see header."""
+    """Rd -> LF timing (Tp, Te, Ta). Verified against Fant 1985 / Doval 2006.
+
+    Doval 2006 re-parameterization:
+      Ra = (1 + 4.8*Rd) / 100
+      Rk = (22.4 + 11.8*Rd) / 100
+      Rg = Rk*(0.5 + 1.2*Rk) / (0.44*Rd - 4*Ra*(0.5 + 1.2*Rk))
+      Oq = (1 + Rk) / (2*Rg)          # open quotient = Te/T0
+      am = 1 / (1 + Rk)               # asymmetry = Tp/Te
+      Ta = Ra * T0                     # return phase time constant
+
+      Te = Oq * T0
+      Tp = am * Te
+    """
     t0 = 1.0 / f0
-    te = 0.60 * t0
-    tp = 0.45 * te
-    ta = 0.02 * t0 * (rd / 1.25)
+    ra = (1.0 + 4.8 * rd) / 100.0
+    rk = (22.4 + 11.8 * rd) / 100.0
+    rg = rk * (0.5 + 1.2 * rk) / (0.44 * rd - 4.0 * ra * (0.5 + 1.2 * rk))
+    oq = (1.0 + rk) / (2.0 * rg)
+    am = 1.0 / (1.0 + rk)
+    te = oq * t0
+    tp = am * te
+    ta = ra * t0
     return tp, te, ta
 
 
-def lf_pulse(tp, te, ta, t0, sr, n_cycles, rng, jitter_pct=0.7):
-    """LF glottal-flow-derivative pulse train (canonical piecewise form)."""
+def _lf_alpha(tp, te, ta, t0):
+    """Compute alpha for zero DC condition (verified)."""
+    from scipy.optimize import brentq
     omega = np.pi / tp
-    tan_term = np.tan(omega * te)
-    alpha = -omega / tan_term if abs(tan_term) > 1e-3 else 0.05 / te
     eps = 1.0 / ta
+
+    def integral_opening(alpha):
+        return (np.exp(alpha * te) * (alpha * np.sin(omega * te) - omega * np.cos(omega * te)) + omega) / (alpha**2 + omega**2)
+
+    t = np.linspace(te, t0, 1000)
+    ret = -(1.0 / (eps * ta)) * (np.exp(-eps * (t - te)) - np.exp(-eps * (t0 - te)))
+    ir = np.trapezoid(ret, t)
+
+    def f(alpha):
+        return integral_opening(alpha) + ir
+
+    try:
+        alpha = brentq(f, -10000, 10000, xtol=1e-10, maxiter=1000)
+    except ValueError:
+        alpha = -omega / np.tan(omega * te) if abs(np.tan(omega * te)) > 1e-6 else 0.0
+    return alpha, omega, eps
+
+
+def lf_pulse(tp, te, ta, t0, sr, n_cycles, rng, jitter_pct=0.7, drift_hz=0.5):
+    """LF glottal-flow-derivative pulse train (verified piecewise form)."""
+    alpha, omega, eps = _lf_alpha(tp, te, ta, t0)
     e0 = 1.0
 
     total = int(round(n_cycles * t0 * sr))
@@ -91,15 +128,21 @@ def lf_pulse(tp, te, ta, t0, sr, n_cycles, rng, jitter_pct=0.7):
         n = min(period, total - pos)
         t = np.arange(n) / sr
         te_c = te * (1.0 + jit)
+
+        # Value at Te from opening phase
+        val_te_open = e0 * np.exp(alpha * te_c) * np.sin(omega * te_c)
+        # Return phase amplitude for continuity
+        denom = 1.0 - np.exp(-eps * (t0 - te_c))
+        A = -val_te_open / denom if abs(denom) > 1e-10 else 0.0
+
         cyc = np.where(
             t < te_c,
             e0 * np.exp(alpha * t) * np.sin(omega * t),
-            -(e0 / (eps * ta)) * (np.exp(-eps * (t - te_c))
-                                   - np.exp(-eps * (t0 - te_c))),
+            -A * (np.exp(-eps * (t - te_c)) - np.exp(-eps * (t0 - te_c))),
         )
         out[pos:pos + n] += cyc
         pos += n
-    out *= (1.0 + 0.02 * np.sin(2 * np.pi * 0.7 * np.arange(total) / sr))
+    out *= (1.0 + 0.02 * np.sin(2 * np.pi * drift_hz * np.arange(total) / sr))
     return out
 
 
@@ -217,7 +260,7 @@ def main():
     ap.add_argument("--genome", default="genome/voice_genome.yaml")
     ap.add_argument("--outdir", default="renders/phase1")
     ap.add_argument("--source", choices=["lf", "simple"], default="simple",
-                    help="simple = verified Phase 0 source; lf = new LF (timing unverified)")
+                    help="simple = verified Phase 0 source; lf = LF (timing verified)")
     ap.add_argument("--duration", type=float, default=1.5)
     ap.add_argument("--seed", type=int, default=7)
     args = ap.parse_args()

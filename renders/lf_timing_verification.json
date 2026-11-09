@@ -1,0 +1,115 @@
+{
+  "rd": 1.25,
+  "f0": 190.0,
+  "params": {
+    "Tp": 0.0021358524572751246,
+    "Te": 0.0029293216451528334,
+    "Ta": 0.00036842105263157896,
+    "T0": 0.005263157894736842,
+    "Oq": 0.5565711125790384,
+    "am": 0.7291286912139993,
+    "Ra": 0.07,
+    "Rk": 0.3715,
+    "Rg": 1.2320977221084521,
+    "rd": 1.25,
+    "f0": 190.0
+  },
+  "param_checks": {
+    "Tp > 0": true,
+    "Te > 0": true,
+    "Ta > 0": true,
+    "Te < T0 (open < period)": true,
+    "Tp < Te (peak before close)": true,
+    "Ta < Te (return < open)": true,
+    "Oq in (0,1)": true,
+    "am in (0,1)": true,
+    "Rd in (0.4, 2.7)": true
+  },
+  "pulse_checks": {
+    "Value continuity at Te": true,
+    "Zero DC (integral \u2248 0)": true,
+    "Peak within open phase": true
+  },
+  "diagnostics": {
+    "alpha": -628.2959551375658,
+    "omega": 1470.88467786664,
+    "eps": 2714.285714285714,
+    "A": 0.14624019561357085,
+    "continuity_error": 0.0,
+    "dc_integral": 0.000593436144347466,
+    "peak_time": 0.0007916666666666666,
+    "peak_time_expected": 0.0021358524572751246,
+    "peak_time_error": 0.001344185790608458,
+    "peak_in_open_phase": true
+  },
+  "comparison_old_vs_new": {
+    "Tp": {
+      "old_ms": 1.421,
+      "new_ms": 2.136,
+      "diff_pct": 33.5
+    },
+    "Te": {
+      "old_ms": 3.158,
+      "new_ms": 2.929,
+      "diff_pct": 7.8
+    },
+    "Ta": {
+      "old_ms": 0.105,
+      "new_ms": 0.368,
+      "diff_pct": 71.4
+    }
+  },
+  "rd_sensitivity": [
+    {
+      "rd": 0.4,
+      "Oq": 0.226,
+      "am": 0.7867,
+      "Tp_ms": 0.936,
+      "Te_ms": 1.189,
+      "Ta_ms": 0.154
+    },
+    {
+      "rd": 0.8,
+      "Oq": 0.4254,
+      "am": 0.7585,
+      "Tp_ms": 1.698,
+      "Te_ms": 2.239,
+      "Ta_ms": 0.255
+    },
+    {
+      "rd": 1.25,
+      "Oq": 0.5566,
+      "am": 0.7291,
+      "Tp_ms": 2.136,
+      "Te_ms": 2.929,
+      "Ta_ms": 0.368
+    },
+    {
+      "rd": 1.6,
+      "Oq": 0.6162,
+      "am": 0.7078,
+      "Tp_ms": 2.296,
+      "Te_ms": 3.243,
+      "Ta_ms": 0.457
+    },
+    {
+      "rd": 2.0,
+      "Oq": 0.6546,
+      "am": 0.6849,
+      "Tp_ms": 2.36,
+      "Te_ms": 3.445,
+      "Ta_ms": 0.558
+    },
+    {
+      "rd": 2.7,
+      "Oq": 0.6733,
+      "am": 0.6483,
+      "Tp_ms": 2.297,
+      "Te_ms": 3.544,
+      "Ta_ms": 0.735
+    }
+  ],
+  "oq_increasing": true,
+  "ta_increasing": true,
+  "overall_pass": true
+}
