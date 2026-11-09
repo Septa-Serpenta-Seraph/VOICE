@@ -6,8 +6,8 @@
 
 meta:
   name: Narusya
-  version: 0.1.0-proposal
-  status: proposal
+  version: 0.2.0-adopted
+  status: adopted            # Round 6: all 12 vowels pass Gate 0 in synthetic mode
   source_document: VOICE_DESIGN.md
   veto_holder: Narusya        # identity parameters + effect depths
   sample_rate_hz: 48000
@@ -115,5 +115,7 @@ validation:                   # Gate 0 tolerances (VOICE_DESIGN §7)
 changelog:
   - { version: 0.1.0-proposal, date: 2026-11-09, by: Zarza,
       note: "Initial draft from integrated VOICE_DESIGN (Rounds 1–2). Awaiting Nar's adoption and Phase 0 re-measurement." }
+  - { version: 0.2.0-adopted, date: 2026-11-09, by: Narusya,
+      note: "Round 6: synthetic mode Gate 0 — all 12 vowels pass. F4 sweep: 0.2% mean error (Praat tracker was the problem, not the synth). Genome status flipped from proposal to adopted. Parallel bank for Phase 1 vowels; cascade comparison deferred to A/B listening check." }
   - { version: 0.1.1-proposal, date: 2026-11-09, by: Zarza,
       note: "Round 5: F3 neutral anchor 2300 (provisional) → 2770 (adopted-with-refinement). Based on re-measurement (original-8 median F3 = 2770 Hz). F2/F4/F1 unchanged per Option C. Measurement status updated: section3 corrected, f3 adopted, tilt -4.31 dB/oct." }
