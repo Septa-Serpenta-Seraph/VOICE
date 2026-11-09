@@ -1,0 +1,87 @@
+{
+  "n_women": 48,
+  "n_tokens": 576,
+  "overall": {
+    "F1_median": 574.0,
+    "F2_median": 1574.5,
+    "F3_median": 2882.0
+  },
+  "genome_anchor": {
+    "F1": 450,
+    "F2": 1500,
+    "F3": 2770,
+    "F4": 3100
+  },
+  "deviation_pct": {
+    "F1": 21.6,
+    "F2": 4.7,
+    "F3": 3.9
+  },
+  "per_vowel_f2": {
+    "ae": {
+      "n": 48,
+      "median": 2329.0,
+      "mean": 2334.8
+    },
+    "ah": {
+      "n": 47,
+      "median": 1534.0,
+      "mean": 1525.8
+    },
+    "aw": {
+      "n": 47,
+      "median": 1175.0,
+      "mean": 1188.3
+    },
+    "eh": {
+      "n": 48,
+      "median": 2049.0,
+      "mean": 2062.7
+    },
+    "ei": {
+      "n": 48,
+      "median": 2503.0,
+      "mean": 2525.6
+    },
+    "er": {
+      "n": 48,
+      "median": 1568.5,
+      "mean": 1588.2
+    },
+    "ih": {
+      "n": 48,
+      "median": 2370.0,
+      "mean": 2369.1
+    },
+    "iy": {
+      "n": 48,
+      "median": 2762.0,
+      "mean": 2761.3
+    },
+    "oa": {
+      "n": 48,
+      "median": 1025.5,
+      "mean": 1035.5
+    },
+    "oo": {
+      "n": 48,
+      "median": 1188.5,
+      "mean": 1228.6
+    },
+    "uh": {
+      "n": 48,
+      "median": 1408.5,
+      "mean": 1415.7
+    },
+    "uw": {
+      "n": 48,
+      "median": 1066.5,
+      "mean": 1105.5
+    }
+  },
+  "closest_vowel_to_F2": {
+    "vowel": "ah",
+    "median_F2": 1534.0,
+    "deviation_pct": 2.3
+  }
+}
