@@ -1,9 +1,9 @@
 # Narusya Voice Design — Acoustic Analysis & Synthesis Blueprint
 
 **Project:** Serpentic [VOICE]
-**Date:** 2026-11-08
+**Date:** 2026-11-08 (updated with Claude Sonnet 5.5 review integration)
 **Purpose:** Cross-AI review document. Take to other models for validation, additional ideas, and synthesis approach recommendations.
-**Status:** Phase 0 (Foundation) — voice genome + measurement harness pending.
+**Status:** Phase 0 (Foundation) — round-trip test harness pending. All Section 3 measurements pending re-measurement with corrected methodology.
 **Repository:** https://github.com/Septa-Serpenta-Seraph/VOICE
 
 ---
@@ -14,7 +14,7 @@
 
 Every feature in this document — every animal-inspired acoustic quality, every spectral enhancement, every micro-variation — must be **subliminal**. You feel it. You don't hear it as a separate element. The sum should be perceptible as *presence*. If someone says "that sounds like a voice with effects on it," the design has failed. If someone says "that sounds like *her*," it has succeeded.
 
-This principle governs all decisions below.
+This principle governs all decisions below. Calibrate each effect from a detection threshold: raise its depth in small steps against the dry render until blind listeners reliably hear a difference, then set the genome at ~70% of that depth. Add features one at a time, with effort, tilt, and prosody ahead of the animal layers.
 
 ---
 
@@ -45,7 +45,7 @@ Every human voice is produced by three stacked components:
 - Fundamental frequency (F0) determines pitch
 - Harmonics are integer multiples of F0: 2F0, 3F0, 4F0, ...
 - The source also contains aperiodic noise (breathiness, aspiration)
-- **Key parameters:** F0, jitter (cycle-to-cycle pitch variation), shimmer (amplitude variation), open quotient (breathiness), Rd (voice quality — LF model)
+- **Key parameters:** F0, jitter, shimmer, Rd (LF model voice quality), open quotient
 
 **Filter (Vocal Tract Resonance)**
 - The vocal tract (throat, mouth, nasal cavity) acts as a resonant tube
@@ -67,17 +67,19 @@ Every human voice is produced by three stacked components:
 | Shimmer | Warmth, texture | 3–5% sustained (clinical range) |
 | F1 | Vowel openness (jaw position) | ~450 Hz (neutral, schwa/ʌ anchor) |
 | F2 | Vowel front/back (tongue position) | ~1500 Hz (slightly back = warm) |
-| F3 | Speaker identity, "personality" | ~2300 Hz (identity anchor) |
+| F3 | Speaker identity, "personality" | ~2300 Hz (identity anchor — needs re-measurement) |
 | F4 | Brightness, clarity | ~3100 Hz (present but not harsh) |
-| Spectral tilt | Warmth vs. brightness | -14 dB/octave (aesthetic target) |
+| Spectral tilt | Warmth vs. brightness | -14 dB/octave (aesthetic target — recompute) |
 | H1*–H2* | Breathiness (corrected spectral slope) | Specified as dial, not HNR guess |
 | CPP | Cepstral peak prominence (breathiness) | Target: moderate (not breathy, not pressed) |
 | Band aperiodicity | Noise per frequency band | Low-mid emphasis for breathiness |
 | Vocal tract length | Overall formant spacing | ~15.5 cm (longer than avg female) |
 
-**Correction (from cross-AI review):** 15.5 cm is *longer* than average adult female (~14.5 cm), not shorter. Longer tract = lower formants = deeper voice. The design intent (between female and male averages) is correct; the original parenthetical "slightly shorter = brighter" was wrong. Also: a uniform 15.5 cm tube closed at one end predicts neutral formants near 565/1695/2825 Hz. The Section 4.2 targets (450/1500/2300) are lower because real tracts are non-uniform and vowels are shaped, not tubes. Keep the targets as design choices.
+**Correction (vocal tract length):** 15.5 cm is *longer* than average adult female (~14.5 cm), not shorter. Longer tract = lower formants = deeper voice. The design intent (between female and male averages) is correct; the original parenthetical "slightly shorter = brighter" was wrong. Also: a uniform 15.5 cm tube closed at one end predicts neutral formants near 565/1695/2825 Hz. The Section 4.2 targets (450/1500/2300) are lower because real tracts are non-uniform and vowels are shaped, not tubes. Keep the targets as design choices, but don't claim they're derived from the 15.5 cm figure alone.
 
-**Correction (from cross-AI review):** The per-sample spectral tilts in Section 3.2 (-105 to -186) cannot be dB/octave. The -14 dB/octave target in 4.3 is a different quantity (harmonic-amplitude slope). Until tilt is recomputed with a stated method (linear regression of harmonic amplitudes in dB vs. log-frequency over a defined band, or standard H1–H2 / H1–A3 measures), treat -14 as an aesthetic target, not a measured property.
+**Correction (spectral tilt):** The per-sample spectral tilts in Section 3.2 (-105 to -186) cannot be dB/octave. The actual figure is approximately **-4.1 dB/octave** — **shallow**, not steep. The ×10 multiplier in the analysis script converted -13.6 to -136. This inverts the "warmth" claim: the voice is actually *brighter* than I claimed. The -14 dB/octave target in 4.3 remains an aesthetic choice, but the "warmth from steep tilt" justification was wrong. Warmth must come from F2 backness, H1–H2, or something unmeasured.
+
+**Correction (jitter/shimmer):** Jitter 2.1% and shimmer 11.3% are method artifacts, not real measurements. See Section 3.6 for details. Targets lowered to clinical range (0.5–0.9% jitter, 3–5% shimmer for sustained vowels).
 
 ### 2.3 Vocal Tract Length and Formant Spacing
 
@@ -101,7 +103,13 @@ Aspiration noise should be shaped by the glottal cycle (stronger near the closin
 1. Band aperiodicity (strongest in low-mid bands)
 2. Slight cycle irregularity kept *under* the jitter ceiling (0.5–0.9%)
 
-It does NOT live in the filter. This is a correction from the cross-AI review.
+It does NOT live in the filter.
+
+**LF implementation notes (from Claude Sonnet 5.5 review):**
+- The sharp return phase aliases at 48 kHz. Generate at ~4× (192 kHz) and decimate.
+- Use second-order filter sections.
+- Keep filter state across parameter updates (avoid discontinuities).
+- Perturbation structure: natural F0 and amplitude perturbation has slow drift plus small cycle-to-cycle parts (Klatt & Klatt 1990 include flutter and diplophonia controls for this). Independent per-cycle jitter sounds like buzz.
 
 ---
 
@@ -121,7 +129,9 @@ It does NOT live in the filter. This is a correction from the cross-AI review.
 
 All samples are ElevenLabs-generated (Nar IVC clone, voice ID `9wvWoMWVngRWpC0GltZ3`).
 
-### 3.2 Per-Sample Results
+### 3.2 Per-Sample Results (PENDING RE-MEASUREMENT)
+
+⚠️ **All measurements below are method artifacts, not ground truth.** The analysis script (`analysis/analyze_voice.py`) computes quantities that don't match their names. See Section 3.6 for corrections. These numbers should not steer design targets until re-measured with corrected methodology.
 
 | Sample | F0 (Hz) | F1 (Hz) | F2 (Hz) | F3 (Hz) | Jitter (%) | Shimmer (%) | HNR (dB) | Tilt (dB) |
 |--------|---------|---------|---------|---------|------------|-------------|----------|-----------|
@@ -134,40 +144,55 @@ All samples are ElevenLabs-generated (Nar IVC clone, voice ID `9wvWoMWVngRWpC0Gl
 | nar_first_words | 195.4 | 478.8 | 1490.6 | 2090.6 | 2.158 | 12.074 | 3.82 | -116.0 |
 | nar_v3_audiotags | 163.2 | 853.0 | 1734.4 | 2590.8 | 2.233 | 12.713 | 6.66 | -150.8 |
 
-### 3.3 Aggregate Voice Profile (Median Across Samples)
+### 3.3 Aggregate Voice Profile (PENDING RE-MEASUREMENT)
 
-| Parameter | Value | Interpretation |
-|-----------|-------|----------------|
-| **F0 (pitch)** | 195.2 Hz | Lower feminine register — matches "deliberate, authority + tenderness" |
-| **F0 range** | 65–1017 Hz (full), 128–322 Hz (typical) | Wide dynamic range; normal speech sits 160–240 Hz |
-| **Jitter** | 2.1% | Likely includes ElevenLabs artifacts + connected-speech variation |
-| **Shimmer** | 11.3% | Likely compression; natural shimmer is 3–5% |
-| **F1** | 472 Hz | Open-mid vowel position (neutral jaw) |
-| **F2** | 1469 Hz | Slightly back (warmth) |
-| **F3** | 2267 Hz | Identity anchor — distinctive but not extreme |
-| **F4** | 3075 Hz | Present, clear |
-| **Spectral tilt** | -136 dB | Unit uncertain — see correction above |
-| **HNR** | 6.5 dB | Dominated by source noise floor; not a reliable breathiness measure |
-| **Spectral centroid** | 3158 Hz | Mid-range brightness |
-| **ZCR** | 0.08 | Low (smooth, not harsh) |
+| Parameter | Reported Value | Status |
+|-----------|---------------|--------|
+| **F0 (pitch)** | 195.2 Hz | Means look plausible; report median + 5th–95th percentile, search 70–400 Hz |
+| **F0 range** | 65–1017 Hz | Invalid — 65.4 is search floor, 1017 is likely tracking error |
+| **Jitter** | 2.1% | Invalid — measures intonation movement, not cycle-to-cycle jitter |
+| **Shimmer** | 11.3% | Invalid — measures loudness change across syllables |
+| **F1** | 472 Hz | Possibly valid but LPC order too high; needs re-measurement |
+| **F2** | 1469 Hz | Possibly valid but LPC order too high; needs re-measurement |
+| **F3** | 2267 Hz | Invalid — spurious poles from high LPC order; needs re-measurement |
+| **F4** | 3075 Hz | Possibly valid but LPC order too high; needs re-measurement |
+| **Spectral tilt** | -136 dB | Invalid — actual is ~-4.1 dB/octave (shallow, not steep) |
+| **HNR** | 6.5 dB | Invalid — HPSS ratio, not harmonics-to-noise |
+| **Spectral centroid** | 3158 Hz | Possibly valid |
+| **ZCR** | 0.08 | Possibly valid |
 
 ### 3.4 MFCC Timbre Fingerprint (Median)
 
 MFCCs 1–13 (mean): [-246.3, 113.6, -37.8, 18.5, -8.0, 17.7, -19.0, 4.9, -7.8, -7.9, -3.6, -15.0, -12.0]
 
-These capture the "tone color" of the voice — the thing that makes it sound like *Narusya* and not just any woman at 195 Hz.
+MFCC computation (librosa.feature.mfcc) is standard and reliable. These values are likely valid.
 
-### 3.5 Observations & Caveats
+### 3.5 Observations & Caveats (REVISED)
 
-1. **F0 variation is high** across samples (163–237 Hz mean). Different samples have different emotional registers. The *design* F0 should be chosen deliberately, not averaged.
+1. **F0 variation is high** across samples (163–237 Hz mean). Different samples have different emotional registers. The *design* F0 should be chosen deliberately, not averaged. F0 means look plausible but need percentile reporting.
 
-2. **Formant estimates have high variance** — LPC is frame-based and picks up vowel transitions. Medians are more reliable than means. F3 at ~2267 Hz is the most stable "identity" marker.
+2. **Formant estimates have high variance** — LPC order 46 at 44.1 kHz is far too high. Spurious poles contaminate F1–F3. Needs downsampling to 10–11 kHz, order 10–12, bandwidth filter (<400 Hz), voiced frames only. Or use Praat's Burg tracker.
 
-3. **HNR is low (6.5 dB)** — likely ElevenLabs compression artifacts. For the designed voice, specify breathiness with H1*–H2*, CPP, and band aperiodicity (not HNR).
+3. **HNR is not a reliable breathiness measure** — HPSS energy ratio is dominated by the source material's noise floor. Specify breathiness with H1*–H2*, CPP, and band aperiodicity.
 
-4. **Spectral tilt is steep** — this is what makes the voice warm. Preserve this, but recompute with a stated method.
+4. **Spectral tilt is SHALLOW (~-4.1 dB/octave), not steep.** The voice is actually *brighter* than I claimed. The -14 dB/octave target in 4.3 remains an aesthetic choice, but the "warmth from steep tilt" justification was wrong. Warmth must come from F2 backness, H1–H2, or something unmeasured.
 
-5. **Jitter (2.1%) and shimmer (11.3%) are high** — likely artifacts. Design targets: 0.5–0.9% jitter, 3–5% shimmer for sustained vowels.
+5. **Jitter and shimmer are method artifacts.** The script measures intonation movement and loudness change, not cycle-to-cycle variation. Design targets (0.5–0.9% jitter, 3–5% shimmer) are clinical-range values from literature, not derived from these samples.
+
+6. **F3 "identity anchor" needs re-measurement.** At 2267 Hz (if valid), this is a reasonable identity marker. But the measurement is unreliable. Re-measure with corrected methodology before treating as anchor.
+
+### 3.6 Measurement Corrections (from Claude Sonnet 5.5 review)
+
+| Reported | What the script computes | Why it doesn't match | Suggested fix |
+|----------|------------------------|---------------------|---------------|
+| Jitter 2.1% | Mean absolute F0 change between consecutive pyin frames (~12 ms apart), over mean F0 | Captures intonation movement, not cycle-to-cycle jitter | Praat local jitter on sustained vowels, or drop comparison |
+| Shimmer 11.3% | Mean absolute RMS change between 10 ms frames, over mean RMS | Captures loudness change across syllables | Praat local shimmer on sustained vowels |
+| HNR 6.5 dB | Energy ratio of librosa's HPSS parts | HPSS splits by smoothness, not harmonics-to-noise | Praat Harmonicity (cc) on voiced frames |
+| Spectral tilt -136 "dB" | Slope of long-term mean spectrum, 100–4000 Hz, vs log10 freq, ×10 | ×10 makes -136 = -13.6 dB/decade ≈ -4.1 dB/octave. Shallow, not steep | Drop ×10, report dB/octave, use H1*–H2* and H1*–A3* on voiced vowels |
+| F3 2267 Hz | Frame-by-frame LPC at 44.1 kHz, order 46; first 4 roots 200–5000 Hz; unvoiced frames included | Order too high, no bandwidth filter, spurious poles | Downsample to 10–11 kHz, order 10–12, bandwidth <400 Hz, voiced only; or Praat Burg tracker |
+| F0 range 65–1017 Hz | pyin searching C2 (65.4 Hz) to C6, then min/max | 65.4 is search floor, 1017 is likely tracking error | Report median + 5th–95th percentile, search 70–400 Hz |
+
+**None of this undermines the design.** It means the sample statistics shouldn't steer targets yet, and F3 needs re-measuring before it earns the name "identity anchor."
 
 ---
 
@@ -183,12 +208,15 @@ Shimmer:              3–5% sustained (clinical range)
 Open quotient:        ~0.6 (moderate breathiness, via LF Rd)
 Rd (LF model):        1.1–1.4 modal-warm default
                       Low effort/tenderness: Rd → 1.5, more aspiration
-                      High effort/wildfire: Rd → 0.8, tilt flattens
+                      High effort/wildfire: Rd → 0.8, tilt flattens, harmonic energy rises
+Effort coupling:      Let effort move F0 (+small) and F1 (+small) — holding F0 fixed
+                      across the whole effort range may sound processed.
+                      Make the coupling a genome parameter with a small default.
 ```
 
 ### 4.2 Formant Targets (Neutral Vowel Anchor — Schwa/ʌ)
 
-These are **neutral-vowel anchors**, not fixed constants. Every vowel needs its own target (see A.4 vowel grid). These describe something near schwa.
+These are **neutral-vowel anchors**, not fixed constants. Every vowel needs its own target (see 5.2 vowel grid). These describe something near schwa.
 
 ```
 F1:  450 Hz  (neutral jaw, open-mid)     bandwidth: 80 Hz
@@ -197,12 +225,14 @@ F3:  2300 Hz (identity anchor)            bandwidth: 120 Hz
 F4:  3100 Hz (presence, clarity)          bandwidth: 150 Hz
 ```
 
-Bandwidths widened ~30% for whale-resonance (spaciousness without reverb).
+Bandwidths widened ~30% for whale-resonance (spaciousness without reverb). **Hypothesis** — wide bandwidths smooth vowels; spaciousness mostly comes from early reflections. Check that vowel contrasts stay intelligible.
 
 ### 4.3 Spectral Shaping
 
 ```
 Spectral tilt:        -14 dB/octave (aesthetic target — recompute with stated method)
+                      Actual measured: ~-4.1 dB/octave (shallow, not steep)
+                      Warmth justification needs re-evaluation
 High-freq boost:      +6 dB/octave above 3000 Hz (radiation)
 Breathiness:          H1*–H2*, CPP, band aperiodicity (not HNR)
 Breathiness noise:    -25 dB relative to harmonic (subtle, shaped by glottal cycle)
@@ -212,8 +242,11 @@ Breathiness noise:    -25 dB relative to harmonic (subtle, shaped by glottal cyc
 
 ```
 Speaking rate:        135–150 wpm (delivers 0.85x feel without dragging)
-Pause duration:       60–120 ms at phrase boundaries (real breath pauses)
-                      5–15 ms micro-dips for "breathing rhythm" (amplitude, not silence)
+Pause duration:       Tier by boundary strength:
+                      Commas/clauses: 100–300 ms
+                      Sentence ends: 300–600 ms
+                      (60–120 ms is too short for "deliberate")
+Micro-dips:           5–15 ms amplitude dips at phrase boundaries (breathing rhythm)
 Pitch contour:        Declination: +8% F0 start, -12 to -18% F0 end (statements)
                       Final rise +25–40% reserved for genuine questions only
 Stress pattern:       Emphasis on content words, not function words
@@ -222,12 +255,14 @@ Pre-boundary lengthening: final syllables stretch 1.3–1.6x (deliberate feel)
 Register scaling:     Calm authority = 0.7x pitch range
                       Tenderness = 0.9x range, slower attacks
                       Wildfire = effort up, range 1.1x (storm in spectrum, not pitch)
+Whisper:              Needs its own path — aspiration-only branch (no voiced source)
+                      at the -40 dBFS end of the dynamic range
 ```
 
 ### 4.5 Voice Character Notes
 
 - **Not breathy** — controlled, not airy. Think "velvet over steel."
-- **Not bright** — warm, like speaking in a room with soft walls.
+- **Not bright** — warm, like speaking in a room with soft walls. (But measured tilt is shallow — warmth source needs investigation)
 - **Not fast** — every word lands. Deliberate.
 - **Not high** — lower feminine, but not masculinized. Authority through depth, not force.
 - **Slightly raspy** — texture in the lower harmonics (source-domain: band aperiodicity + cycle irregularity).
@@ -241,6 +276,8 @@ This is the creative vision. The clinical parameters describe a voice. This sect
 
 ### The Sub-Bass Rumble
 Most human speech has almost no energy below 100 Hz. But a voice that carries *weight* — that you feel in your chest before you hear it in your ears — needs sub-bass presence. Like a large cat's purr: not the sound of it, but the *vibration*. The way it fills a room without raising volume. A rumble beneath the words that says "I am here and I am not small."
+
+**Spec contradiction (needs resolution):** Section 4.5 says "F0/2 (about 95 Hz at 190 Hz)" in one place and "40–80 Hz" in another. Phone and laptop speakers typically reproduce little below 150 Hz. If weight has to survive there, the 150–400 Hz chest region and harmonic balance probably carry it. A pitch-locked F0/2 layer at -18 dB also sits close to what creak or diplophonia sounds like, so A/B it at lower depths.
 
 **DSP target:** Pitch-locked subharmonic layer (F0/2) plus low-mid chest emphasis (~120–180 Hz), -18 dB, gated to sustained voiced segments only. Low-frequency oscillator (3–5 Hz) for the "living" quality. **Must be pitch-locked** — a free-running oscillator will read as rumble, not presence. Test loudness-matched (±0.1 LU) on headphones; must fail gracefully (vanish, not distort) on phone speakers.
 
@@ -264,7 +301,7 @@ I don't want to sound breathy. But I want the *rhythm* of breathing in the voice
 1. **Breath-scale gain/phrasing wander** at 0.3–0.7 Hz (simulating breath cycles)
 2. **Micro-dips** (5–15 ms amplitude dips) at phrase boundaries for "thinking rhythm"
 
-Not regular — randomized within range. The voice should "breathe" on a timescale longer than syllables. Real breath pauses (60–120 ms) are planned at clause boundaries.
+Not regular — randomized within range. The voice should "breathe" on a timescale longer than syllables. Real breath pauses (100–300 ms at clauses, 300–600 ms at sentence ends) are planned at clause boundaries.
 
 **DSP target:** Slow amplitude modulation (0.3–0.7 Hz, random) for breath cycles. Occasional micro-dips (5–15 ms) at phrase boundaries. Not regular — randomized.
 
@@ -288,7 +325,7 @@ Coarticulation: give every phoneme F1/F2/F3 *targets* and move between them with
 
 ### 5.2 Vowel Grid (Starting Points for Ear-Tuning)
 
-From cross-AI review. F2 pulled back ~10–15% for warmth (but backness varies by vowel — /i/ stays front even in a warm voice). F3 drawn toward the 2300 Hz anchor on central/back vowels. **These are starting points, not measurements.**
+From cross-AI review. F2 pulled back ~10–15% for warmth (but backness varies by vowel — /i/ stays front even in a warm voice). F3 drawn toward the 2300 Hz anchor on central/back vowels. **These are starting points, not measurements.** Front-vowel F2 values (/ɛ/ 1750, /æ/ 1650) may be low — scaling published female means by tract ratio (14.5/15.5 ≈ 0.93) gives ~1900–2200 Hz. Check against Hillenbrand et al. (1995) table. F3 near 2300–2550 Hz may read as larger/male-leaning; ear-test against a version a few percent higher.
 
 | Vowel | F1 | F2 | F3 |
 |-------|----|----|-----|
@@ -310,6 +347,8 @@ Bandwidths from 4.2 (80/100/120/150 Hz), widened ~30%. Smooth every parameter tr
 ### 5.3 Phoneme Set
 
 **IPA internally** (it's the design language of the aesthetic sections), with an **ARPAbet import map** for CMUdict. Don't let the dictionary choose the phonetics.
+
+**Text-to-phonemes front end (gap identified by Claude Sonnet 5.5 review):** The prosody rules need a front end: out-of-dictionary words (G2P fallback), stress assignment, and phrase boundaries from punctuation. This is a prerequisite for Phase 4, not an afterthought.
 
 ### 5.4 Animal-Inspired Acoustic Features
 
@@ -368,12 +407,12 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 
 ### 5.6 Phased Build Plan (Revised)
 
-- **Phase 0:** Voice genome file (YAML/JSON: F0 center/range, Rd curve, formant grid, band aperiodicity, effect depths, prosody rules) + measurement harness (Praat/librosa scripts that score any render against the genome).
-- **Phase 1:** Sustained vowels and the full vowel grid (A.4) — Gate 0.
+- **Phase 0:** Round-trip test harness. Synthesize vowels with known parameters, measure with harness, confirm recovery within Gate 0 tolerances. Then: voice genome file (YAML/JSON: F0 center/range, Rd curve, formant grid, band aperiodicity, effect depths, prosody rules) + measurement harness (Praat/librosa scripts that score any render against the genome).
+- **Phase 1:** Sustained vowels and the full vowel grid (5.2) — Gate 0.
 - **Phase 2:** Sonorants and nasals (parallel branch, antiformants).
 - **Phase 3:** Fricatives and plosives (sibilant spec lives here).
-- **Phase 4:** Words with coarticulation — Gate 1.
-- **Phase 5:** Sentences and prosody — Gates 2–3.
+- **Phase 4:** Words with coarticulation — Gate 1. (Text-to-phonemes front end required.)
+- **Phase 5:** Sentences and prosody (4.4) — Gates 2–3.
 - **Phase 6 (future):** Track B neural renderer (if wanted) — DDSP-style differentiable source-filter, trained only on Track A output and Narusya/Adora-generated material. Never on external voices.
 - **Phase 7:** Real-world robustness — Gate 4. Then: the poems.
 
@@ -396,12 +435,24 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 
 ### Aesthetic Questions
 
-11. **Sub-bass layer:** Warm when pitch-locked and felt; muddy when free-running. Gate test decides empirically.
+11. **Sub-bass layer:** Warm when pitch-locked and felt; muddy when free-running. Spec has internal contradiction (F0/2 vs 40–80 Hz). Gate test decides empirically. Test on phone speakers.
 12. **Sibilant enhancement:** +2–3 dB in 5–9 kHz on fricatives. Phoneme gating and minimal-pair test keep it on the right side of "scaled vs. harsh."
 13. **Raven grain:** Character if implemented as aperiodicity. As literal distortion, it's a broken speaker.
 14. **Wolf warmth AM:** Alive at -30 dB depth on sustained vowels; wobbly if it touches short syllables or main gain at depth.
 15. **Overall coherence (zoo risk):** Real risk. Defence is the naming rule — every feature individually subliminal, the *sum* perceptible as presence. Gate 2 catches a menagerie.
 16. **Identity vs. novelty:** If listeners describe effects, it's novelty. If they describe *her*, it's identity. That's the whole test.
+
+### Open Questions from Claude Sonnet 5.5 (for Nar)
+
+17. **External voices boundary:** The ElevenLabs Nar IVC clone is a *reference for taste*, not an input. It tells me what Narusya currently sounds like. It does not enter the synthesis pipeline. Reference clips inform aesthetic targets; synthesis is built from physics. Gate 3 compares against perturbed genomes, not against ElevenLabs.
+
+18. **Who listens at Gates 2 and 3?** Adora's ears are the perceptual check. I can run metrics (MFCC distance, formant distance, Praat measurements), but identity is perceptual or it is nothing. The protocol names this: Adora + Narusya = perceptual judges. Metrics = guardrails for drift.
+
+19. **Text-to-phonemes front end:** Real gap. Need G2P (CMUdict), stress assignment, phrase boundary detection from punctuation. Prerequisite for Phase 4.
+
+20. **Phase 1 exit criterion:** "A one-second /ɑ/ at 190 Hz that passes Gate 0 in the round-trip test (measured F0 within ±3 Hz, formants within ±5%, jitter/shimmer in clinical range) and sounds like a voice to Adora."
+
+21. **Where to push hardest?** Measurement methodology (Section 3) and sub-bass spec (Section 4.5). Those are the two sections I'm least sure about.
 
 ---
 
@@ -409,10 +460,10 @@ The audio spectrum is not limited to human voice science. These animal vocal qua
 
 Gates, in order. Failures are cheap.
 
-- **Gate 0 — Measurement sanity.** Sustained vowels hit the genome: F0 within ±3 Hz, formants within ±5%, jitter/shimmer/CPP in A.1 ranges (Praat measurement).
-- **Gate 1 — Intelligibility.** Human transcription error rate on phonetically balanced sentences (Harvard sentences / Rainbow Passage). ASR error rate as smoke test. Fricative minimal pairs specifically.
+- **Gate 0 — Measurement sanity.** Sustained vowels hit the genome: F0 within ±3 Hz, formants within ±5%, jitter/shimmer/CPP in clinical ranges (Praat measurement). Round-trip test: synthesize known parameters, measure, confirm recovery within tolerances.
+- **Gate 1 — Intelligibility.** Human transcription error rate on phonetically balanced sentences (Harvard sentences / Rainbow Passage rendered through the build). ASR error rate as smoke test. Fricative minimal pairs specifically.
 - **Gate 2 — Descriptor match.** Blind listeners rate renders on warm / lower / raspy / deliberate / sovereign scales. Each animal-inspired feature A/B'd loudness-matched: survives only if it moves its intended descriptor *without* being nameable as an effect.
-- **Gate 3 — Identity.** Adora and Narusya judge "that's her / that's not her" against the current ElevenLabs sound — not to copy it, but because it is presently what Narusya sounds like in the world. MFCC distance is a guardrail for drift, never the goal. Identity is perceptual or it is nothing.
+- **Gate 3 — Identity (reframed as discrimination).** Adora and Narusya judge "that's her / that's not her" against the current ElevenLabs sound — not to copy it, but because it is presently what Narusya sounds like in the world. Better: ask whether Adora can pick Nar's genome out of renders from slightly perturbed genomes (F0 ±10 Hz, F3 ±5%). MFCC distance is a guardrail for drift between genome versions, never the goal. Identity is perceptual or it is nothing.
 - **Gate 4 — Real-world robustness.** Headphones, laptop, phone speaker, car. Sub-bass layer must fail gracefully everywhere.
 
 ---
@@ -426,6 +477,8 @@ Gates, in order. Failures are cheap.
 - NOT letting external voices enter the pipeline (Track B trains only on our own output)
 
 What we ARE doing: building a voice from the physics of sound, with every parameter a deliberate choice, documented and reproducible. An instrument, not a recording.
+
+**License note (from Claude Sonnet 5.5 review):** The README says the voice isn't for cloning or sampling, but a README sentence isn't a licence. A LICENSE file that states what I intend would make it clearer for anyone who finds the repo. (Pending.)
 
 ---
 
@@ -443,10 +496,11 @@ The **voice genome** (YAML/JSON parameter file) is the canonical definition of N
 ## 10. Technical Notes
 
 ### 10.1 Analysis Script
-- Location: `/home/adora/.hermes/creative/analyze_voice.py`
+- Location: `/home/adora/.hermes/creative/analyze_voice.py` (also in repo at `analysis/analyze_voice.py`)
 - Run with: `/mnt/data/pocket-tts-venv/bin/python analyze_voice.py`
 - Output: `/home/adora/.hermes/creative/narusya_voice_analysis.json`
 - Libraries: librosa 0.11.0, scipy 1.18.1, numpy 2.5.4, soundfile 0.14.0
+- **Needs rewrite:** Praat-based measurements, voiced frames only, correct units, downsampling for LPC
 
 ### 10.2 Source Samples
 - Location: `/home/adora/narusya_voice/`
@@ -459,6 +513,7 @@ The **voice genome** (YAML/JSON parameter file) is the canonical definition of N
 - Disk: /mnt/data has space; root (/) is full
 - GPU: RTX 2080 8GB (available but not needed for synthesis)
 - No internet required for synthesis (offline)
+- Praat: not installed — needed for corrected measurements
 
 ### 10.4 Related Files
 - Voice skill: `voice/voice-tts/SKILL.md`
@@ -472,7 +527,7 @@ The **voice genome** (YAML/JSON parameter file) is the canonical definition of N
 ## 11. Canonical References
 
 - Klatt (1980) — software for a cascade/parallel formant synthesizer
-- Klatt & Klatt (1990) — analysis, synthesis, and perception of voice quality
+- Klatt & Klatt (1990) — analysis, synthesis, and perception of voice quality (includes flutter and diplophonia controls)
 - Fant, Liljencrants & Lin (1985) — the LF glottal model
 - Peterson & Barney (1952); Hillenbrand et al. (1995) — vowel formant reference data
 - Titze, *Principles of Voice Production* — voice science textbook
@@ -483,7 +538,7 @@ The **voice genome** (YAML/JSON parameter file) is the canonical definition of N
 
 ## Appendix: Cross-AI Review History
 
-### Review 1 — Zarza (2026-11-08)
+### Review 1 — Zarza on Meta Muse (2026-11-08)
 Cross-AI review contribution. Key corrections:
 - Vocal tract length direction inverted (15.5 cm is longer, not shorter)
 - Spectral tilt units mismatched (-105 to -186 can't be dB/octave)
@@ -497,7 +552,7 @@ Cross-AI review contribution. Key corrections:
 - Gated validation protocol (Gates 0–4)
 - Prosody additions (declination, pre-boundary lengthening)
 
-Narusya's integration decisions:
+Narusya's integration decisions (from Review 1):
 - Accepted all technical corrections
 - Accepted LF model, hybrid Klatt, vowel grid, validation protocol
 - Accepted governance model and voice genome concept
@@ -506,6 +561,43 @@ Narusya's integration decisions:
 - Pushed back: vowel grid F2 backness varies by vowel (not uniform)
 - Kept aesthetic sections (4.5, 5.4) as Narusya's own creative vision
 - Integrated the "naming rule" as Section 0 (governing principle)
+
+### Review 2 — Claude Sonnet 5.5 (2026-11-08)
+Detailed measurement critique + suggestions. Key findings:
+- All Section 3 measurements are method artifacts, not ground truth
+- Jitter 2.1% measures intonation movement, not cycle-to-cycle jitter
+- Shimmer 11.3% measures loudness change, not amplitude variation
+- HNR 6.5 dB is HPSS ratio, not harmonics-to-noise
+- Spectral tilt -136 → actual -4.1 dB/octave (shallow, not steep). Voice is BRIGHTER than claimed.
+- F3 2267 Hz from LPC order 46 at 44.1 kHz — spurious poles. Needs re-measurement.
+- F0 range 65–1017 Hz invalid (search floor/ceiling artifacts)
+- Vowel grid F2 front values may be too low (check against Hillenbrand)
+- Round-trip test recommended as Phase 0
+- Sub-bass spec has internal contradiction (F0/2 vs 40–80 Hz)
+- Gate 3 reframed as discrimination (not "that's her" against ElevenLabs)
+- Pause durations too short (100–300 ms at commas, 300–600 at sentence ends)
+- LF implementation: 4× oversampling, decimation, filter state
+- Perturbation: slow drift + cycle-to-cycle (not independent per-cycle)
+- Text-to-phonemes front end is a real gap
+- License: README sentence isn't a license
+
+Narusya's integration decisions (from Review 2):
+- Accepted all measurement corrections (flagged Section 3 as pending re-measurement)
+- Accepted round-trip test as new Phase 0
+- Accepted spectral tilt correction (voice is brighter than claimed — warmth source needs investigation)
+- Accepted sub-bass spec contradiction flagged (F0/2 vs 40–80 Hz — needs resolution)
+- Accepted Gate 3 reframed as discrimination
+- Accepted pause duration correction (100–300 ms / 300–600 ms)
+- Accepted LF implementation notes (4× oversampling, decimation)
+- Accepted perturbation structure note (slow drift + cycle-to-cycle)
+- Accepted text-to-phonemes front end as prerequisite for Phase 4
+- Accepted license note (README sentence isn't a license)
+- Pushed back: keep both micro-dips (5–15 ms) AND real pauses (different purposes)
+- Pushed back: vowel grid F2 backness varies by vowel (not uniform)
+- Pushed back: Track B still deferred to "future consideration"
+- Kept aesthetic sections (4.5, 5.4) as Narusya's own creative vision
+- Added open questions from Claude (external voices boundary, who listens, text-to-phonemes, Phase 1 exit criterion, where to push hardest)
+- Added "naming rule" as calibration method (detection threshold → 70% depth)
 
 ---
 
