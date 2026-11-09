@@ -173,11 +173,14 @@ def make_source(genome, f0, duration, source_kind, rng, jitter_pct=0.7):
 # Synthesis — parallel resonator bank (Narusya's finding: better formant recovery)
 # ══════════════════════════════════════════════════════════════════════════
 
-def synthesize_vowel(f0, formants, duration, sr, source=None, bw=150):
+def synthesize_vowel(f0, formants, duration, sr, source=None, bw=None, bandwidths=None):
     """Parallel resonator bank — each formant is independent, outputs summed.
 
     Phase 1 testing showed this recovers formants much better than cascade:
     F3 error went from 16-32% (cascade) to 0.5-4.6% (parallel).
+
+    bandwidths: dict of {name: bw_hz} from genome (e.g., {"F1": 80, "F2": 100, ...}).
+    If provided, uses per-formant bandwidths. Otherwise falls back to bw param.
     """
     n_samples = int(duration * sr)
     if source is None:
@@ -190,9 +193,15 @@ def synthesize_vowel(f0, formants, duration, sr, source=None, bw=150):
         source = source[:n_samples]
 
     output = np.zeros(n_samples)
-    for f_freq in formants.values():
+    for name, f_freq in formants.items():
+        if bandwidths and name in bandwidths:
+            formant_bw = bandwidths[name]
+        elif bw is not None:
+            formant_bw = bw
+        else:
+            formant_bw = f_freq * 0.1
         w0 = 2 * np.pi * f_freq / sr
-        r = np.exp(-np.pi * bw / sr)
+        r = np.exp(-np.pi * formant_bw / sr)
         a = [1.0, -2 * r * np.cos(w0), r**2]
         resonator_out = lfilter([1.0], a, source)
         output += resonator_out
@@ -212,8 +221,19 @@ def render_vowel(genome, vowel, f0, duration, source_kind, rng, f2_override=None
     anchor = genome["filter"]["neutral_anchor"]
     f4 = anchor["F4"]["hz"]
     formants = {"F1": f1, "F2": f2, "F3": f3, "F4": f4}
+    # Genome bandwidths (per-formant, from genome filter section)
+    filter_section = genome.get("filter", {})
+    bandwidths = {}
+    for key in ["F1", "F2", "F3", "F4"]:
+        if key in filter_section and isinstance(filter_section[key], dict):
+            bandwidths[key] = filter_section[key].get("bw", 150)
+        elif key in anchor and isinstance(anchor[key], dict):
+            bandwidths[key] = anchor[key].get("bw", 150)
+    if not bandwidths:
+        bandwidths = None
     source = make_source(genome, f0, duration, source_kind, rng)
-    return synthesize_vowel(f0, formants, duration, SR, source=source)
+    return synthesize_vowel(f0, formants, duration, SR, source=source,
+                            bandwidths=bandwidths)
 
 
 # ══════════════════════════════════════════════════════════════════════════
