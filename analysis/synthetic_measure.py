@@ -115,13 +115,46 @@ def gate0_synthetic(measured_formants, target_formants, measured_f0, target_f0,
     return passed, notes
 
 
-def f4_sweep(sr=48000, duration=1.0, f4_values=None):
-    """F4 diagnostic sweep: synthesize single-resonator renders at known
-    F4 values, measure back with synthetic mode. Tells us if the tracker
-    or the synth owns the F4 error.
-    
-    Returns list of (target_f4, measured_f4, error_pct).
+def gate0_negative_control(signal, sr, wrong_targets, correct_targets):
+    """Negative control: verify that Gate 0 FAILS when given wrong targets.
+
+    This ensures the gate can actually detect failures. If a vowel with
+    formants 20% off target still passes, the gate is broken.
+
+    Args:
+        signal: audio signal (can be any render)
+        sr: sample rate
+        wrong_targets: dict of formant_name → wrong target (20% off)
+        correct_targets: dict of formant_name → correct target
+
+    Returns:
+        (gate_fails_on_wrong, gate_passes_on_correct, details)
     """
+    measured_wrong = measure_formants_synthetic(signal, sr, wrong_targets)
+    measured_correct = measure_formants_synthetic(signal, sr, correct_targets)
+
+    # Gate should FAIL on wrong targets
+    _, notes_wrong = gate0_synthetic(measured_wrong, wrong_targets,
+                                     {"median": 190.0}, 190.0,
+                                     label="wrong")
+    fails_on_wrong = len(notes_wrong) > 0
+
+    # Gate should PASS on correct targets
+    _, notes_correct = gate0_synthetic(measured_correct, correct_targets,
+                                       {"median": 190.0}, 190.0,
+                                       label="correct")
+    passes_on_correct = len(notes_correct) == 0
+
+    return {
+        "fails_on_wrong_targets": fails_on_wrong,
+        "passes_on_correct_targets": passes_on_correct,
+        "negative_control_passes": fails_on_wrong and passes_on_correct,
+        "wrong_notes": notes_wrong,
+        "correct_notes": notes_correct,
+    }
+
+
+def f4_sweep(sr=48000, duration=1.0, f4_values=None):
     if f4_values is None:
         f4_values = list(range(2800, 3601, 100))
     
