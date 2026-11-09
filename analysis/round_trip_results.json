@@ -1,0 +1,67 @@
+{
+  "test": "Phase 0 Round-Trip",
+  "target": {
+    "F0": 190.0,
+    "formants": {
+      "F1": 800.0,
+      "F2": 1150.0,
+      "F3": 2400.0,
+      "F4": 3100.0
+    }
+  },
+  "measured": {
+    "f0": {
+      "median": 190.5,
+      "p5": 190.5,
+      "p95": 190.5,
+      "n_voiced": 90,
+      "n_total": 90
+    },
+    "formants": {
+      "F1": {
+        "median": 811.7,
+        "p5": 809.6,
+        "p95": 813.7,
+        "n": 2
+      },
+      "F2": {
+        "median": 1169.0,
+        "p5": 1167.5,
+        "p95": 1170.6,
+        "n": 2
+      },
+      "F3": {
+        "median": 2346.1,
+        "p5": 2345.9,
+        "p95": 2346.4,
+        "n": 2
+      },
+      "F4": {
+        "median": 2990.4,
+        "p5": 2985.9,
+        "p95": 2994.9,
+        "n": 2
+      }
+    },
+    "hnr": {
+      "median": 136.1,
+      "p5": 128.4,
+      "p95": 139.0,
+      "n": 98
+    },
+    "jitter_shimmer": {
+      "jitter_local_pct": 0.0,
+      "shimmer_local_pct": 1.238,
+      "n_cycles": 189
+    },
+    "tilt": {
+      "tilt_db_per_octave": -8.91,
+      "n_points": 166,
+      "freq_range_hz": [
+        100,
+        4000
+      ]
+    }
+  },
+  "gate0_passed": true
+}
