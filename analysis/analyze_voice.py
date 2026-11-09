@@ -90,7 +90,8 @@ def measure_formants(signal, sr):
         bw3 = formant.get_bandwidth_at_time(3, t)
         bw4 = formant.get_bandwidth_at_time(4, t)
         if f1 > 0 and f2 > 0 and f3 > 0 and f4 > 0:
-            if bw1 < BW_MAX and bw2 < BW_MAX and bw3 < BW_MAX and bw4 < BW_MAX:
+            if (bw1 < 800.0 and bw2 < 800.0 and
+                    bw3 < 800.0 and bw4 < 800.0):
                 f1_list.append(f1)
                 f2_list.append(f2)
                 f3_list.append(f3)

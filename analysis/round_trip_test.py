@@ -38,48 +38,46 @@ SR = 48000
 OUTPUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "round_trip_alpha.wav")
 
 
-def synthesize_vowel(f0, formants, duration, sr):
-    """Synthesize a vowel using a simple formant (cascade) synthesizer.
+def synthesize_vowel(f0, formants, duration, sr, mode="parallel", bw=150):
+    """Synthesize a vowel using formant synthesis.
 
-    Approach: generate glottal pulse train, apply formant resonators,
-    add radiation characteristic.
+    mode="parallel": parallel bank of resonators (better formant recovery)
+    mode="cascade": cascade of resonators (traditional Klatt)
     """
     n_samples = int(duration * sr)
-    t = np.arange(n_samples) / sr
-
-    # 1. Glottal source: pulse train at F0
     period = int(sr / f0)
     source = np.zeros(n_samples)
     for i in range(0, n_samples, period):
         source[i] = 1.0
-    # Apply glottal pulse shape (simple: decay after each pulse)
-    # Use a one-pole filter to smooth
     from scipy.signal import lfilter
     glottal = lfilter([1.0], [1.0, -0.95], source)
 
-    # 2. Formant resonators (cascade of 2nd-order IIR)
-    signal = glottal.copy()
-    for f_name, f_freq in formants.items():
-        # Bandwidth ~10% of frequency (reasonable for vowels)
-        bw = f_freq * 0.1
-        # 2nd-order resonator
-        w0 = 2 * np.pi * f_freq / sr
-        r = np.exp(-np.pi * bw / sr)
-        b = [1 - r, 0, 0]  # numerator
-        # Standard formant resonator: H(z) = 1 / (1 - 2r*cos(w0)*z^-1 + r^2*z^-2)
-        a = [1.0, -2 * r * np.cos(w0), r**2]
-        signal = lfilter([1.0], a, signal)
+    if mode == "parallel":
+        output = np.zeros(n_samples)
+        for f_name, f_freq in formants.items():
+            w0 = 2 * np.pi * f_freq / sr
+            r = np.exp(-np.pi * bw / sr)
+            a = [1.0, -2 * r * np.cos(w0), r**2]
+            resonator_out = lfilter([1.0], a, glottal)
+            output += resonator_out
+    else:  # cascade
+        output = glottal.copy()
+        for f_name, f_freq in formants.items():
+            if bw is None:
+                bw_f = f_freq * 0.1
+            else:
+                bw_f = bw
+            w0 = 2 * np.pi * f_freq / sr
+            r = np.exp(-np.pi * bw_f / sr)
+            a = [1.0, -2 * r * np.cos(w0), r**2]
+            output = lfilter([1.0], a, output)
 
-    # 3. Radiation: +6 dB/oct high-freq boost (simple high-shelf)
-    # Apply a simple differentiator
-    signal = np.diff(signal, prepend=signal[0])
-
-    # 4. Normalize
-    peak = np.max(np.abs(signal))
+    # Radiation
+    output = np.diff(output, prepend=output[0])
+    peak = np.max(np.abs(output))
     if peak > 0:
-        signal = signal / peak * 0.5
-
-    return signal
+        output = output / peak * 0.5
+    return output
 
 
 def main():
