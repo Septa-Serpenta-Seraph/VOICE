@@ -1,0 +1,26 @@
+{
+  "/m/": {
+    "measurement": {
+      "murmur_pole_hz": 246.1,
+      "resonator_target_hz": 250
+    },
+    "passed": true,
+    "notes": []
+  },
+  "/n/": {
+    "measurement": {
+      "murmur_pole_hz": 293.0,
+      "resonator_target_hz": 300
+    },
+    "passed": true,
+    "notes": []
+  },
+  "/\u014b/": {
+    "measurement": {
+      "murmur_pole_hz": 339.8,
+      "resonator_target_hz": 350
+    },
+    "passed": true,
+    "notes": []
+  }
+}
