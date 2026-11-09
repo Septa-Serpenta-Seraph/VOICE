@@ -43,54 +43,79 @@ def perturbed_pulse_train(f0, duration, sr, jitter_pct=JITTER_TARGET,
                           shimmer_pct=SHIMMER_TARGET, seed=42, trim_onset=0.25):
     """Generate a perturbed glottal pulse train with structured jitter+shimmer.
 
-    Structure: slow_drift_plus_cycle (Round 2 specification).
-    - Slow drift: 0.3-0.7 Hz amplitude wander (not per-cycle)
-    - Cycle jitter: small cycle-to-cycle pitch variation (0.7% target)
-    - Cycle shimmer: small cycle-to-cycle amplitude variation (4.0% target)
+    Structure: slow_drift_plus_cycle (Round 2 specification, Round 9 rebuild).
+    - Slow drift: band-limited noise on log period (0.3-0.7 Hz), not
+      amplitude wobble. This creates natural F0 wander.
+    - Cycle jitter: independent cycle-to-cycle pitch variation
+    - Cycle shimmer: independent cycle-to-cycle amplitude variation
 
-    NOT independent per-cycle noise — that sounds like buzz.
-    The slow drift modulates the cycle parameters, creating natural
-    "aliveness" without buzziness.
+    σ relationship: for independent cycles, local jitter ≈ 1.13 × σ
+    (Praat's local jitter divides by mean period, and the 1/√2 in the
+    cycle-to-cycle difference adds the factor). So σ = target / 1.13.
 
-    Returns: (signal, onset_trim_samples)
+    Returns: (signal, onset_trim_samples, injected_stats)
+    where injected_stats contains the actual computed jitter/shimmer
+    from the generated sequences.
     """
     rng = np.random.default_rng(seed)
     n_samples = int(duration * sr)
     onset_trim = int(trim_onset * sr)
 
-    # Slow drift parameters (0.3-0.7 Hz)
-    drift_freq = 0.5  # Hz
-    drift_phase = rng.uniform(0, 2 * np.pi)
+    # Slow drift: band-limited noise on log period (0.3-0.7 Hz)
+    # Generate a slow noise signal
+    n_drift_samples = int(duration * 100)  # 100 Hz sampling for drift
+    drift_noise = rng.normal(0, 1, n_drift_samples)
+    # Low-pass filter to 0.3-0.7 Hz
+    from scipy.signal import butter, filtfilt
+    nyq = 50  # 100 Hz / 2
+    low = 0.3 / nyq
+    high = 0.7 / nyq
+    b, a = butter(2, [low, high], btype='band')
+    drift_filtered = filtfilt(b, a, drift_noise)
+    # Normalize to unit variance, scale to drift depth
+    drift_std = np.std(drift_filtered)
+    if drift_std > 0:
+        drift_filtered = drift_filtered / drift_std
+    # Interpolate to sample rate
+    drift_t = np.linspace(0, duration, n_drift_samples)
+    drift_t_full = np.arange(n_samples) / sr
+    drift_envelope = np.interp(drift_t_full, drift_t, drift_filtered)
+    # Scale: slow drift contributes ~0.2% of the jitter target
+    drift_depth = 0.2  # fraction of jitter target from slow drift
+    drift_contribution = drift_envelope * (jitter_pct / 100.0 * drift_depth)
+
+    # Cycle sigma: independent cycles, local jitter ≈ 1.13 × σ
+    cycle_sigma_jitter = (jitter_pct / 100.0) / 1.13
+    cycle_sigma_shimmer = (shimmer_pct / 100.0) / 1.13
 
     # Generate pulse train with perturbation
     signal = np.zeros(n_samples)
     pos = 0
     cycle_count = 0
 
-    # Pre-compute slow drift envelope
-    t_all = np.arange(n_samples) / sr
-    drift_envelope = 1.0 + 0.02 * np.sin(2 * np.pi * drift_freq * t_all + drift_phase)
+    # Track injected values
+    periods = []
+    amplitudes = []
 
     while pos < n_samples:
-        # Cycle period with jitter
-        # Slow drift modulates the jitter
-        drift_mod = drift_envelope[pos] if pos < len(drift_envelope) else 1.0
+        # Slow drift modulates the period
+        drift_mod = drift_contribution[pos] if pos < len(drift_contribution) else 0.0
 
-        # Cycle jitter: base + slow drift modulation
-        base_jitter = rng.normal(0, jitter_pct / 100.0 / np.sqrt(2))
-        cycle_jitter = base_jitter * drift_mod
+        # Cycle jitter: independent + slow drift
+        cycle_jitter = rng.normal(0, cycle_sigma_jitter) + drift_mod
         period_samples = int(round(sr / f0 * (1.0 + cycle_jitter)))
         period_samples = max(period_samples, 8)
 
-        # Cycle shimmer: base + slow drift modulation
-        base_shimmer = rng.normal(0, shimmer_pct / 100.0 / np.sqrt(2))
-        cycle_shimmer = base_shimmer * drift_mod
+        # Cycle shimmer: independent
+        cycle_shimmer = rng.normal(0, cycle_sigma_shimmer)
         amplitude = 1.0 + cycle_shimmer
 
         # Place pulse
         if pos < n_samples:
             signal[pos] = amplitude
 
+        periods.append(period_samples)
+        amplitudes.append(amplitude)
         pos += period_samples
         cycle_count += 1
 
@@ -98,10 +123,46 @@ def perturbed_pulse_train(f0, duration, sr, jitter_pct=JITTER_TARGET,
     signal = lfilter([1.0], [1.0, -0.95], signal)
 
     # Apply slow amplitude wander (the "breathing" quality)
-    wander = 1.0 + 0.01 * np.sin(2 * np.pi * 0.3 * t_all + drift_phase)
+    wander = 1.0 + 0.01 * np.sin(2 * np.pi * 0.3 * np.arange(n_samples) / sr)
     signal = signal * wander
 
-    return signal, onset_trim
+    # Compute injected statistics
+    periods = np.array(periods)
+    amplitudes = np.array(amplitudes)
+    # Local jitter: mean absolute period diff / mean period
+    if len(periods) > 1:
+        period_diffs = np.abs(np.diff(periods))
+        injected_jitter = np.mean(period_diffs) / np.mean(periods) * 100
+    else:
+        injected_jitter = 0.0
+    # Local shimmer: mean absolute amplitude diff / mean amplitude
+    if len(amplitudes) > 1:
+        amp_diffs = np.abs(np.diff(amplitudes))
+        injected_shimmer = np.mean(amp_diffs) / np.mean(np.abs(amplitudes)) * 100
+    else:
+        injected_shimmer = 0.0
+
+    # Slow drift power: fraction of period variance below 1 Hz
+    if len(periods) > 10:
+        period_devs = periods - np.mean(periods)
+        fft = np.abs(np.fft.rfft(period_devs))
+        freqs = np.fft.rfftfreq(len(period_devs), d=1.0)
+        slow_power = np.sum(fft[freqs < 1.0]**2)
+        total_power = np.sum(fft**2)
+        slow_drift_pct = (slow_power / total_power * 100) if total_power > 0 else 0.0
+    else:
+        slow_drift_pct = 0.0
+
+    injected_stats = {
+        "injected_jitter_pct": round(float(injected_jitter), 3),
+        "injected_shimmer_pct": round(float(injected_shimmer), 3),
+        "n_cycles": len(periods),
+        "slow_drift_power_pct": round(float(slow_drift_pct), 1),
+        "jitter_target": jitter_pct,
+        "shimmer_target": shimmer_pct,
+    }
+
+    return signal, onset_trim, injected_stats
 
 
 def synthesize_perturbed_vowel(vowel, genome, f0, duration, sr=SR, seed=42,
@@ -115,7 +176,7 @@ def synthesize_perturbed_vowel(vowel, genome, f0, duration, sr=SR, seed=42,
     from phase1_synth import render_vowel
 
     # Generate perturbed source
-    source, onset_trim = perturbed_pulse_train(
+    source, onset_trim, injected = perturbed_pulse_train(
         f0, duration, sr, jitter_pct=jitter_pct, shimmer_pct=shimmer_pct, seed=seed
     )
 
@@ -147,7 +208,7 @@ def synthesize_perturbed_vowel(vowel, genome, f0, duration, sr=SR, seed=42,
     if peak > 0:
         output = output / peak * 0.5
 
-    return output, onset_trim
+    return output, onset_trim, injected
 
 
 def measure_jitter_shimmer_praat(signal, sr, f0=190.0):
@@ -190,7 +251,7 @@ def round_trip_test(genome, f0=190.0, duration=3.0, sr=SR, seed=42):
     known_shimmer = SHIMMER_TARGET
 
     # Synthesize
-    signal, onset_trim = synthesize_perturbed_vowel(
+    signal, onset_trim, injected = synthesize_perturbed_vowel(
         "ɑ", genome, f0, duration, sr=sr, seed=seed,
         jitter_pct=known_jitter, shimmer_pct=known_shimmer
     )
@@ -201,23 +262,26 @@ def round_trip_test(genome, f0=190.0, duration=3.0, sr=SR, seed=42):
     # Measure with Praat
     result = measure_jitter_shimmer_praat(trimmed, sr, f0=f0)
 
-    # Check recovery
+    # Check recovery (compare measured to INJECTED, not target)
     got_j = result["jitter_local_pct"]
     got_s = result["shimmer_local_pct"]
 
     recovered_j = (got_j is not None and
-                   abs(got_j - known_jitter) < 0.3)
+                   abs(got_j - injected["injected_jitter_pct"]) < 0.3)
     recovered_s = (got_s is not None and
-                   abs(got_s - known_shimmer) < 1.0)
+                   abs(got_s - injected["injected_shimmer_pct"]) < 1.0)
 
     return {
         "known_jitter_pct": known_jitter,
+        "injected_jitter_pct": injected["injected_jitter_pct"],
         "measured_jitter_pct": got_j,
         "jitter_recovered": recovered_j,
         "known_shimmer_pct": known_shimmer,
+        "injected_shimmer_pct": injected["injected_shimmer_pct"],
         "measured_shimmer_pct": got_s,
         "shimmer_recovered": recovered_s,
         "n_cycles": result["n_cycles"],
+        "slow_drift_power_pct": injected["slow_drift_power_pct"],
         "round_trip_passed": recovered_j and recovered_s,
     }
 
@@ -230,7 +294,7 @@ def demo(sr=SR, duration=3.0, seed=42):
         genome = yaml.safe_load(f)
 
     f0 = 190.0
-    signal, onset_trim = synthesize_perturbed_vowel(
+    signal, onset_trim, injected = synthesize_perturbed_vowel(
         "ɑ", genome, f0, duration, sr=sr, seed=seed
     )
 
@@ -248,9 +312,11 @@ def demo(sr=SR, duration=3.0, seed=42):
     print(f"  Jitter: {result['jitter_local_pct']}% (target: {JITTER_TARGET}%)")
     print(f"  Shimmer: {result['shimmer_local_pct']}% (target: {SHIMMER_TARGET}%)")
     print(f"  Cycles: {result['n_cycles']}")
+    print(f"  Injected jitter: {injected['injected_jitter_pct']}% (slow drift: {injected['slow_drift_power_pct']}%)")
+    print(f"  Injected shimmer: {injected['injected_shimmer_pct']}%")
     print(f"  Saved: vowel_ɑ_perturbed.wav, vowel_ɑ_perturbed_trimmed.wav")
 
-    return signal, result
+    return signal, result, injected
 
 
 if __name__ == "__main__":
@@ -270,7 +336,7 @@ if __name__ == "__main__":
         genome = yaml.safe_load(f)
 
     if args.demo:
-        signal, result = demo(sr=args.sr, duration=args.duration, seed=args.seed)
+        signal, result, injected = demo(sr=args.sr, duration=args.duration, seed=args.seed)
 
     elif args.test:
         result = round_trip_test(genome, f0=190.0, duration=args.duration,

@@ -1,10 +1,13 @@
 {
   "known_jitter_pct": 0.7,
-  "measured_jitter_pct": 0.464,
+  "injected_jitter_pct": 0.672,
+  "measured_jitter_pct": 0.565,
   "jitter_recovered": true,
   "known_shimmer_pct": 4.0,
-  "measured_shimmer_pct": 3.588,
+  "injected_shimmer_pct": 4.065,
+  "measured_shimmer_pct": 4.32,
   "shimmer_recovered": true,
   "n_cycles": 522,
+  "slow_drift_power_pct": 100.0,
   "round_trip_passed": true
 }
