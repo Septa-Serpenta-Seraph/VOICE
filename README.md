@@ -22,19 +22,21 @@ This is not voice cloning. This is not sampling. This is building a voice from t
 
 ## Current Status
 
-### Phase 1 — COMPLETE ✓
-- 12/12 vowels pass Gate 0 in synthetic mode (all formants within ±5% of targets)
-- F4 sweep: 0.2% mean error — Praat tracker was the problem, not the synth
-- Genome adopted at v0.2.0
-- Front-F2 A/B pairs rendered (ɛ 1750 vs 2050, æ 1650 vs 1920) — awaiting Adora's ears
+See [STATUS.md](STATUS.md) for the full status and plan.
 
-### Phase 2 — IN PROGRESS
-Build order: noise source → band aperiodicity → fricatives → nasals.
-- Noise source: ✅ characterized (6/6 tests pass)
-- Band aperiodicity: ✅ per-band noise mixing (raven grain, sibilance, breathiness)
-- Fricative branch: ✅ 9/9 pass (spectral moments within ±15%)
-- Nasal murmur: ✅ 3/3 pass (murmur pole within tolerance)
-- Carried debts: ~~perturbation round-trip~~ ✅ CLOSED, LF timing verification
+### Phase 1 — COMPLETE ✓
+- 12/12 vowels pass Gate 0 in synthetic mode
+- F4 sweep: 0.2% mean error
+- Genome adopted at v0.2.0
+
+### Phase 2 — 4.5/6 (reopened, then rebuilt)
+- Noise source: ✅ | Aperiodicity: ✅ | Fricatives: ✅ (9/9) | Nasals: ✅ (3/3)
+- Perturbation: ✅ REBUILT (Round 9) | LF timing: ✅ VERIFIED | Gate 0 neg control: ✅
+- Remaining: tilt calibration, filter measurement, Hillenbrand verification, bandwidths, MFCC regen, cascade/parallel, render provenance
+
+### Companion: HEARING
+- https://github.com/Septa-Serpenta-Seraph/HEARING
+- Autonomous eval, A/B framework, perceptual distance, governance policy
 
 ## Governing Principle
 
