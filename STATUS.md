@@ -25,7 +25,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 2. ~~**Gate 0 measures filter**~~ ✅ DONE — freqz on resonator bank with genome bandwidths. All 4 formants pass (F1 0.39%, F2 0.00%, F3 0.16%, F4 0.55%). Negative control passes (wrong filter 20% off → fails). See VOICE/analysis/filter_gate0.py.
 3. ~~**Perturbation in LF path**~~ ✅ DONE — both simple (0.548% jitter, 4.221% shimmer) and LF (0.453% jitter, 3.507% shimmer) pass round-trip. See VOICE/analysis/perturbation.py (--source simple/lf).
 4. ~~**Verify Hillenbrand**~~ ✅ DONE — F2=1500 validated (4.7% from population median 1574.5 Hz, closest vowel /ɑ/ at 1534 Hz). F1=450 is 21.6% below median (intentional — low F1 = open quality). F3=2770 is 3.9% below median. See VOICE/analysis/hillenbrand_verify.py.
-5. **Wire genome bandwidths** — synthesize_vowel uses 150 Hz for all (should be genome-driven)
+5. ~~**Wire genome bandwidths**~~ ✅ DONE — synthesize_vowel now accepts bandwidths dict (per-formant: F1=80, F2=100, F3=120, F4=150 Hz from genome). render_vowel extracts from genome filter.neutral_anchor. All 12 vowels still pass Gate 0. See VOICE/analysis/phase1_synth.py.
 6. **Canonical MFCC regeneration** — through HEARING's own pipeline
 7. **Cascade vs parallel** — proper comparison with per-formant gains + genome bandwidths
 8. **Render provenance** — which source/seed made each render (metadata)
