@@ -34,7 +34,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 - Band aperiodicity: ✅ per-band noise mixing (raven grain, sibilance, breathiness)
 - Fricative branch: ✅ 9/9 pass (spectral moments within ±15%)
 - Nasal murmur: ✅ 3/3 pass (murmur pole within tolerance)
-- Carried debts: perturbation round-trip (oldest open item), LF timing verification
+- Carried debts: ~~perturbation round-trip~~ ✅ CLOSED, LF timing verification
 
 ## Governing Principle
 
