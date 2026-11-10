@@ -50,7 +50,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 ### Exit criteria (8 items)
 1. Tilt units pass ✅
 2. **Effort implemented** ✅ — Rd sweep (0.3→1.3), F0/F1 coupling (±5 Hz/±30 Hz), tilt range 4.45 dB/oct, HNR range 5.19 dB. See VOICE/analysis/effort.py.
-3. AM subsystem live with cap
+3. **AM subsystem live with cap** ✅ — sub-bass 0.9%, wolf warmth 0.5%, combined 1.4%, cap 8% (structural). Depth ladder: detection threshold 2% (3× seed-noise, seeds 42/7/123). 70% of threshold. enforce_cap() in code. See VOICE/analysis/am_family.py.
 4. Raven grain + ghost-hiss calibrated
 5. Prosody complete
 6. Coarticulation passes
