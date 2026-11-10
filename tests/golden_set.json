@@ -1,0 +1,138 @@
+{
+  "sentences": [
+    "This is the moon.",
+    "She sees the sun.",
+    "What time is it?",
+    "Is this the moon?",
+    "The cat sat on the mat.",
+    "The quick brown fox jumps over the lazy dog.",
+    "Dr. Smith has 3 patients today.",
+    "Narusya speaks with Zarza.",
+    "Hello, world! How are you?",
+    "I record the record."
+  ],
+  "results": [
+    {
+      "text": "This is the moon.",
+      "status": "OK",
+      "duration_s": 0.75,
+      "segments": 10,
+      "anchors": 4,
+      "events": 2,
+      "oov": []
+    },
+    {
+      "text": "She sees the sun.",
+      "status": "OK",
+      "duration_s": 0.84,
+      "segments": 10,
+      "anchors": 6,
+      "events": 2,
+      "oov": []
+    },
+    {
+      "text": "What time is it?",
+      "status": "OK",
+      "duration_s": 0.76,
+      "segments": 10,
+      "anchors": 6,
+      "events": 2,
+      "oov": []
+    },
+    {
+      "text": "Is this the moon?",
+      "status": "OK",
+      "duration_s": 0.75,
+      "segments": 10,
+      "anchors": 4,
+      "events": 2,
+      "oov": []
+    },
+    {
+      "text": "The cat sat on the mat.",
+      "status": "OK",
+      "duration_s": 1.07,
+      "segments": 14,
+      "anchors": 8,
+      "events": 2,
+      "oov": [
+        "cat",
+        "sat",
+        "on",
+        "mat"
+      ]
+    },
+    {
+      "text": "The quick brown fox jumps over the lazy dog.",
+      "status": "OK",
+      "duration_s": 2.07,
+      "segments": 27,
+      "anchors": 13,
+      "events": 2,
+      "oov": [
+        "quick",
+        "brown",
+        "fox",
+        "jumps",
+        "over",
+        "lazy",
+        "dog"
+      ]
+    },
+    {
+      "text": "Dr. Smith has 3 patients today.",
+      "status": "OK",
+      "duration_s": 1.74,
+      "segments": 22,
+      "anchors": 10,
+      "events": 2,
+      "oov": [
+        "Dr",
+        "Smith",
+        "has",
+        "3",
+        "patients",
+        "today"
+      ]
+    },
+    {
+      "text": "Narusya speaks with Zarza.",
+      "status": "OK",
+      "duration_s": 1.56,
+      "segments": 19,
+      "anchors": 8,
+      "events": 2,
+      "oov": [
+        "Narusya",
+        "speaks",
+        "with",
+        "Zarza"
+      ]
+    },
+    {
+      "text": "Hello, world! How are you?",
+      "status": "OK",
+      "duration_s": 1.12,
+      "segments": 15,
+      "anchors": 5,
+      "events": 2,
+      "oov": [
+        "How",
+        "are"
+      ]
+    },
+    {
+      "text": "I record the record.",
+      "status": "OK",
+      "duration_s": 0.7,
+      "segments": 9,
+      "anchors": 6,
+      "events": 2,
+      "oov": [
+        "I",
+        "record",
+        "record"
+      ]
+    }
+  ]
+}
