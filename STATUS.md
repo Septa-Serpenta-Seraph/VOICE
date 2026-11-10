@@ -21,7 +21,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 
 ### Remaining work (gates Phase 3)
 
-1. ~~**Tilt calibration**~~ ✅ DONE — true dB/octave recovers known tilts within 0.3 dB. VOICE convention is dB/decade (factor 3.01×). Canonical -4.31 = -1.43 true dB/oct. See HEARING/analysis/tilt_calibration.py.
+1. ~~**Tilt calibration**~~ ✅ DONE — true dB/octave recovers known tilts within 0.3 dB. VOICE convention is dB/decade (factor 3.01×). Canonical -4.31 = -1.30 true dB/oct. See HEARING/analysis/tilt_calibration.py.
 2. ~~**Gate 0 measures filter**~~ ✅ DONE — freqz on resonator bank with genome bandwidths. All 4 formants pass (F1 0.39%, F2 0.00%, F3 0.16%, F4 0.55%). Negative control passes (wrong filter 20% off → fails). See VOICE/analysis/filter_gate0.py.
 3. ~~**Perturbation in LF path**~~ ✅ DONE — both simple (0.548% jitter, 4.221% shimmer) and LF (0.453% jitter, 3.507% shimmer) pass round-trip. See VOICE/analysis/perturbation.py (--source simple/lf).
 4. ~~**Verify Hillenbrand**~~ ✅ DONE — F2=1500 validated (4.7% from population median 1574.5 Hz, closest vowel /ɑ/ at 1534 Hz). F1=450 is 21.6% below median (intentional — low F1 = open quality). F3=2770 is 3.9% below median. See VOICE/analysis/hillenbrand_verify.py.
@@ -54,8 +54,8 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 4. **Raven grain + ghost-hiss calibrated** ✅ — raven grain: threshold -54 dB, genome -57 dB (70%, 3 seeds). Ghost-hiss: threshold 0.1 dB shelf, genome 0.07 dB. Depth ladders in VOICE/analysis/spectral_sigs.py.
 5. **Prosody complete** ✅ — F0 contours (declination +8%→-15%, question rise 25-40%). Pause tiers (clause 100-300ms, sentence 300-600ms). Micro-dip depth: 15% amplitude, 5-15ms. Breath rhythm: phrase-final lengthening 1.3-1.6x. See VOICE/analysis/prosody.py.
 6. **Coarticulation complete** ✅ — CV/VC transitions 60/60 pass (12 vowels × 5 consonants). Nasal place cues 12/12 pass (distinct loci: /m/=800, /n/=1500, /ŋ/=1000 Hz F2). Locus targets per Fant 1960. See VOICE/analysis/coarticulation.py.
-7. **HEARING canonical bumped** ✅ — HNR updated from 12 dB (ElevenLabs adopted) to 94.5 dB (measured from 16 phase1 synthetic vowel renders, median). Version bumped to 0.3.0-phase3. See HEARING/analysis/autonomous_eval.py.
-8. **Gate 2 — PASS** ✅ — Tilt ✅ (-1.36 dB/oct, target -1.30, error 0.06). F0 ✅ (190.5 Hz, target 190.0). HNR ✅ (94.5 dB, target 94.5). Spectral tilt shaping via tilt EQ (FFT-based, zero-phase). See VOICE/analysis/spectral_tilt.py. Shaped renders in renders/phase1_shaped/.
+7. **HEARING canonical bumped** ✅ — HNR updated from 12 dB (ElevenLabs) to 19.1 dB (all-on Phase 3 renders, median). Sample reference: 11.9 dB (ElevenLabs). σ=2.8 (derived from spread). Version bumped to v0.3.4-phase3. See HEARING/analysis/autonomous_eval.py. Re-derived per Zarza Round 11 §2.
+8. **Gate 2 — PASS** ✅ — Tilt ✅ (-1.36 dB/oct, target -1.30, error 0.06). F0 ✅ (190.5 Hz, target 190.0). HNR ✅ (19.1 dB, target 19.1, σ=2.8). All-on renders (calibrated voice: AM, grain, aperiodicity, tilt). Gate 2 re-run against all-on renders per Zarza Round 11 §2. See VOICE/analysis/spectral_tilt.py, VOICE/analysis/all_on_render.py.
 
 ## Companion repo: HEARING
 

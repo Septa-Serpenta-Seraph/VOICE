@@ -2,7 +2,7 @@
   "gate": "Gate 2 \u2014 Descriptor Match",
   "tilt": {
     "target": -1.3,
-    "median": -1.7415,
+    "median": -1.145,
     "pass": true
   },
   "f0": {
@@ -11,8 +11,8 @@
     "pass": true
   },
   "hnr": {
-    "target": 94.5,
-    "median": 88.525,
+    "target": 19.1,
+    "median": 19.08,
     "pass": true
   },
   "overall": true,

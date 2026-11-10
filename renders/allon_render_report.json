@@ -1,0 +1,84 @@
+{
+  "results": [
+    {
+      "file": "e.wav",
+      "hnr": 20.8,
+      "tilt": -1.2
+    },
+    {
+      "file": "i.wav",
+      "hnr": 16.27,
+      "tilt": -0.861
+    },
+    {
+      "file": "o.wav",
+      "hnr": 13.81,
+      "tilt": -0.891
+    },
+    {
+      "file": "u.wav",
+      "hnr": 13.47,
+      "tilt": -0.974
+    },
+    {
+      "file": "\u00e6.wav",
+      "hnr": 20.9,
+      "tilt": -1.169
+    },
+    {
+      "file": "\u00e6_f2_design_1650.wav",
+      "hnr": 20.9,
+      "tilt": -1.169
+    },
+    {
+      "file": "\u00e6_f2_reference_1920.wav",
+      "hnr": 22.07,
+      "tilt": -1.114
+    },
+    {
+      "file": "\u0251.wav",
+      "hnr": 20.99,
+      "tilt": -1.251
+    },
+    {
+      "file": "\u0254.wav",
+      "hnr": 16.21,
+      "tilt": -0.973
+    },
+    {
+      "file": "\u0259.wav",
+      "hnr": 16.38,
+      "tilt": -1.134
+    },
+    {
+      "file": "\u025b.wav",
+      "hnr": 19.95,
+      "tilt": -1.252
+    },
+    {
+      "file": "\u025b_f2_design_1750.wav",
+      "hnr": 19.95,
+      "tilt": -1.252
+    },
+    {
+      "file": "\u025b_f2_reference_2050.wav",
+      "hnr": 20.03,
+      "tilt": -1.117
+    },
+    {
+      "file": "\u026a.wav",
+      "hnr": 18.21,
+      "tilt": -1.156
+    },
+    {
+      "file": "\u028a.wav",
+      "hnr": 13.95,
+      "tilt": -0.951
+    },
+    {
+      "file": "\u028c.wav",
+      "hnr": 17.25,
+      "tilt": -1.171
+    }
+  ]
+}
