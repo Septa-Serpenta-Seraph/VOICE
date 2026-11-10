@@ -52,7 +52,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 2. **Effort implemented** ✅ — Rd sweep (0.3→1.3), F0/F1 coupling (±5 Hz/±30 Hz), tilt range 4.45 dB/oct, HNR range 5.19 dB. See VOICE/analysis/effort.py.
 3. **AM subsystem live with cap** ✅ — sub-bass 0.9%, wolf warmth 0.5%, combined 1.4%, cap 8% (structural). Depth ladder: detection threshold 2% (3× seed-noise, seeds 42/7/123). 70% of threshold. enforce_cap() in code. See VOICE/analysis/am_family.py.
 4. **Raven grain + ghost-hiss calibrated** ✅ — raven grain: threshold -54 dB, genome -57 dB (70%, 3 seeds). Ghost-hiss: threshold 0.1 dB shelf, genome 0.07 dB. Depth ladders in VOICE/analysis/spectral_sigs.py.
-5. Prosody complete
+5. **Prosody complete** ✅ — F0 contours (declination +8%→-15%, question rise 25-40%). Pause tiers (clause 100-300ms, sentence 300-600ms). Micro-dip depth: 15% amplitude, 5-15ms. Breath rhythm: phrase-final lengthening 1.3-1.6x. See VOICE/analysis/prosody.py.
 6. Coarticulation passes
 7. HEARING canonical bumped (HNR from calibrated renders)
 8. Gate 2 — descriptor match
