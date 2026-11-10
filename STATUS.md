@@ -88,9 +88,12 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 - Aperiodicity gated on voicing mask (no noise under pauses — risk #8 fix)
 - See VOICE/analysis/prosody_poststage.py
 ### Remaining (Phase 4)
-5. Missing consonants (stops, affricates, liquids, glides)
-6. Lexicon, G2P, syllables, normalization
-7. Full golden set and effort/register presets
+All 7 steps complete. Phase 4 done.
+### Step 7: Golden set + effort/register presets ✅
+- 10/10 golden sentences pass (full pipeline text→plan→render→audio)
+- Sentences: short statements, questions, function-word dense, long, numbers/abbreviations, OOV names, punctuation variety, stress contrast
+- Golden set saved to tests/golden_set.json
+- See VOICE/analysis/golden_set.py
 
 ## Companion repo: HEARING
 - Perceptual distance: 6 metrics
