@@ -238,6 +238,50 @@ def aperiodicity_with_voicing(signal, voicing_mask, sr=SR, targets=None, seed=42
     return mixed
 
 
+# ── Consonant branch ──────────────────────────────────────────────────────
+# Consonants are synthesized by their own modules (fricatives.py, nasals.py,
+# consonants_v2.py) and mixed into the output. The main resonator path renders
+# vowels/diphthongs only — see render_plan_v3.
+
+CONSONANT_KINDS = ("fricative", "nasal", "stop", "affricate", "liquid", "glide")
+
+# Relative level of the consonant branch vs. the (pre-normalization) vowel
+# peak. 0.5 ≈ -6 dB. Tuned by measurement — see analysis/consonant_level.py.
+CONSONANT_GAIN = 0.5
+
+
+def synthesize_segment_consonant(seg, sr, seed, next_formants=None):
+    """Dispatch one consonant segment to its synthesizer.
+
+    Returns a float array of length int((seg.t1-seg.t0)*sr), or None when the
+    phone has no synthesizer (caller skips it silently).
+
+    next_formants: {"F1": hz, "F2": hz, "F3": hz} of the following vowel.
+    Used to shape /h/ aspiration — without it /h/ is flat white noise.
+    """
+    dur = seg.t1 - seg.t0
+    if dur <= 0:
+        return None
+
+    if seg.kind == "fricative":
+        from fricatives import synthesize_fricative, FRICATIVE_SPECS
+        key = f"/{seg.phone}/"
+        if key not in FRICATIVE_SPECS:
+            return None
+        return synthesize_fricative(key, duration=dur, sr=sr, seed=seed,
+                                    vowel_formants=next_formants)
+
+    if seg.kind == "nasal":
+        from nasals import synthesize_nasal, NASAL_TARGETS
+        key = f"/{seg.phone}/"
+        if key not in NASAL_TARGETS:
+            return None
+        return synthesize_nasal(key, duration=dur, sr=sr, seed=seed)
+
+    from consonants_v2 import synthesize_consonant
+    return synthesize_consonant(seg.phone, dur, sr, rng=np.random.default_rng(seed))
+
+
 def render_plan_v3(plan, genome):
     """Render with full prosody + post-stage (tilt, sub-bass, aperiodicity as tracks)."""
     import frame_renderer as fr
@@ -266,7 +310,7 @@ def render_plan_v3(plan, genome):
     bw_tracks = {f"F{i}": np.zeros(n_total) for i in range(1, 5)}
 
     for seg in plan.segments:
-        if seg.kind == "silence":
+        if seg.kind == "silence" or seg.kind in CONSONANT_KINDS:
             continue
         t0_s = int(seg.t0 * SR)
         t1_s = min(int(seg.t1 * SR), n_total)
@@ -328,6 +372,20 @@ def render_plan_v3(plan, genome):
         )
         source[frame_start:frame_end] = frame_source
 
+    # Gate the glottal source to vowel regions. Consonants are rendered by
+    # their own branch (below); without this gate the resonator path renders
+    # every consonant as a short neutral vowel, which buries the real
+    # consonant audio and makes the utterance unintelligible.
+    vowel_mask = np.zeros(n_total)
+    for seg in plan.segments:
+        if seg.kind in ("vowel", "diphthong"):
+            t0_s = int(seg.t0 * SR)
+            t1_s = min(int(seg.t1 * SR), n_total)
+            vowel_mask[t0_s:t1_s] = 1.0
+    from scipy.ndimage import gaussian_filter1d
+    vowel_mask = gaussian_filter1d(vowel_mask, sigma=max(1, int(0.004 * SR)))
+    source = source * vowel_mask
+
     # Run resonators
     output = np.zeros(n_total)
     resonator_state = {}
@@ -382,20 +440,36 @@ def render_plan_v3(plan, genome):
                 dip = 1.0 - 0.15 * (1 - window)
                 output[start:end] = output[start:end] * dip
 
-    # Render consonants separately and place in output
+    # ── Consonant branch ────────────────────────────────────────────────
+    # Every consonant is synthesized by its own module and mixed in. The
+    # main resonator path above is silent during consonants (source gated
+    # to vowels), so nothing masks these.
+    next_vowel_formants = {}
+    last_vowel_targets = None
+    for seg in reversed(plan.segments):
+        if seg.kind in ("vowel", "diphthong"):
+            last_vowel_targets = dict(seg.targets) if seg.targets else None
+        elif seg.kind in CONSONANT_KINDS:
+            next_vowel_formants[seg.i] = last_vowel_targets
+
     for seg in plan.segments:
-        if seg.kind in ("fricative", "nasal", "stop", "affricate", "liquid", "glide"):
-            try:
-                from consonants_v2 import synthesize_consonant
-                cons_audio = synthesize_consonant(seg.phone, seg.t1 - seg.t0, SR,
-                                                  rng=np.random.default_rng(plan.style.seed + seg.i))
-                t0_s = int(seg.t0 * SR)
-                t1_s = min(t0_s + len(cons_audio), n_total)
-                n_cons = t1_s - t0_s
-                if n_cons > 0:
-                    output[t0_s:t1_s] += cons_audio[:n_cons] * 0.5
-            except (ValueError, ImportError):
-                pass  # unknown consonant, skip
+        if seg.kind not in CONSONANT_KINDS:
+            continue
+        try:
+            cons_audio = synthesize_segment_consonant(
+                seg, SR, plan.style.seed + 1000 + seg.i,
+                next_formants=next_vowel_formants.get(seg.i),
+            )
+        except (ValueError, ImportError, KeyError):
+            cons_audio = None
+        if cons_audio is None or len(cons_audio) == 0:
+            continue
+        t0_s = int(seg.t0 * SR)
+        t1_s = min(t0_s + len(cons_audio), n_total)
+        n_cons = t1_s - t0_s
+        if n_cons <= 0:
+            continue
+        output[t0_s:t1_s] += cons_audio[:n_cons] * CONSONANT_GAIN
 
 
     # Normalize
@@ -412,11 +486,21 @@ def demo():
     genome_path = os.path.join(os.path.dirname(__file__), "..", "genome", "voice_genome.yaml")
     genome = load_genome(genome_path)
 
-    for text in ["This is the moon.", "She sees the sun."]:
+    # v5 = consonant branch wired in (fricatives/nasals/stops/liquids/glides).
+    # v3/v4 rendered consonants as neutral vowels, so v5 is the first render
+    # where consonants are actually present.
+    sentences = [
+        "This is the moon.",
+        "She sees the sun.",
+        "Hello, world!",
+        "Narusya speaks with Zarza.",
+    ]
+    for text in sentences:
         plan = build_plan(text)
         audio = render_plan_v3(plan, genome)
         out_path = os.path.join(os.path.dirname(__file__), "..", "renders", "phase4",
-                                text.replace(" ", "_").replace(".", "").lower() + "_v3.wav")
+                                text.replace(" ", "_").replace(".", "").replace("!", "")
+                                .replace("?", "").lower() + "_v5.wav")
         os.makedirs(os.path.dirname(out_path), exist_ok=True)
         from scipy.io import wavfile
         wavfile.write(out_path, SR, (audio * 32767).astype(np.int16))

@@ -94,11 +94,47 @@ All 7 steps complete. Phase 4 done.
 - Time-varying liquid formants (rhotic /ɹ/, dark /l/)
 - Glide transitions (cosine easing from onset to offset)
 - Integrated into prosody_poststage.py renderer at 0.5 gain
-- **Adora's feedback (11/10): v4 didn't sound different from v3 — consonant improvements not audible in mix. Possible causes: gain too low, alignment off, normalization compressing. Needs investigation.**
+- **Adora's feedback (11/10): v4 didn't sound different from v3 — consonant improvements not audible in mix.**
 - 10/10 golden sentences pass (full pipeline text→plan→render→audio)
 - Sentences: short statements, questions, function-word dense, long, numbers/abbreviations, OOV names, punctuation variety, stress contrast
 - Golden set saved to tests/golden_set.json
 - See VOICE/analysis/golden_set.py
+
+### Step 5c: Consonant branch fix (v5) — DIAGNOSED + FIXED
+**Root cause of "v4 didn't sound different from v3":** `this_is_the_moon_v3.wav`
+and `this_is_the_moon_v4.wav` are byte-identical (md5 `ea55b3fd…`). The
+consonant integration was a no-op, for three compounding reasons:
+
+1. **Phone-set mismatch.** `consonants_v2.synthesize_consonant` handles stops,
+   affricates, liquids, glides. "This is the moon" contains only fricatives
+   (ð s z ð) and nasals (m n) → every consonant raised `ValueError` and was
+   silently skipped by the `except` clause.
+2. **Main path rendered consonants as vowels.** The glottal source ran for the
+   whole utterance and the formant tracks gave consonants the neutral anchor
+   formants, so every consonant was synthesized as a short neutral vowel.
+3. **Overlay masking.** Consonants were added at 0.5 gain *on top of* that
+   neutral-vowel render, so even handled consonants would have been buried.
+
+**Fix (analysis/prosody_poststage.py):**
+- **Source gating** — the glottal source is now gated to vowel/diphthong regions
+  only (4 ms smoothed mask). Consonants get silence from the main path.
+- **Consonant dispatch** — all six consonant kinds are routed to their own
+  synthesizer: `fricatives.py`, `nasals.py`, `consonants_v2.py`.
+- **/h/ shaping** — aspiration is shaped by the following vowel's formants
+  (was flat white noise, centroid 12 kHz → now 0.8 kHz).
+- **`CONSONANT_KINDS` / `CONSONANT_GAIN`** module constants; gain 0.5 (-6 dB).
+- New diagnostic: `analysis/consonant_level.py` (per-segment RMS + spectral
+  centroid, consonant level vs. vowel).
+
+**Verification (objective):**
+- v5 differs from v3/v4 (md5 no longer identical); vowel waveforms 97-99%
+  correlated with v4 → no vowel-quality regression, just level rebalance.
+- Consonant spectral centroids match targets: /s/ 6680-7005 (target 7000),
+  /z/ 6087-6422 (6500), /ʃ/ 4259 (4000), /ð/ 5304-5525 (5000).
+- Nasals at murmur pole: /m/ 212-259 Hz, /n/ 253-327 Hz.
+- Consonant level -5.5 to -11.1 dB rel. vowel (was ~0 dB — as loud as vowels).
+- Golden set 10/10 pass.
+- Renders: `renders/phase4/*_v5.wav` (moon, sun, hello world, Narusya speaks with Zarza).
 
 ## Companion repo: HEARING
 - Perceptual distance: 6 metrics

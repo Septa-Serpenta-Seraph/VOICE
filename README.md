@@ -24,6 +24,21 @@ This is not voice cloning. This is not sampling. This is building a voice from t
 
 See [STATUS.md](STATUS.md) for the full status and plan.
 
+### Running
+
+No committed venv — the analysis scripts run under `uv` with the deps from
+`requirements.txt`:
+
+```sh
+cd analysis
+uv run --with numpy --with scipy --with pyyaml python prosody_poststage.py --demo
+uv run --with numpy --with scipy --with pyyaml python consonant_level.py
+uv run --with numpy --with scipy --with pyyaml python golden_set.py --run
+```
+
+`librosa`, `soundfile` and `praat-parselmouth` are only needed by the Phase 1/2
+measurement scripts.
+
 ### Phase 1 — COMPLETE ✓
 - 12/12 vowels pass Gate 0 in synthetic mode
 - F4 sweep: 0.2% mean error
