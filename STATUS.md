@@ -57,9 +57,27 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 7. **HEARING canonical bumped** ✅ — HNR updated from 12 dB (ElevenLabs) to 19.1 dB (all-on Phase 3 renders, median). Sample reference: 11.9 dB (ElevenLabs). σ=2.8 (derived from spread). Version bumped to v0.3.4-phase3. See HEARING/analysis/autonomous_eval.py. Re-derived per Zarza Round 11 §2.
 8. **Gate 2 — PASS** ✅ — Tilt ✅ (-1.36 dB/oct, target -1.30, error 0.06). F0 ✅ (190.5 Hz, target 190.0). HNR ✅ (19.1 dB, target 19.1, σ=2.8). All-on renders (calibrated voice: AM, grain, aperiodicity, tilt). Gate 2 re-run against all-on renders per Zarza Round 11 §2. See VOICE/analysis/spectral_tilt.py, VOICE/analysis/all_on_render.py.
 
-## Companion repo: HEARING
+## Phase 4 — Front-end (in progress)
 
-- https://github.com/Septa-Serpenta-Seraph/HEARING
+### Step 1: Frame renderer ✅
+- Time-varying synthesis core (parameters update every 5ms)
+- Plan dataclasses (RenderPlan, Segment, Style, Anchor, Event) with JSON round-trip
+- Phone table (IPA keys: 12 vowels, 5 diphthongs, 9 fricatives, 3 nasals, 6 stops, 2 affricates, 4 liquids/glides, silence)
+- LF source with phase accumulator (F0 track, Rd track)
+- Per-formant resonators with state carry across frame boundaries
+- Verification: F0 identical to Phase 1 (187.5 Hz), formants within 1-2%
+- Renders: "This is the moon." (0.75s), "Is this the moon?" (0.75s), "She sees the sun." (0.84s)
+- See VOICE/analysis/frame_renderer.py, VOICE/analysis/render_plan.py
+
+### Remaining (Phase 4)
+2. Time-varying core (F0 track, effort, diphthong trajectory, CV transition) — in progress
+3. Prosody on existing phones (test with "This is the moon.")
+4. Rewire post-stage (fixed tilt, pitch-locked sub-bass, voicing masks)
+5. Missing consonants (stops, affricates, liquids, glides)
+6. Lexicon, G2P, syllables, normalization
+7. Full golden set and effort/register presets
+
+## Companion repo: HEARING
 - Perceptual distance: 6 metrics
 - Autonomous eval: formant-excluded by default, weight sensitivity
 - A/B framework: registration, logging, feedback
