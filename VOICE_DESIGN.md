@@ -157,7 +157,7 @@ Two corpora: the **original eight** (the canonical comparison set — same files
 | F3 | **2770 Hz** | 2807 Hz | The identity region — see decision box |
 | F4 | 4145 Hz | 4104 Hz | More presence than v1 claimed (3075 was an artifact) |
 | HNR | 11.9 dB | 12.1 dB | Plausible for the source material |
-| Spectral tilt | −4.31 dB/oct | −4.75 dB/oct | **Shallow** — the voice is bright, not steep-warm (ranges: −5.6…−3.6 / −8.7…−2.5) |
+| Spectral tilt | −1.30 dB/oct | −1.43 dB/oct | **Shallow** — the voice is bright, not steep-warm (converted from −4.31/−4.75 dB/decade ×0.301, Round 10 §0) |
 
 ### 3.4 MFCC Timbre Fingerprint (Median, original 8)
 

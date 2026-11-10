@@ -15,7 +15,7 @@ meta:
 measurement_status:
   section3_samples: corrected_round5   # Round 5: re-measured with Praat
   f3_anchor: adopted_with_refinement    # Round 5: 2300 (provisional) → 2770 (measured), refine with vowel-controlled pass
-  measured_tilt_db_per_oct: -4.31       # shallow — voice is brighter than first claimed
+  measured_tilt_db_per_oct: -1.30       # true dB/octave (converted from -4.31 dB/decade ×0.301, Round 10 §0)
   measured_f0_median_hz: 190.9          # original-8 median, matches 190 Hz design target
   measured_f2_median_hz: 1690           # original-8 median (design keeps 1500)
   measured_f4_median_hz: 4145           # original-8 median (design keeps 3100)
@@ -118,4 +118,4 @@ changelog:
   - { version: 0.2.0-adopted, date: 2026-11-09, by: Narusya,
       note: "Round 6: synthetic mode Gate 0 — all 12 vowels pass. F4 sweep: 0.2% mean error (Praat tracker was the problem, not the synth). Genome status flipped from proposal to adopted. Parallel bank for Phase 1 vowels; cascade comparison deferred to A/B listening check." }
   - { version: 0.1.1-proposal, date: 2026-11-09, by: Zarza,
-      note: "Round 5: F3 neutral anchor 2300 (provisional) → 2770 (adopted-with-refinement). Based on re-measurement (original-8 median F3 = 2770 Hz). F2/F4/F1 unchanged per Option C. Measurement status updated: section3 corrected, f3 adopted, tilt -4.31 dB/oct." }
+      note: "Round 5: F3 neutral anchor 2300 (provisional) → 2770 (adopted-with-refinement). Based on re-measurement (original-8 median F3 = 2770 Hz). F2/F4/F1 unchanged per Option C. Measurement status updated: section3 corrected, f3 adopted, tilt -1.30 dB/oct (true, converted from -4.31 dB/decade)." }
