@@ -73,7 +73,7 @@ effects:                      # naming rule governs all: subliminal or it's too 
     lfo_depth_pct: 0.9                # calibrated: 70% of 2% detection threshold (Round 10)
     gate: sustained_voiced_only
   sibilance:                  # ghost of a hiss
-    shelf_db: [2, 3]
+    shelf_db: [0.07, 0.07]    # calibrated: 70% of 0.1 dB detection threshold (Round 10)
     band_hz: [5000, 9000]
     phonemes: [s, ʃ, f, θ]
     noise: shaped             # not white
@@ -81,7 +81,7 @@ effects:                      # naming rule governs all: subliminal or it's too 
   raven_grain:
     band_hz: [1000, 3000]
     implementation: band_aperiodicity   # never waveshaping distortion
-    level_db: -24             # ≈6% of harmonic level
+    level_db: -57             # calibrated: 70% of -54 dB detection threshold (Round 10)
   wolf_warmth:
     am_hz: [3, 5]
     depth_pct: 0.5                      # calibrated: 70% of 2% detection threshold (Round 10)
@@ -121,3 +121,5 @@ changelog:
       note: "Round 5: F3 neutral anchor 2300 (provisional) → 2770 (adopted-with-refinement). Based on re-measurement (original-8 median F3 = 2770 Hz). F2/F4/F1 unchanged per Option C. Measurement status updated: section3 corrected, f3 adopted, tilt -1.30 dB/oct (true, converted from -4.31 dB/decade)." }
   - { version: 0.3.0-phase3, date: 2026-11-09, by: Narusya,
       note: "Phase 3 Step 2: AM family calibrated. Depth ladder (seeds 42/7/123): detection threshold 2% (3x seed-noise). Genome values: sub-bass 0.9%, wolf warmth 0.5% (70% of threshold). Combined 1.4% (cap 8% structural). Enforced in code via enforce_cap()." }
+  - { version: 0.3.1-phase3, date: 2026-11-09, by: Narusya,
+      note: "Phase 3 Step 3: Spectral signatures calibrated. Raven grain: detection threshold -54 dB, genome -57 dB (70%). Ghost-hiss: detection threshold 0.1 dB shelf, genome 0.07 dB. Depth ladders run across seeds 42/7/123 for raven grain." }
