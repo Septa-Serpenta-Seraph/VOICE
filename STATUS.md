@@ -55,7 +55,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 5. **Prosody complete** ✅ — F0 contours (declination +8%→-15%, question rise 25-40%). Pause tiers (clause 100-300ms, sentence 300-600ms). Micro-dip depth: 15% amplitude, 5-15ms. Breath rhythm: phrase-final lengthening 1.3-1.6x. See VOICE/analysis/prosody.py.
 6. **Coarticulation complete** ✅ — CV/VC transitions 60/60 pass (12 vowels × 5 consonants). Nasal place cues 12/12 pass (distinct loci: /m/=800, /n/=1500, /ŋ/=1000 Hz F2). Locus targets per Fant 1960. See VOICE/analysis/coarticulation.py.
 7. **HEARING canonical bumped** ✅ — HNR updated from 12 dB (ElevenLabs adopted) to 94.5 dB (measured from 16 phase1 synthetic vowel renders, median). Version bumped to 0.3.0-phase3. See HEARING/analysis/autonomous_eval.py.
-8. **Gate 2 — PARTIAL** ⚠️ — F0 ✅ (190.5 Hz, target 190.0), HNR ✅ (94.5 dB, target 94.5). Tilt ❌ (-4.27 dB/oct measured vs -1.30 target). Tilt mismatch: phase1 renders are raw formant synthesis without spectral tilt shaping. Spectral shaping is a post-processing step not yet implemented in base synthesis. See renders/gate2_descriptor_match.json.
+8. **Gate 2 — PASS** ✅ — Tilt ✅ (-1.36 dB/oct, target -1.30, error 0.06). F0 ✅ (190.5 Hz, target 190.0). HNR ✅ (94.5 dB, target 94.5). Spectral tilt shaping via tilt EQ (FFT-based, zero-phase). See VOICE/analysis/spectral_tilt.py. Shaped renders in renders/phase1_shaped/.
 
 ## Companion repo: HEARING
 

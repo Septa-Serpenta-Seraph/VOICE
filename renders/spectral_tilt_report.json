@@ -1,0 +1,101 @@
+{
+  "target": -1.3,
+  "results": [
+    {
+      "file": "e.wav",
+      "tilt_before": -3.7160882696143043,
+      "tilt_after": -1.3576439559388747,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "i.wav",
+      "tilt_before": -4.155446001325073,
+      "tilt_after": -1.3387278082524403,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "o.wav",
+      "tilt_before": -5.823805901037993,
+      "tilt_after": -1.4138256782988183,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "u.wav",
+      "tilt_before": -6.228930944956476,
+      "tilt_after": -1.4067899263277268,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u00e6.wav",
+      "tilt_before": -2.3880364567264776,
+      "tilt_after": -1.3244879192680985,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u00e6_f2_design_1650.wav",
+      "tilt_before": -2.3880364567264776,
+      "tilt_after": -1.3244879192680985,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u00e6_f2_reference_1920.wav",
+      "tilt_before": -1.9466308347764623,
+      "tilt_after": -1.3145328164154277,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u0251.wav",
+      "tilt_before": -3.6230594961517277,
+      "tilt_after": -1.3558045287978135,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u0254.wav",
+      "tilt_before": -5.66196391174494,
+      "tilt_after": -1.4172972729830566,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u0259.wav",
+      "tilt_before": -4.43785542944062,
+      "tilt_after": -1.3692420092717663,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u025b.wav",
+      "tilt_before": -3.1868554209255575,
+      "tilt_after": -1.3471104052937914,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u025b_f2_design_1750.wav",
+      "tilt_before": -3.1868554209255575,
+      "tilt_after": -1.3471104052937914,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u025b_f2_reference_2050.wav",
+      "tilt_before": -2.8153089146857555,
+      "tilt_after": -1.3373279109795264,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u026a.wav",
+      "tilt_before": -4.208393325588648,
+      "tilt_after": -1.3666480556489184,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u028a.wav",
+      "tilt_before": -5.675639855403708,
+      "tilt_after": -1.4068305051660996,
+      "tilt_target": -1.3
+    },
+    {
+      "file": "\u028c.wav",
+      "tilt_before": -4.196849057819511,
+      "tilt_after": -1.3694170603877966,
+      "tilt_target": -1.3
+    }
+  ]
+}
