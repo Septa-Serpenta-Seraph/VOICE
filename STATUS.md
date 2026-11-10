@@ -89,7 +89,12 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 - See VOICE/analysis/prosody_poststage.py
 ### Remaining (Phase 4)
 All 7 steps complete. Phase 4 done.
-### Step 7: Golden set + effort/register presets ✅
+### Step 5b: Improved consonants (v2) — INTEGRATED
+- Proper stop bursts (place-specific), VOT, voicing bars
+- Time-varying liquid formants (rhotic /ɹ/, dark /l/)
+- Glide transitions (cosine easing from onset to offset)
+- Integrated into prosody_poststage.py renderer at 0.5 gain
+- **Adora's feedback (11/10): v4 didn't sound different from v3 — consonant improvements not audible in mix. Possible causes: gain too low, alignment off, normalization compressing. Needs investigation.**
 - 10/10 golden sentences pass (full pipeline text→plan→render→audio)
 - Sentences: short statements, questions, function-word dense, long, numbers/abbreviations, OOV names, punctuation variety, stress contrast
 - Golden set saved to tests/golden_set.json

@@ -382,6 +382,22 @@ def render_plan_v3(plan, genome):
                 dip = 1.0 - 0.15 * (1 - window)
                 output[start:end] = output[start:end] * dip
 
+    # Render consonants separately and place in output
+    for seg in plan.segments:
+        if seg.kind in ("fricative", "nasal", "stop", "affricate", "liquid", "glide"):
+            try:
+                from consonants_v2 import synthesize_consonant
+                cons_audio = synthesize_consonant(seg.phone, seg.t1 - seg.t0, SR,
+                                                  rng=np.random.default_rng(plan.style.seed + seg.i))
+                t0_s = int(seg.t0 * SR)
+                t1_s = min(t0_s + len(cons_audio), n_total)
+                n_cons = t1_s - t0_s
+                if n_cons > 0:
+                    output[t0_s:t1_s] += cons_audio[:n_cons] * 0.5
+            except (ValueError, ImportError):
+                pass  # unknown consonant, skip
+
+
     # Normalize
     peak = np.max(np.abs(output))
     if peak > 0:
@@ -389,7 +405,6 @@ def render_plan_v3(plan, genome):
 
     output = output[:int(total_duration * SR)]
     return output
-
 
 # ── Demo ─────────────────────────────────────────────────────────────────
 
