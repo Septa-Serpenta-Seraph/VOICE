@@ -30,8 +30,32 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 7. ~~**Cascade vs parallel**~~ ✅ DONE — with per-formant gains + genome bandwidths, both methods are nearly identical (parallel: 1.97% mean, cascade: 2.00% mean). Parallel wins by 0.03%. Original cascade failure (16-32% F3 error) was due to uniform bandwidth + no gains. See VOICE/analysis/cascade_vs_parallel.py.
 8. ~~**Render provenance**~~ ✅ DONE — phase1_synth.py now writes provenance.json with source, seed, duration, f0, genome status/version, sample rate, bandwidths, and per-render formant values. See VOICE/analysis/phase1_synth.py and renders/phase1/provenance.json.
 
-### Phase 3 (not yet started)
-Character: effects (raven grain, sibilance, breathiness), naming rule calibration, effort coupling, prosody, coarticulation.
+## Phase 3 (in progress — Round 10)
+
+**§0 Tilt units pass: COMPLETE ✅** — all tilt values converted from dB/decade to true dB/octave (×0.301). Canonical: -4.31 → -1.30 dB/oct. HEARING measure_render updated to report true dB/octave.
+
+### Build order (Round 10 brief)
+1. **Effort** — Rd as effort/quality control, F0/F1 coupling
+2. **AM family** — sub-bass purr + wolf warmth, 8% combined cap
+3. **Spectral signatures** — raven grain standing depth, ghost-of-a-hiss
+4. **Prosody** — F0 contours, pause tiers, micro-dip depth, breath rhythm
+5. **Coarticulation** — CV/VC transitions, nasal place cues
+
+### Calibration protocol (naming rule, operationalized)
+- Depth ladder: 8-12 steps from 0
+- Detection threshold = HEARING discrimination (3× seed-noise floor)
+- Genome value = ~70% of threshold
+- Interaction check: all-on render
+
+### Exit criteria (8 items)
+1. Tilt units pass ✅
+2. Effort implemented
+3. AM subsystem live with cap
+4. Raven grain + ghost-hiss calibrated
+5. Prosody complete
+6. Coarticulation passes
+7. HEARING canonical bumped (HNR from calibrated renders)
+8. Gate 2 — descriptor match
 
 ## Companion repo: HEARING
 
