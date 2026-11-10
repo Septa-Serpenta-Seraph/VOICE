@@ -70,7 +70,7 @@ effects:                      # naming rule governs all: subliminal or it's too 
     type: subharmonic_f0_div_2        # pitch-locked (≈95 Hz at F0 190)
     level_db: -18                     # ≈13% of main signal
     lfo_hz: [3, 5]
-    lfo_depth_pct: 5                  # proposal (Round 3, Fix 2)
+    lfo_depth_pct: 0.9                # calibrated: 70% of 2% detection threshold (Round 10)
     gate: sustained_voiced_only
   sibilance:                  # ghost of a hiss
     shelf_db: [2, 3]
@@ -84,9 +84,9 @@ effects:                      # naming rule governs all: subliminal or it's too 
     level_db: -24             # ≈6% of harmonic level
   wolf_warmth:
     am_hz: [3, 5]
-    depth_pct: 3                      # proposal (Round 3, Fix 2)
+    depth_pct: 0.5                      # calibrated: 70% of 2% detection threshold (Round 10)
     scope: sustained_vowels_only
-  combined_slow_am_cap_pct: 8         # proposal (Round 3, Fix 2)
+  combined_slow_am_cap_pct: 8         # structural cap (not actual depth — actual combined = 1.4%)
   breath:
     wander_hz: [0.3, 0.7]
     micro_dips_ms: [5, 15]            # amplitude dips, not silence (Nar's distinction, kept)
@@ -119,3 +119,5 @@ changelog:
       note: "Round 6: synthetic mode Gate 0 — all 12 vowels pass. F4 sweep: 0.2% mean error (Praat tracker was the problem, not the synth). Genome status flipped from proposal to adopted. Parallel bank for Phase 1 vowels; cascade comparison deferred to A/B listening check." }
   - { version: 0.1.1-proposal, date: 2026-11-09, by: Zarza,
       note: "Round 5: F3 neutral anchor 2300 (provisional) → 2770 (adopted-with-refinement). Based on re-measurement (original-8 median F3 = 2770 Hz). F2/F4/F1 unchanged per Option C. Measurement status updated: section3 corrected, f3 adopted, tilt -1.30 dB/oct (true, converted from -4.31 dB/decade)." }
+  - { version: 0.3.0-phase3, date: 2026-11-09, by: Narusya,
+      note: "Phase 3 Step 2: AM family calibrated. Depth ladder (seeds 42/7/123): detection threshold 2% (3x seed-noise). Genome values: sub-bass 0.9%, wolf warmth 0.5% (70% of threshold). Combined 1.4% (cap 8% structural). Enforced in code via enforce_cap()." }
