@@ -289,6 +289,7 @@ def main():
     f0 = 190.0
     rng = np.random.default_rng(args.seed)
     os.makedirs(args.outdir, exist_ok=True)
+    anchor = genome["filter"]["neutral_anchor"]
     report = {"source": args.source, "genome_status": genome["meta"]["status"],
               "vowels": {}, "ab_pairs": {}, "perturbation_roundtrip": {}, "notes": []}
     trim = int(0.25 * SR)
@@ -347,11 +348,42 @@ def main():
               f"error={r['error_pct']}%")
     report["f4_sweep"] = sweep
 
+    # 5. Render provenance manifest.
+    provenance = {
+        "source": args.source,
+        "seed": args.seed,
+        "duration": args.duration,
+        "f0": f0,
+        "genome_status": genome["meta"]["status"],
+        "genome_version": genome["meta"].get("version", "unknown"),
+        "sr": SR,
+        "bandwidths": {k: anchor[k]["bw"] for k in ["F1", "F2", "F3", "F4"]
+                       if k in anchor and isinstance(anchor[k], dict)},
+        "renders": [],
+    }
+    for vowel in vowels:
+        provenance["renders"].append({
+            "file": f"{vowel}.wav",
+            "vowel": vowel,
+            "formants": {
+                "F1": genome["vowel_grid"][vowel][0],
+                "F2": genome["vowel_grid"][vowel][1],
+                "F3": genome["vowel_grid"][vowel][2],
+                "F4": anchor["F4"]["hz"],
+            },
+        })
+    for name in report.get("ab_pairs", {}):
+        provenance["renders"].append({"file": name, "type": "ab_pair"})
+    prov_path = os.path.join(args.outdir, "provenance.json")
+    with open(prov_path, "w") as fh:
+        json.dump(provenance, fh, indent=2)
+    # Save phase1 report
     out = os.path.join(args.outdir, "phase1_report.json")
     with open(out, "w") as fh:
         json.dump(report, fh, indent=2)
-    print(f"\nOverall: {'ALL PASS' if all_pass else 'SOME FAILURES'}")
     print(f"Report: {out}")
+    print(f"Provenance: {prov_path}")
+    print(f"\nOverall: {'ALL PASS' if all_pass else 'SOME FAILURES'}")
     if report["notes"]:
         print("Notes / warnings:")
         for n in report["notes"]:

@@ -1,0 +1,153 @@
+{
+  "source": "simple",
+  "seed": 7,
+  "duration": 1.0,
+  "f0": 190.0,
+  "genome_status": "adopted",
+  "genome_version": "0.2.0-adopted",
+  "sr": 48000,
+  "bandwidths": {
+    "F1": 80,
+    "F2": 100,
+    "F3": 120,
+    "F4": 150
+  },
+  "renders": [
+    {
+      "file": "i.wav",
+      "vowel": "i",
+      "formants": {
+        "F1": 300,
+        "F2": 2350,
+        "F3": 3420,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u026a.wav",
+      "vowel": "\u026a",
+      "formants": {
+        "F1": 430,
+        "F2": 1900,
+        "F3": 3120,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "e.wav",
+      "vowel": "e",
+      "formants": {
+        "F1": 550,
+        "F2": 1900,
+        "F3": 3020,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u025b.wav",
+      "vowel": "\u025b",
+      "formants": {
+        "F1": 650,
+        "F2": 1750,
+        "F3": 2970,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u00e6.wav",
+      "vowel": "\u00e6",
+      "formants": {
+        "F1": 850,
+        "F2": 1650,
+        "F3": 2920,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u0251.wav",
+      "vowel": "\u0251",
+      "formants": {
+        "F1": 800,
+        "F2": 1150,
+        "F3": 2820,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u028c.wav",
+      "vowel": "\u028c",
+      "formants": {
+        "F1": 620,
+        "F2": 1250,
+        "F3": 2770,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u0254.wav",
+      "vowel": "\u0254",
+      "formants": {
+        "F1": 550,
+        "F2": 950,
+        "F3": 2770,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "o.wav",
+      "vowel": "o",
+      "formants": {
+        "F1": 450,
+        "F2": 900,
+        "F3": 2720,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u028a.wav",
+      "vowel": "\u028a",
+      "formants": {
+        "F1": 430,
+        "F2": 1050,
+        "F3": 2720,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "u.wav",
+      "vowel": "u",
+      "formants": {
+        "F1": 350,
+        "F2": 800,
+        "F3": 2670,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u0259.wav",
+      "vowel": "\u0259",
+      "formants": {
+        "F1": 450,
+        "F2": 1500,
+        "F3": 2720,
+        "F4": 3100
+      }
+    },
+    {
+      "file": "\u025b_f2_design_1750.wav",
+      "type": "ab_pair"
+    },
+    {
+      "file": "\u025b_f2_reference_2050.wav",
+      "type": "ab_pair"
+    },
+    {
+      "file": "\u00e6_f2_design_1650.wav",
+      "type": "ab_pair"
+    },
+    {
+      "file": "\u00e6_f2_reference_1920.wav",
+      "type": "ab_pair"
+    }
+  ]
+}
