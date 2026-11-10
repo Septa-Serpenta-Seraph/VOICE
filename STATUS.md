@@ -28,7 +28,7 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 5. ~~**Wire genome bandwidths**~~ ✅ DONE — synthesize_vowel now accepts bandwidths dict (per-formant: F1=80, F2=100, F3=120, F4=150 Hz from genome). render_vowel extracts from genome filter.neutral_anchor. All 12 vowels still pass Gate 0. See VOICE/analysis/phase1_synth.py.
 6. ~~**Canonical MFCC regeneration**~~ ✅ DONE — regenerated through HEARING's measure_render() over 12 synthetic vowel renders (median). New: [-237.6, -41.9, 5.3, 26.6, -59.5, 1.6, -15.9, -25.8, -14.0, -2.8, -32.1, -3.3, -4.0]. Old stale (ElevenLabs) replaced. See HEARING/analysis/regen_canonical_mfcc.py.
 7. ~~**Cascade vs parallel**~~ ✅ DONE — with per-formant gains + genome bandwidths, both methods are nearly identical (parallel: 1.97% mean, cascade: 2.00% mean). Parallel wins by 0.03%. Original cascade failure (16-32% F3 error) was due to uniform bandwidth + no gains. See VOICE/analysis/cascade_vs_parallel.py.
-8. **Render provenance** — which source/seed made each render (metadata)
+8. ~~**Render provenance**~~ ✅ DONE — phase1_synth.py now writes provenance.json with source, seed, duration, f0, genome status/version, sample rate, bandwidths, and per-render formant values. See VOICE/analysis/phase1_synth.py and renders/phase1/provenance.json.
 
 ### Phase 3 (not yet started)
 Character: effects (raven grain, sibilance, breathiness), naming rule calibration, effort coupling, prosody, coarticulation.
