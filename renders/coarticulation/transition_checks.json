@@ -1,0 +1,559 @@
+{
+  "all_pass": true,
+  "results": {
+    "cv": {
+      "m_i": {
+        "passed": true,
+        "notes": []
+      },
+      "n_i": {
+        "passed": true,
+        "notes": [
+          "F1: minimal movement (0.0 Hz)"
+        ]
+      },
+      "\u014b_i": {
+        "passed": true,
+        "notes": [
+          "F1: minimal movement (0.0 Hz)"
+        ]
+      },
+      "s_i": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_i": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "m_e": {
+        "passed": true,
+        "notes": []
+      },
+      "n_e": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_e": {
+        "passed": true,
+        "notes": []
+      },
+      "s_e": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_e": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "m_o": {
+        "passed": true,
+        "notes": []
+      },
+      "n_o": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_o": {
+        "passed": true,
+        "notes": []
+      },
+      "s_o": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_o": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "m_u": {
+        "passed": true,
+        "notes": [
+          "F2: minimal movement (0.0 Hz)"
+        ]
+      },
+      "n_u": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_u": {
+        "passed": true,
+        "notes": []
+      },
+      "s_u": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_u": {
+        "passed": true,
+        "notes": [
+          "F1: minimal movement (0.0 Hz)"
+        ]
+      },
+      "m_\u0259": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u0259": {
+        "passed": true,
+        "notes": [
+          "F2: minimal movement (0.0 Hz)"
+        ]
+      },
+      "\u014b_\u0259": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u0259": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u0259": {
+        "passed": true,
+        "notes": []
+      }
+    },
+    "vc": {
+      "m_i": {
+        "passed": true,
+        "notes": []
+      },
+      "n_i": {
+        "passed": true,
+        "notes": [
+          "F1: minimal movement (0.0 Hz)"
+        ]
+      },
+      "\u014b_i": {
+        "passed": true,
+        "notes": [
+          "F1: minimal movement (0.0 Hz)"
+        ]
+      },
+      "s_i": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_i": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "m_e": {
+        "passed": true,
+        "notes": []
+      },
+      "n_e": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_e": {
+        "passed": true,
+        "notes": []
+      },
+      "s_e": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_e": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u00e6": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u0251": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u028c": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u0254": {
+        "passed": true,
+        "notes": []
+      },
+      "m_o": {
+        "passed": true,
+        "notes": []
+      },
+      "n_o": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_o": {
+        "passed": true,
+        "notes": []
+      },
+      "s_o": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_o": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u028a": {
+        "passed": true,
+        "notes": []
+      },
+      "m_u": {
+        "passed": true,
+        "notes": [
+          "F2: minimal movement (0.0 Hz)"
+        ]
+      },
+      "n_u": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_u": {
+        "passed": true,
+        "notes": []
+      },
+      "s_u": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_u": {
+        "passed": true,
+        "notes": [
+          "F1: minimal movement (0.0 Hz)"
+        ]
+      },
+      "m_\u0259": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u0259": {
+        "passed": true,
+        "notes": [
+          "F2: minimal movement (0.0 Hz)"
+        ]
+      },
+      "\u014b_\u0259": {
+        "passed": true,
+        "notes": []
+      },
+      "s_\u0259": {
+        "passed": true,
+        "notes": []
+      },
+      "\u0283_\u0259": {
+        "passed": true,
+        "notes": []
+      }
+    },
+    "nasal": {
+      "m_i": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "m_e": {
+        "passed": true,
+        "notes": []
+      },
+      "m_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "n_i": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "n_e": {
+        "passed": true,
+        "notes": []
+      },
+      "n_\u025b": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_i": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u026a": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_e": {
+        "passed": true,
+        "notes": []
+      },
+      "\u014b_\u025b": {
+        "passed": true,
+        "notes": []
+      }
+    }
+  }
+}
