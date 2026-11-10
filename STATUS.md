@@ -69,8 +69,13 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 - Renders: "This is the moon." (0.75s), "Is this the moon?" (0.75s), "She sees the sun." (0.84s)
 - See VOICE/analysis/frame_renderer.py, VOICE/analysis/render_plan.py
 
-### Remaining (Phase 4)
-2. Time-varying core (F0 track, effort, diphthong trajectory, CV transition) — in progress
+### Step 2: Time-varying core ✅
+- Proper declination F0 contour (per-phrase, +8%→-15%, exponential)
+- CV/VC transition blending at segment boundaries (from coarticulation.py)
+- Diphthong trajectories in formant tracks (cosine easing)
+- Effort as track (Rd, F0 coupling, tilt)
+- Verification: F0 identical to Step 1 (187.5 Hz), formants within 1-4%
+- See VOICE/analysis/time_varying.py
 3. Prosody on existing phones (test with "This is the moon.")
 4. Rewire post-stage (fixed tilt, pitch-locked sub-bass, voicing masks)
 5. Missing consonants (stops, affricates, liquids, glides)
