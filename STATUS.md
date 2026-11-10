@@ -76,8 +76,18 @@ Build order: noise source → band aperiodicity → fricatives → nasals.
 - Effort as track (Rd, F0 coupling, tilt)
 - Verification: F0 identical to Step 1 (187.5 Hz), formants within 1-4%
 - See VOICE/analysis/time_varying.py
-3. Prosody on existing phones (test with "This is the moon.")
-4. Rewire post-stage (fixed tilt, pitch-locked sub-bass, voicing masks)
+### Step 3+4: Prosody + post-stage rewire ✅
+- Accents on content words, nuclear accent largest (+12%)
+- Question rise anchored to final accented syllable (floored at 25%)
+- Declination per-phrase (+8%→-15%)
+- Pauses at sentence boundaries (clause/sentence tiers)
+- Micro-dips at boundaries (15%, 5-15ms)
+- Phrase-final lengthening (1.3-1.6x on last vowel)
+- Fixed tilt curve (not re-fitted per signal — Claude's risk #5 fix)
+- Pitch-locked sub-bass (F0/2 following contour — risk #8 fix)
+- Aperiodicity gated on voicing mask (no noise under pauses — risk #8 fix)
+- See VOICE/analysis/prosody_poststage.py
+### Remaining (Phase 4)
 5. Missing consonants (stops, affricates, liquids, glides)
 6. Lexicon, G2P, syllables, normalization
 7. Full golden set and effort/register presets
