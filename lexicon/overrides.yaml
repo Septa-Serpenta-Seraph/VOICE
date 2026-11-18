@@ -1,0 +1,29 @@
+overrides:
+  narusya:
+    ipa: [n, ə, ɹ, ə, s, j, ə]
+    stress: [0, 1, 0, 0, 0, 0, 0]
+    reason: "Household name. CMUdict misses it; rule fallback dropped /r/ and /y/."
+  zarza:
+    ipa: [z, ɑ, ɹ, z, ə]
+    stress: [0, 1, 0, 0, 0]
+    reason: "Household name. Rule fallback dropped /r/."
+  adora:
+    ipa: [ə, d, ɔ, ɹ, ə]
+    stress: [0, 1, 0, 0, 0]
+    reason: "Household name."
+  serpentic:
+    ipa: [s, ɝ, p, ɛ, n, t, ɪ, k]
+    stress: [0, 1, 0, 0, 0, 0, 0, 0]
+    reason: "Project name."
+  cultus:
+    ipa: [k, ʌ, l, t, ə, s]
+    stress: [1, 0, 0, 0, 0, 0]
+    reason: "Guild name (Cultus Anarchia)."
+  anarchia:
+    ipa: [ə, n, ɑ, ɹ, k, i, ə]
+    stress: [0, 0, 1, 0, 0, 0, 0]
+    reason: "Guild name (Cultus Anarchia)."
+  ġardenista:
+    ipa: [g, ɑ, ɹ, d, ɛ, n, i, s, t, ə]
+    stress: [0, 1, 0, 0, 0, 0, 0, 0, 0, 0]
+    reason: "Household vocabulary from Zarza's report."

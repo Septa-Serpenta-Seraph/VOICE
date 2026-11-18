@@ -70,6 +70,9 @@ def run_golden():
                 "anchors": len(plan.f0_anchors),
                 "events": len(plan.events),
                 "oov": plan.provenance.get("oov_words", []),
+                "unknown_phones": plan.provenance.get("unknown_phones", []),
+                "g2p_paths": plan.provenance.get("g2p_paths", {}),
+                "phones": [s.phone for s in plan.segments],
             })
             print(f"  OK  {text!r:45s} {duration:.2f}s  {len(plan.segments)} segs")
         except Exception as e:
@@ -88,12 +91,30 @@ def run_golden():
     ok = sum(1 for r in results if r["status"] == "OK")
     print(f"\nGolden set: {ok}/{len(results)} passed")
 
-    # Basic property checks
+    # Structural property checks. These must be able to FAIL. The v3/v4 bug
+    # (a consonant branch that was a silent no-op) and the lexicon no-op both
+    # passed the old "did it render" checks, so we assert on mechanism now.
     print("\nProperty checks:")
     for r in results:
-        if r["status"] == "OK":
-            assert r["duration_s"] > 0, f"Zero duration: {r['text']}"
-            assert r["segments"] > 0, f"No segments: {r['text']}"
+        if r["status"] != "OK":
+            continue
+        assert r["duration_s"] > 0, f"Zero duration: {r['text']}"
+        assert r["segments"] > 0, f"No segments: {r['text']}"
+        assert not r["unknown_phones"], f"Unknown phones dropped: {r['text']}: {r['unknown_phones']}"
+        # Every word in the golden set must resolve through a real lexicon
+        # path. A rule_fallback on a household name is allowed only if it
+        # survives in the override file (checked in a dedicated test below).
+        bad_paths = [w for w, p in r.get("g2p_paths", {}).items()
+                     if p in ("simple_rule",)]
+        assert not bad_paths, f"Placeholder G2P path: {r['text']}: {bad_paths}"
+    # Household names must come from the override dictionary, not fallback.
+    names = [r for r in results if r["text"] == "Narusya speaks with Zarza."]
+    if names:
+        nr = names[0]
+        if nr["status"] == "OK":
+            for name in ("Narusya", "Zarza"):
+                assert nr.get("g2p_paths", {}).get(name) == "override", (
+                    f"Household name {name!r} is not from override dictionary")
     print("  All property checks passed")
 
     return results

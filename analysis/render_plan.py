@@ -353,9 +353,14 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
 
     plan.provenance = {
         "sentence_type": sentence_type,
-        "g2p_path": "simple_rule",
+        "g2p_path": "lexicon",
+        "g2p_paths": {},
         "oov_words": [],
     }
+
+    # Lexicon imports SR from this module, so import lazily here to avoid a
+    # circular import. The dictionary is resolved by lexicon.g2p_word.
+    import lexicon as _lex
 
     # G2P each word
     seg_idx = 0
@@ -364,26 +369,32 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
         word = token.strip(".,!?;:'\"()")
         if not word:
             continue
-        phones = g2p_word(word)
-        # Check OOV
-        if word.lower() not in SIMPLE_G2P:
+        phones, phone_stresses, path = _lex.g2p_word(word)
+        plan.provenance["g2p_paths"][word] = path
+        if path in ("rule_fallback", "oov", "acronym"):
             plan.provenance["oov_words"].append(word)
+        if len(phone_stresses) != len(phones):
+            # Defensive: a lexicon bug must not silently corrupt stress.
+            raise RuntimeError(f"stress/phone length mismatch for {word!r}")
 
-        # Syllabify
-        sylls = syllabify(phones)
+        # Syllabify with the lexicon's phone list; keep its per-phone stress.
+        sylls = _lex.syllabify_phones(phones, phone_stresses)
 
-        # Assign stress: primary on first syllable of content words
+        # Assign stress from the lexicon's per-phone values, positionally.
         is_function = word.lower() in FUNCTION_WORDS
-        for si, syll in enumerate(sylls):
+        pos = 0
+        for si, syll_group in enumerate(sylls):
+            syll = syll_group[0]  # (phones, stress) tuple from lexicon
             for phone in syll:
                 if phone not in PHONE_TABLE:
-                    # Unknown phone — log and skip
+                    # Unknown phone — log it rather than failing silently.
                     plan.provenance.setdefault("unknown_phones", []).append(phone)
+                    pos += 1
                     continue
                 info = PHONE_TABLE[phone]
                 stress = 0
-                if not is_function and si == 0 and _is_vowel(phone):
-                    stress = 1
+                if not is_function and pos < len(phone_stresses):
+                    stress = int(phone_stresses[pos]) if _lex._is_vowel_ipa(phone) else 0
                 seg = Segment(
                     i=seg_idx,
                     phone=phone,
@@ -417,7 +428,8 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
 
                 plan.segments.append(seg)
                 seg_idx += 1
-            word_idx += 1
+                pos += 1
+        word_idx += 1
 
     # Prosody
     plan = plan_prosody(plan)

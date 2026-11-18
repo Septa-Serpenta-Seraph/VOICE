@@ -32,7 +32,7 @@ OVERRIDE_PATH = os.path.join(os.path.dirname(__file__), "..", "lexicon", "overri
 
 ARPABET_TO_IPA = {
     # Consonants
-    "P": "p", "B": "b", "T": "t", "D": "d", "K": "k", "G": "ɡ",
+    "P": "p", "B": "b", "T": "t", "D": "d", "K": "k", "G": "g",
     "CH": "tʃ", "JH": "dʒ",
     "F": "f", "V": "v", "TH": "θ", "DH": "ð",
     "S": "s", "Z": "z", "SH": "ʃ", "ZH": "ʒ",
@@ -66,9 +66,11 @@ def arpabet_to_ipa(arpabet_tokens):
 
         if base in ARPABET_TO_IPA:
             ipa = ARPABET_TO_IPA[base]
-            # R-colored vowel: stress decides ɝ vs ɚ
+            # R-colored vowel: stress decides ɝ (stressed) vs ɚ (unstressed).
+            # Phone table carries only ɝ (with F3 override); ɚ is not a table
+            # entry, so map the unstressed variant to ɝ to avoid a silent drop.
             if base == "ER":
-                ipa = "ɝ" if stress >= 1 else "ɚ"
+                ipa = "ɝ"
             # AH: stressed → ʌ, unstressed → ə
             if base == "AH":
                 ipa = "ʌ" if stress >= 1 else "ə"
