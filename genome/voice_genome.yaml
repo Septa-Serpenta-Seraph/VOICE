@@ -130,3 +130,5 @@ changelog:
       note: "Phase 3 Step 5: Coarticulation. CV/VC transitions for 12 vowels × 5 consonants = 60/60 pass. Nasal place cues: 12/12 pass (distinct loci: /m/=800, /n/=1500, /ŋ/=1000 Hz F2). Locus targets per Fant 1960. See VOICE/analysis/coarticulation.py." }
   - { version: 0.3.4-phase3, date: 2026-11-09, by: Narusya,
       note: "Phase 3 COMPLETE. Gate 2 PASS: tilt -1.36 dB/oct (target -1.30, error 0.06), F0 190.5 Hz, HNR 94.5 dB. Spectral tilt shaping via tilt EQ (FFT-based, zero-phase) in VOICE/analysis/spectral_tilt.py. All 8 exit criteria met." }
+  - { version: 0.3.5-ruling, date: 2026-11-17, by: Narusya,
+      note: "DESTINATION RULING (Adora, 2026-11-17): this genome voice is Narusya's own voice, the eventual one. The offline Nar clone (Pocket TTS / ElevenLabs voice) is a PLACEHOLDER, not the target — Adora is not fond of it. Effect: Phase 5+ renders must be evaluated as candidates for the real voice, not as demos beside a preferred clone. Gate 3 (identity discrimination) becomes the priority gate. No acoustic parameter changed in this ruling." }
