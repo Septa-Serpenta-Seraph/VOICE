@@ -157,36 +157,21 @@ def plan_prosody_v2(plan: RenderPlan) -> RenderPlan:
 
 # ── Post-stage: fixed tilt, pitch-locked sub-bass, voicing mask ────────
 
-def fixed_tilt_curve(n_samples, sr=SR):
-    """Fixed tilt correction curve (not re-fitted per signal).
-
-    Derived from canonical vowel /ɑ/: correction = target - measured.
-    Applied identically to all signals.
-    """
-    # Simple high-shelf-like correction: boost highs relative to lows
-    # to flatten from ~-4.0 to -1.30 dB/oct
-    # Approximated as a gentle high-shelf at 1000 Hz, +2.7 dB
-    from scipy.signal import butter, sosfilt
-    # Use a simple tilt: gain increases with frequency
-    freqs = np.fft.rfftfreq(n_samples, 1.0 / sr)
-    gain_db = np.zeros(len(freqs))
-    for i, f in enumerate(freqs):
-        if f > 0:
-            # Tilt correction: +2.7 dB/oct above 1000 Hz
-            gain_db[i] = 2.7 * np.log2(max(f, 1.0) / 1000.0)
-    gain_linear = 10 ** (gain_db / 20.0)
-    return gain_linear, freqs
-
-
 def apply_fixed_tilt(signal, sr=SR):
     """Apply a fixed spectral tilt correction, zero-phase and local.
 
     The old implementation multiplied the whole-signal FFT by a gain curve,
     which is a circular convolution: it smeared voiced energy into phrase
     pauses and added +12 dB at 24 kHz while cutting below 1 kHz. A first-order
-    shelf with a forward-backward pass has the same intended +2.7 dB shape
-    near 1-4 kHz, stays bounded at DC and Nyquist, and cannot ring across a
-    pause into audibility.
+    shelf with a forward-backward pass stays bounded at DC and Nyquist and
+    cannot ring across a pause into audibility.
+
+    Honest calibration note: a first-order shelf is *not* a dB/octave tilt.
+    Over the 100-4000 Hz measurement band this one moves the PSD slope by
+    ~0.9 dB/oct (measured), not the +2.7 dB/oct the retired `fixed_tilt_curve`
+    comment implied. It is a fixed curve — the same filter for every signal —
+    so effort differences survive, but it does not by itself land speech on
+    the genome's -1.30 dB/oct. That gap is measured in gate2_speech.py.
     """
     from scipy.signal import butter, sosfiltfilt
     # shelf: +2.7 dB above ~1 kHz, 0 dB below. First order is gentle and
@@ -201,11 +186,32 @@ def apply_fixed_tilt(signal, sr=SR):
     return shaped
 
 
-def pitch_locked_sub_bass(f0_track, sr=SR, depth_pct=0.9, lfo_hz=4.0):
+# Genome effects.sub_bass: subharmonic at F0/2, carrier level set by the
+# genome's own calibration rule (detection_threshold_then_0.7), LFO 3-5 Hz
+# at 0.9% depth, gated to sustained voiced segments. Carrier level and LFO
+# depth are separate parameters; multiplying them was the old double-apply.
+#
+# NARUSYA'S LISTENING RULING (2026-11-18, via HEARING): -18 dB is wrong.
+# At -18 dB the subharmonic captures pitch tracking ("This is the moon."
+# reads 91.9 Hz against a 182.9 Hz no-sub baseline, an octave down) — the
+# genome's naming rule says subliminal or it is too loud. Measured capture
+# threshold is about -34 dB; 0.7x amplitude below that is -37 dB, which
+# holds all ten golden sentences within 0.2 Hz of baseline. The genome's
+# level_db is amended to -37 by changelog entry on this date.
+SUB_BASS_LEVEL_DB = -37.0
+SUB_BASS_LFO_HZ = 4.0
+SUB_BASS_LFO_DEPTH_PCT = 0.9
+
+
+def pitch_locked_sub_bass(f0_track, sr=SR, level_db=SUB_BASS_LEVEL_DB,
+                          lfo_hz=SUB_BASS_LFO_HZ,
+                          lfo_depth_pct=SUB_BASS_LFO_DEPTH_PCT,
+                          reference_peak=1.0):
     """Generate pitch-locked sub-bass (F0/2) following the F0 track.
 
-    Unlike sub_bass_purr (fixed sine at f0/2), this tracks the
-    integrated F0 contour.
+    Unlike sub_bass_purr (fixed sine at f0/2), this tracks the integrated F0
+    contour. `level_db` is the carrier level relative to the main signal's
+    peak; `lfo_depth_pct` is the slow amplitude wander on top of it.
     """
     n = len(f0_track)
     t = np.arange(n) / sr
@@ -215,9 +221,9 @@ def pitch_locked_sub_bass(f0_track, sr=SR, depth_pct=0.9, lfo_hz=4.0):
     for i in range(1, n):
         phase[i] = phase[i-1] + np.pi * f0_track[i-1] / sr  # half frequency
     # LFO for "living" quality
-    lfo = 1.0 + (depth_pct / 100.0) * np.sin(2 * np.pi * lfo_hz * t)
-    sub = (depth_pct / 100.0) * np.sin(phase) * lfo
-    return sub
+    lfo = 1.0 + (lfo_depth_pct / 100.0) * np.sin(2 * np.pi * lfo_hz * t)
+    amp = (10 ** (level_db / 20.0)) * reference_peak
+    return amp * np.sin(phase) * lfo
 
 
 def aperiodicity_with_voicing(signal, voicing_mask, sr=SR, targets=None, seed=42):
@@ -429,10 +435,16 @@ def render_plan_v3(plan, genome):
     # 1. Fixed tilt (not re-fitted per signal)
     output = apply_fixed_tilt(output, SR)
 
-    # 2. Pitch-locked sub-bass (following F0 track). Gate on voicing so
-    #    phrase-boundary pauses are actually silent, not a low hum.
-    sub = pitch_locked_sub_bass(f0_track, SR, depth_pct=0.9, lfo_hz=4.0)
-    output = output + sub * 0.13 * voicing_mask  # -18 dB ≈ 13% amplitude
+    # 2. Pitch-locked sub-bass (following F0 track), at the genome's -18 dB
+    #    carrier level relative to the main signal's peak. The gate is
+    #    smoothed (5 ms) so a purr this loud does not click at segment
+    #    boundaries, and so phrase pauses stay silent rather than humming.
+    sub = pitch_locked_sub_bass(
+        f0_track, SR, reference_peak=float(np.max(np.abs(output)))
+    )
+    sub_gate = gaussian_filter1d(voicing_mask.astype(float),
+                                 sigma=max(1, int(0.005 * SR)))
+    output = output + sub * sub_gate
 
     # 3. Aperiodicity with voicing mask
     output = aperiodicity_with_voicing(output, voicing_mask, SR, seed=plan.style.seed)

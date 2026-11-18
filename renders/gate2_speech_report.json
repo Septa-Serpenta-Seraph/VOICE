@@ -1,0 +1,205 @@
+{
+  "gate": "Gate 2 \u2014 descriptor match on speech",
+  "instrument": "HEARING measure_render (tilt 100-4000 Hz, true dB/oct)",
+  "n_sentences": 10,
+  "checks": {
+    "tilt_median": {
+      "value": -4.231,
+      "target": -1.3,
+      "tol": 0.3,
+      "pass": false
+    },
+    "f0_median": {
+      "value": 183.55,
+      "target": 190.0,
+      "tol": 3.0,
+      "pass": false
+    },
+    "f0_anchor_tracking": {
+      "value": 6.75,
+      "target_max_pct": 5.0,
+      "pass": false
+    },
+    "sub_bass_carrier": {
+      "value": -36.92,
+      "target": -37.0,
+      "tol": 3.0,
+      "pass": true
+    },
+    "f0_not_captured": {
+      "value": 0.2,
+      "target_max_hz": 2.0,
+      "pass": true
+    }
+  },
+  "overall": false,
+  "sentences": [
+    {
+      "text": "This is the moon.",
+      "tilt_db_oct": -3.738,
+      "f0_hz": 182.9,
+      "hnr_db": 17.16,
+      "anchor_err_pct": [
+        -10.78,
+        4.29
+      ],
+      "anchor_err_median_pct": 7.53,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -20.75,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 182.9
+    },
+    {
+      "text": "She sees the sun.",
+      "tilt_db_oct": -2.837,
+      "f0_hz": 183.2,
+      "hnr_db": 15.94,
+      "anchor_err_pct": [
+        -3.74,
+        -10.89,
+        4.23
+      ],
+      "anchor_err_median_pct": 4.23,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -18.45,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 183.2
+    },
+    {
+      "text": "What time is it?",
+      "tilt_db_oct": -7.58,
+      "f0_hz": 193.7,
+      "hnr_db": 21.14,
+      "anchor_err_pct": [
+        2.32,
+        11.76,
+        -12.25
+      ],
+      "anchor_err_median_pct": 11.76,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -18.48,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 193.7
+    },
+    {
+      "text": "Is this the moon?",
+      "tilt_db_oct": -3.842,
+      "f0_hz": 191.6,
+      "hnr_db": 16.82,
+      "anchor_err_pct": [
+        5.89,
+        -15.31
+      ],
+      "anchor_err_median_pct": 10.6,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -21.84,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 191.6
+    },
+    {
+      "text": "The cat sat on the mat.",
+      "tilt_db_oct": -4.62,
+      "f0_hz": 183.9,
+      "hnr_db": 17.49,
+      "anchor_err_pct": [
+        -0.42,
+        -6.0,
+        -11.27,
+        4.0
+      ],
+      "anchor_err_median_pct": 5.0,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -16.97,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 183.9
+    },
+    {
+      "text": "The quick brown fox jumps over the lazy dog.",
+      "tilt_db_oct": -3.57,
+      "f0_hz": 179.2,
+      "hnr_db": 17.26,
+      "anchor_err_pct": [
+        3.4,
+        -1.09,
+        -4.2,
+        -6.94,
+        -10.64,
+        -11.58,
+        3.86
+      ],
+      "anchor_err_median_pct": 4.2,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -15.43,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 179.2
+    },
+    {
+      "text": "Dr. Smith has 3 patients today.",
+      "tilt_db_oct": -2.738,
+      "f0_hz": 181.6,
+      "hnr_db": 15.43,
+      "anchor_err_pct": [
+        -3.15,
+        -18.34,
+        -18.34,
+        -18.34,
+        3.75
+      ],
+      "anchor_err_median_pct": 18.34,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -16.27,
+      "f0_capture_dev_hz": 0.2,
+      "f0_no_sub_hz": 181.4
+    },
+    {
+      "text": "Narusya speaks with Zarza.",
+      "tilt_db_oct": -4.705,
+      "f0_hz": 185.0,
+      "hnr_db": 17.18,
+      "anchor_err_pct": [
+        5.37,
+        -6.58,
+        -10.49,
+        4.93
+      ],
+      "anchor_err_median_pct": 5.97,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -12.79,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 185.0
+    },
+    {
+      "text": "Hello, world! How are you?",
+      "tilt_db_oct": -7.98,
+      "f0_hz": 185.6,
+      "hnr_db": 18.97,
+      "anchor_err_pct": [
+        3.27,
+        -8.41,
+        -18.34,
+        -33.44
+      ],
+      "anchor_err_median_pct": 13.37,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -14.47,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 185.6
+    },
+    {
+      "text": "I record the record.",
+      "tilt_db_oct": -5.916,
+      "f0_hz": 180.6,
+      "hnr_db": 21.74,
+      "anchor_err_pct": [
+        0.36,
+        -9.86,
+        5.45
+      ],
+      "anchor_err_median_pct": 5.45,
+      "sub_carrier_db": -36.92,
+      "sub_fund_db": -16.76,
+      "f0_capture_dev_hz": 0.0,
+      "f0_no_sub_hz": 180.6
+    }
+  ]
+}
