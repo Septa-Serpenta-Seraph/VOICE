@@ -61,6 +61,10 @@ def run_golden():
         try:
             plan = build_plan(text)
             audio = render_plan_v3(plan, genome)
+            # Idempotence: the same plan must render byte-identically twice.
+            # The double-planner bug made the second render differ.
+            audio2 = render_plan_v3(plan, genome)
+            assert np.array_equal(audio, audio2), f"Non-idempotent render: {text!r}"
             duration = len(audio) / SR
             results.append({
                 "text": text,

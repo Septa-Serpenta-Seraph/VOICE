@@ -98,7 +98,9 @@ class Style:
     seed: int = 42
 
     def __post_init__(self):
-        # Register presets
+        # Register presets apply ONLY when the caller did not pass an
+        # explicit effort. Previously Style(effort=0.9) was silently
+        # overwritten to 0.5 by the default "neutral" register.
         presets = {
             "neutral": (1.0, 0.5),
             "calm_authority": (0.7, 0.3),
@@ -106,7 +108,11 @@ class Style:
             "wildfire": (1.1, 0.8),
         }
         if self.register in presets:
-            self.register_scale, self.effort = presets[self.register]
+            preset_scale, preset_effort = presets[self.register]
+            self.register_scale = preset_scale
+            # Only adopt preset effort when it is still the class default.
+            if self.effort == 0.5:
+                self.effort = preset_effort
 
 
 @dataclass
@@ -267,18 +273,24 @@ FUNCTION_WORDS = {
 
 # ── Prosody planner (simplified) ──────────────────────────────────────────
 
+# Duration model: inherent duration per phone class (ms).
+# Calibrated 2026-11-17: the old flat table (vowel 80ms) produced
+# 287-319 wpm against the genome's 135-150 target. A word's duration is
+# the sum of its phones, so per-phone minima must be larger; a stressed
+# vowel carries the syllable and gets the biggest share.
+# Module-level so both planners use ONE source of truth.
+PHONE_DURATIONS_MS = {
+    "vowel": 150, "diphthong": 190, "fricative": 110,
+    "nasal": 100, "stop": 75, "affricate": 140,
+    "liquid": 95, "glide": 80, "silence": 0,
+}
+
+
 def plan_prosody(plan: RenderPlan) -> RenderPlan:
     """Assign durations, F0 anchors, pauses, and micro-dips to a plan.
 
     This is a simplified planner. Full prosody integration comes in Step 2.
     """
-    # Duration model: base duration per phone class (ms)
-    PHONE_DURATIONS_MS = {
-        "vowel": 80, "diphthong": 120, "fricative": 90,
-        "nasal": 70, "stop": 60, "affricate": 100,
-        "liquid": 60, "glide": 50, "silence": 0,
-    }
-
     rate_scale = 142.5 / plan.style.rate_wpm if plan.style.rate_wpm > 0 else 1.0
     t = 0.0
     for seg in plan.segments:
@@ -286,8 +298,8 @@ def plan_prosody(plan: RenderPlan) -> RenderPlan:
             seg.t0 = t
             seg.t1 = t
             continue
-        base_ms = PHONE_DURATIONS_MS.get(seg.kind, 70)
-        # Stress scaling: stressed vowels longer
+        base_ms = PHONE_DURATIONS_MS.get(seg.kind, 100)
+        # Stress scaling: stressed vowels carry the syllable
         if seg.stress >= 1:
             base_ms *= 1.3
         # Function words shorter
@@ -309,14 +321,23 @@ def plan_prosody(plan: RenderPlan) -> RenderPlan:
                 reason="accent",
             ))
 
-    # Declination: last anchor in phrase falls to -15%
+    # Declination / question rise: last anchor reflects sentence type.
     if plan.f0_anchors:
         last = plan.f0_anchors[-1]
-        plan.f0_anchors.append(Anchor(
-            t=last.t + 0.1,
-            value=anchor_hz * 0.85,  # -15%
-            reason="declination_end",
-        ))
+        sentence_type = plan.provenance.get("sentence_type", "statement")
+        if sentence_type == "question":
+            rise = max(0.25, 0.325 * plan.style.register_scale)
+            plan.f0_anchors.append(Anchor(
+                t=last.t + 0.1,
+                value=anchor_hz * (1 + rise),
+                reason="question_rise",
+            ))
+        else:
+            plan.f0_anchors.append(Anchor(
+                t=last.t + 0.1,
+                value=anchor_hz * 0.85,  # -15%
+                reason="declination_end",
+            ))
 
     # Phrase-final lengthening on last syllable
     if plan.segments:
@@ -326,6 +347,10 @@ def plan_prosody(plan: RenderPlan) -> RenderPlan:
             last_seg.t1 = last_seg.t0 + dur * 1.4
             # Shift subsequent (none, but good practice)
             t = last_seg.t1
+
+    # Mark this plan as already planned so render_plan_v3 does not re-run
+    # the planner and mutate it a second time.
+    plan.provenance["prosody_planned"] = True
 
     return plan
 

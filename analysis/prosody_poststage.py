@@ -44,14 +44,14 @@ FRAME_SAMPLES = int(5.0 * SR / 1000)
 
 def plan_prosody_v2(plan: RenderPlan) -> RenderPlan:
     """Improved prosody planner with proper accent placement and boundaries."""
-    from render_plan import plan_prosody
+    from render_plan import PHONE_DURATIONS_MS
 
-    # Base durations from Step 2
-    PHONE_DURATIONS_MS = {
-        "vowel": 80, "diphthong": 120, "fricative": 90,
-        "nasal": 70, "stop": 60, "affricate": 100,
-        "liquid": 60, "glide": 50, "silence": 0,
-    }
+    # Idempotence guard: build_plan already ran plan_prosody. Re-running the
+    # planner here appended anchors/events and rescaled durations on every
+    # render, so the same plan rendered differently each time. A plan that is
+    # already marked planned is rendered as-is.
+    if plan.provenance.get("prosody_planned"):
+        return plan
 
     rate_scale = 142.5 / plan.style.rate_wpm if plan.style.rate_wpm > 0 else 1.0
     t = 0.0
@@ -287,11 +287,12 @@ def render_plan_v3(plan, genome):
     import frame_renderer as fr
     from time_varying import build_f0_track, apply_transitions, _lf_source_frame
 
+    # Prosody FIRST: the planner reassigns segment timings, so the output
+    # buffer must be sized from the planned durations, not the pre-plan ones.
+    plan = plan_prosody_v2(plan)
+
     total_duration = plan.segments[-1].t1 if plan.segments else 1.0
     n_total = int(total_duration * SR) + FRAME_SAMPLES
-
-    # Prosody
-    plan = plan_prosody_v2(plan)
 
     # Build F0 track
     f0_track = build_f0_track(plan, n_total)
