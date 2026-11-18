@@ -292,8 +292,16 @@ def plan_prosody(plan: RenderPlan) -> RenderPlan:
     This is a simplified planner. Full prosody integration comes in Step 2.
     """
     rate_scale = 142.5 / plan.style.rate_wpm if plan.style.rate_wpm > 0 else 1.0
+    # Last phone index for each word, so a boundary can be placed after it.
+    last_phone_idx = {}
+    for s in plan.segments:
+        if s.kind != "silence":
+            last_phone_idx[s.word] = s.i
+    boundary_by_word = {
+        b["word"]: b for b in plan.provenance.get("boundaries", [])
+    }
     t = 0.0
-    for seg in plan.segments:
+    for seg in list(plan.segments):
         if seg.kind == "silence":
             seg.t0 = t
             seg.t1 = t
@@ -310,6 +318,16 @@ def plan_prosody(plan: RenderPlan) -> RenderPlan:
         seg.t0 = t
         seg.t1 = t + dur_s
         t = seg.t1
+
+        b = boundary_by_word.get(seg.word)
+        if b is not None and seg.i == last_phone_idx.get(seg.word):
+            silence = Segment(
+                i=len(plan.segments), phone="", kind="silence",
+                t0=t, t1=t + b["pause_ms"] / 1000.0,
+                word=seg.word, syll=0, stress=0, voiced=False,
+            )
+            plan.segments.append(silence)
+            t = silence.t1
 
     # F0 anchors: one per stressed syllable + phrase boundaries
     anchor_hz = 190.0
@@ -366,8 +384,18 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
 
     # Normalize: split on whitespace, keep punctuation attached to words
     import re
+    # Keep punctuation attached while planning so boundaries can be found.
     tokens = text.split()
     plan.words = [t.strip(".,!?;:'\"()") for t in tokens]
+
+    # Phrase boundaries live in provenance so they survive JSON round-trip.
+    # sentence (>300ms) for .?!, clause (100-300ms) for ,;:
+    boundaries = {}
+    for idx, tok in enumerate(tokens):
+        if any(m in tok for m in ".?!"):
+            boundaries[idx] = ("sentence", 400)
+        elif any(m in tok for m in ",;:"):
+            boundaries[idx] = ("clause", 200)
 
     # Determine sentence type
     sentence_type = "statement"
@@ -381,6 +409,11 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
         "g2p_path": "lexicon",
         "g2p_paths": {},
         "oov_words": [],
+        "boundaries": [
+            {"word": i, "tier": tier, "pause_ms": ms}
+            for i, (tier, ms) in sorted(boundaries.items())
+            if i < len(plan.words) - 1  # no trailing pause at utterance end
+        ],
     }
 
     # Lexicon imports SR from this module, so import lazily here to avoid a

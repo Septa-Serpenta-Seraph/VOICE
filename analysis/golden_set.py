@@ -65,6 +65,17 @@ def run_golden():
             # The double-planner bug made the second render differ.
             audio2 = render_plan_v3(plan, genome)
             assert np.array_equal(audio, audio2), f"Non-idempotent render: {text!r}"
+            # Phrase boundaries must produce real silence, not a pause event
+            # that nothing renders.
+            for b in plan.provenance.get("boundaries", []):
+                sil = [s for s in plan.segments
+                       if s.kind == "silence" and s.word == b["word"]]
+                assert sil, f"Boundary not rendered as silence: {text!r} word {b['word']}"
+                s0 = int((sil[0].t0 + 0.02) * SR)
+                s1 = int((sil[0].t1 - 0.02) * SR)
+                if s1 > s0:
+                    rms = float(np.sqrt(np.mean(audio[s0:s1] ** 2)))
+                    assert rms < 1e-3, f"Pause not silent: {text!r} rms={rms}"
             duration = len(audio) / SR
             results.append({
                 "text": text,

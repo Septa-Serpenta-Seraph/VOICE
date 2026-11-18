@@ -216,8 +216,8 @@
     {
       "text": "Dr. Smith has 3 patients today.",
       "status": "OK",
-      "duration_s": 2.98,
-      "segments": 23,
+      "duration_s": 0.93,
+      "segments": 24,
       "anchors": 5,
       "events": 0,
       "oov": [
@@ -255,7 +255,8 @@
         "t",
         "\u0259",
         "d",
-        "e\u026a"
+        "e\u026a",
+        ""
       ]
     },
     {
@@ -299,8 +300,8 @@
     {
       "text": "Hello, world! How are you?",
       "status": "OK",
-      "duration_s": 1.85,
-      "segments": 14,
+      "duration_s": 1.63,
+      "segments": 16,
       "anchors": 4,
       "events": 0,
       "oov": [],
@@ -326,7 +327,9 @@
         "\u0251",
         "\u0279",
         "j",
-        "u"
+        "u",
+        "",
+        ""
       ]
     },
     {

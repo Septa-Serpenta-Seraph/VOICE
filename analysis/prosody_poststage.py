@@ -179,13 +179,22 @@ def fixed_tilt_curve(n_samples, sr=SR):
 
 
 def apply_fixed_tilt(signal, sr=SR):
-    """Apply fixed tilt correction (not per-signal fitted)."""
-    n = len(signal)
-    spectrum = np.fft.rfft(signal)
-    gain_linear, freqs = fixed_tilt_curve(n, sr)
-    spectrum_shaped = spectrum * gain_linear
-    shaped = np.fft.irfft(spectrum_shaped, n=n)
-    # Normalize
+    """Apply a fixed spectral tilt correction, zero-phase and local.
+
+    The old implementation multiplied the whole-signal FFT by a gain curve,
+    which is a circular convolution: it smeared voiced energy into phrase
+    pauses and added +12 dB at 24 kHz while cutting below 1 kHz. A first-order
+    shelf with a forward-backward pass has the same intended +2.7 dB shape
+    near 1-4 kHz, stays bounded at DC and Nyquist, and cannot ring across a
+    pause into audibility.
+    """
+    from scipy.signal import butter, sosfiltfilt
+    # shelf: +2.7 dB above ~1 kHz, 0 dB below. First order is gentle and
+    # bounded; filtfilt removes phase distortion.
+    sos = butter(1, 1000.0, btype="high", fs=sr, output="sos")
+    high = sosfiltfilt(sos, signal)
+    gain = 10 ** (2.7 / 20.0) - 1.0  # ≈ 0.355 extra above the shelf
+    shaped = signal + high * gain
     peak = np.max(np.abs(shaped))
     if peak > 0.95:
         shaped = shaped * (0.95 / peak)
@@ -420,9 +429,10 @@ def render_plan_v3(plan, genome):
     # 1. Fixed tilt (not re-fitted per signal)
     output = apply_fixed_tilt(output, SR)
 
-    # 2. Pitch-locked sub-bass (following F0 track)
+    # 2. Pitch-locked sub-bass (following F0 track). Gate on voicing so
+    #    phrase-boundary pauses are actually silent, not a low hum.
     sub = pitch_locked_sub_bass(f0_track, SR, depth_pct=0.9, lfo_hz=4.0)
-    output = output + sub * 0.13  # -18 dB ≈ 13% amplitude
+    output = output + sub * 0.13 * voicing_mask  # -18 dB ≈ 13% amplitude
 
     # 3. Aperiodicity with voicing mask
     output = aperiodicity_with_voicing(output, voicing_mask, SR, seed=plan.style.seed)
