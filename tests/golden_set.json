@@ -19,7 +19,26 @@
       "segments": 10,
       "anchors": 4,
       "events": 2,
-      "oov": []
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "This": "cmudict",
+        "is": "cmudict",
+        "the": "cmudict",
+        "moon": "cmudict"
+      },
+      "phones": [
+        "\u00f0",
+        "\u026a",
+        "s",
+        "\u026a",
+        "z",
+        "\u00f0",
+        "\u0259",
+        "m",
+        "u",
+        "n"
+      ]
     },
     {
       "text": "She sees the sun.",
@@ -28,7 +47,26 @@
       "segments": 10,
       "anchors": 6,
       "events": 2,
-      "oov": []
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "She": "cmudict",
+        "sees": "cmudict",
+        "the": "cmudict",
+        "sun": "cmudict"
+      },
+      "phones": [
+        "\u0283",
+        "i",
+        "s",
+        "i",
+        "z",
+        "\u00f0",
+        "\u0259",
+        "s",
+        "\u0259",
+        "n"
+      ]
     },
     {
       "text": "What time is it?",
@@ -37,7 +75,26 @@
       "segments": 10,
       "anchors": 6,
       "events": 2,
-      "oov": []
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "What": "cmudict",
+        "time": "cmudict",
+        "is": "cmudict",
+        "it": "cmudict"
+      },
+      "phones": [
+        "w",
+        "\u0259",
+        "t",
+        "t",
+        "a\u026a",
+        "m",
+        "\u026a",
+        "z",
+        "\u026a",
+        "t"
+      ]
     },
     {
       "text": "Is this the moon?",
@@ -46,92 +103,262 @@
       "segments": 10,
       "anchors": 4,
       "events": 2,
-      "oov": []
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "Is": "cmudict",
+        "this": "cmudict",
+        "the": "cmudict",
+        "moon": "cmudict"
+      },
+      "phones": [
+        "\u026a",
+        "z",
+        "\u00f0",
+        "\u026a",
+        "s",
+        "\u00f0",
+        "\u0259",
+        "m",
+        "u",
+        "n"
+      ]
     },
     {
       "text": "The cat sat on the mat.",
       "status": "OK",
-      "duration_s": 1.07,
-      "segments": 14,
+      "duration_s": 1.13,
+      "segments": 15,
       "anchors": 8,
       "events": 2,
-      "oov": [
-        "cat",
-        "sat",
-        "on",
-        "mat"
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "The": "cmudict",
+        "cat": "cmudict",
+        "sat": "cmudict",
+        "on": "cmudict",
+        "the": "cmudict",
+        "mat": "cmudict"
+      },
+      "phones": [
+        "\u00f0",
+        "\u0259",
+        "k",
+        "\u00e6",
+        "t",
+        "s",
+        "\u00e6",
+        "t",
+        "\u0251",
+        "n",
+        "\u00f0",
+        "\u0259",
+        "m",
+        "\u00e6",
+        "t"
       ]
     },
     {
       "text": "The quick brown fox jumps over the lazy dog.",
       "status": "OK",
-      "duration_s": 2.07,
-      "segments": 27,
-      "anchors": 13,
+      "duration_s": 2.53,
+      "segments": 31,
+      "anchors": 14,
       "events": 2,
-      "oov": [
-        "quick",
-        "brown",
-        "fox",
-        "jumps",
-        "over",
-        "lazy",
-        "dog"
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "The": "cmudict",
+        "quick": "cmudict",
+        "brown": "cmudict",
+        "fox": "cmudict",
+        "jumps": "cmudict",
+        "over": "cmudict",
+        "the": "cmudict",
+        "lazy": "cmudict",
+        "dog": "cmudict"
+      },
+      "phones": [
+        "\u00f0",
+        "\u0259",
+        "k",
+        "w",
+        "\u026a",
+        "k",
+        "b",
+        "\u0279",
+        "a\u028a",
+        "n",
+        "f",
+        "\u0251",
+        "k",
+        "s",
+        "d\u0292",
+        "\u0259",
+        "m",
+        "p",
+        "s",
+        "o\u028a",
+        "v",
+        "\u025d",
+        "\u00f0",
+        "\u0259",
+        "l",
+        "e\u026a",
+        "z",
+        "i",
+        "d",
+        "\u0254",
+        "g"
       ]
     },
     {
       "text": "Dr. Smith has 3 patients today.",
       "status": "OK",
-      "duration_s": 1.74,
-      "segments": 22,
+      "duration_s": 2.02,
+      "segments": 23,
       "anchors": 10,
       "events": 2,
       "oov": [
-        "Dr",
-        "Smith",
-        "has",
-        "3",
-        "patients",
-        "today"
+        "3"
+      ],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "Dr": "cmudict",
+        "Smith": "cmudict",
+        "has": "cmudict",
+        "3": "oov",
+        "patients": "cmudict",
+        "today": "cmudict"
+      },
+      "phones": [
+        "d",
+        "\u0279",
+        "a\u026a",
+        "v",
+        "s",
+        "m",
+        "\u026a",
+        "\u03b8",
+        "h",
+        "\u00e6",
+        "z",
+        "\u0259",
+        "p",
+        "e\u026a",
+        "\u0283",
+        "\u0259",
+        "n",
+        "t",
+        "s",
+        "t",
+        "\u0259",
+        "d",
+        "e\u026a"
       ]
     },
     {
       "text": "Narusya speaks with Zarza.",
       "status": "OK",
-      "duration_s": 1.56,
-      "segments": 19,
+      "duration_s": 1.58,
+      "segments": 20,
       "anchors": 8,
       "events": 2,
-      "oov": [
-        "Narusya",
-        "speaks",
-        "with",
-        "Zarza"
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "Narusya": "override",
+        "speaks": "cmudict",
+        "with": "cmudict",
+        "Zarza": "override"
+      },
+      "phones": [
+        "n",
+        "\u0259",
+        "\u0279",
+        "\u0259",
+        "s",
+        "j",
+        "\u0259",
+        "s",
+        "p",
+        "i",
+        "k",
+        "s",
+        "w",
+        "\u026a",
+        "\u00f0",
+        "z",
+        "\u0251",
+        "\u0279",
+        "z",
+        "\u0259"
       ]
     },
     {
       "text": "Hello, world! How are you?",
       "status": "OK",
-      "duration_s": 1.12,
-      "segments": 15,
-      "anchors": 5,
+      "duration_s": 1.15,
+      "segments": 14,
+      "anchors": 8,
       "events": 2,
-      "oov": [
-        "How",
-        "are"
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "Hello": "cmudict",
+        "world": "cmudict",
+        "How": "cmudict",
+        "are": "cmudict",
+        "you": "cmudict"
+      },
+      "phones": [
+        "h",
+        "\u0259",
+        "l",
+        "o\u028a",
+        "w",
+        "\u025d",
+        "l",
+        "d",
+        "h",
+        "a\u028a",
+        "\u0251",
+        "\u0279",
+        "j",
+        "u"
       ]
     },
     {
       "text": "I record the record.",
       "status": "OK",
-      "duration_s": 0.7,
-      "segments": 9,
+      "duration_s": 1.09,
+      "segments": 15,
       "anchors": 6,
       "events": 2,
-      "oov": [
-        "I",
-        "record",
-        "record"
+      "oov": [],
+      "unknown_phones": [],
+      "g2p_paths": {
+        "I": "cmudict",
+        "record": "cmudict",
+        "the": "cmudict"
+      },
+      "phones": [
+        "a\u026a",
+        "\u0279",
+        "\u0259",
+        "k",
+        "\u0254",
+        "\u0279",
+        "d",
+        "\u00f0",
+        "\u0259",
+        "\u0279",
+        "\u0259",
+        "k",
+        "\u0254",
+        "\u0279",
+        "d"
       ]
     }
   ]
