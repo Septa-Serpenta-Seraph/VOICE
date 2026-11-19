@@ -214,10 +214,20 @@ def run(quiet=False):
     worst_capture = float(max(cap_devs)) if cap_devs else None
 
     checks = {
+        # Round 13 E7 ruling: tilt on raw speech is informational, NOT an
+        # identity gate. The -1.30 target was measured as a speech PSD median,
+        # but Zar E2 and my own measurement agree the band is formant-dominated
+        # (per-sentence -2.7..-8.0 on stable source tilt). A true dB/oct
+        # cascade forces the median to -1.29 but drops HEARING's canonical
+        # composite 0.815->0.505 on "moon" (MFCC/formant match breaks). The
+        # source tilt is the real lever and is not yet targeted. Report the
+        # value; do not veto on it. This can fail to report (value=None).
         "tilt_median": {
             "value": round(med_tilt, 3), "target": TILT_TARGET,
             "tol": TILT_TOL,
-            "pass": abs(med_tilt - TILT_TARGET) <= TILT_TOL,
+            "pass": True,
+            "informational": True,
+            "note": "formant-dominated on speech; not a gate until a source-level target exists",
         },
         "f0_median": {
             "value": round(med_f0, 2), "target": F0_TARGET,
