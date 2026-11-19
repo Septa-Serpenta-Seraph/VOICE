@@ -61,6 +61,30 @@ def effort_to_f1_shift(effort: float) -> float:
 
 # ── LF source with phase accumulator ─────────────────────────────────────
 
+def _aspiration_level(default_db=-25.0):
+    """Read aspiration noise level from the genome (dB relative to LF peak).
+
+    Cached after first read; falls back to -25 dB if genome/field absent.
+    Zarza Round 15 used -25 dB diagnostically to recover front-vowel F2.
+    """
+    if getattr(_aspiration_level, "cached", None) is not None:
+        return _aspiration_level.cached
+    level = default_db
+    try:
+        import os
+        import yaml
+        gp = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "genome", "voice_genome.yaml")
+        with open(gp) as f:
+            g = yaml.safe_load(f)
+        src = g.get("source", {}).get("perturbation", {})
+        if src.get("aspiration_noise"):
+            level = float(src.get("aspiration_noise_level_db", default_db))
+    except Exception:
+        pass
+    _aspiration_level.cached = level
+    return level
+
+
 def lf_source_frame(f0_hz: float, rd: float, n_samples: int,
                     phase_state: dict, sr: float = SR,
                     jitter_pct: float = 0.7, rng=None) -> np.ndarray:
@@ -71,6 +95,14 @@ def lf_source_frame(f0_hz: float, rd: float, n_samples: int,
     """
     if rng is None:
         rng = np.random.default_rng(42)
+
+    # Round 15: the genome specifies glottal-cycle-shaped aspiration noise
+    # (source.perturbation.aspiration_noise) but no renderer wired it. Without
+    # it, the LF source is a pure periodic pulse; formants that fall between
+    # harmonics (front vowels especially) have nothing to excite them. Add
+    # cycle-shaped noise: stronger near the closing phase, absent in the
+    # quietest part of the cycle. Level read from the genome, not hardcoded.
+    asp_level = _aspiration_level()
 
     tp, te, ta = lf_timing_from_rd(rd, f0_hz)
     t0 = 1.0 / f0_hz
@@ -100,6 +132,15 @@ def lf_source_frame(f0_hz: float, rd: float, n_samples: int,
             val = -A * (np.exp(-eps * t_ret) - np.exp(-eps * t_rem))
 
         output[i] = val
+
+        # Cycle-shaped aspiration: strongest near the closing phase (t/te in
+        # the return phase), quiet during the open phase. Fills the spectral
+        # gaps between harmonics so high, misaligned formants can still ring.
+        if asp_level > -120.0:
+            cycle_frac = min(t_in_cycle / te, 1.0) if te > 0 else 0.0
+            shape = cycle_frac ** 2  # ramp up toward closure
+            noise_amp = (10 ** (asp_level / 20.0)) * shape
+            output[i] += noise_amp * rng.normal()
 
         # Advance
         pos_in_cycle += 1.0 / sr
@@ -149,24 +190,24 @@ def _lf_alpha(tp, te, ta, t0):
 # ── Resonator (single formant, with state carry) ─────────────────────────
 
 def resonator_coeffs(f_hz: float, bw_hz: float, sr: float = SR):
-    """Bandpass resonator for a PARALLEL formant bank.
+    """Bandpass formant resonator, normalized to UNITY peak gain.
 
-    Gate 1 fix (2026-11-19): the old b=[1] all-pole resonator passed DC at
-    unity gain. Summed across four parallel formants, low-frequency F0/H2
-    energy leaked through every branch and drowned F2/F3 — the render was
-    unintelligible (Whisper could not transcribe it). A parallel bank needs
-    zeros at DC and Nyquist: b=[1,0,-1]. Peak gain is scaled back up by the
-    resonator's DC-distance so formant peaks keep their intended height.
+    Round 15 fix: the previous bandpass removed the LF source's DC offset but
+    left peak gain = 1/|denominator(w0)|, which is 1630x at F1 450Hz vs 394x
+    at F2 1500Hz — F1 was amplified 4x more, drowning vowel identity. Balanced
+    parallel banks need equal peak gains, then deliberate relative weights.
+
+    Zeros at DC (z=+1) and Nyquist (z=-1): b = [1,0,-1].
+    |num(w0)| = 2*sin(w0); scale b by |den(w0)|/|num(w0)| for unity peak.
     """
     w0 = 2 * np.pi * f_hz / sr
     r = np.exp(-np.pi * bw_hz / sr)
     a = [1.0, -2 * r * np.cos(w0), r**2]
-    # Bandpass numerator: zeros at z=+1 (DC) and z=-1 (Nyquist). This blocks
-    # the LF source's large DC offset (mean ~0.106, 46% of RMS) that the old
-    # b=[1] all-pole form let flood through all four summed branches.
-    # Normalize so the formant peak keeps roughly unity gain: |1-e^{-j2w0}|=2sin(w0).
-    g = 2.0 * np.sin(w0) if np.sin(w0) > 1e-6 else 1.0
-    b = [1.0/g, 0.0, -1.0/g]
+    den = 1.0 - 2 * r * np.cos(w0) * np.exp(-1j * w0) + r**2 * np.exp(-2j * w0)
+    num = abs(2.0 * np.sin(w0))
+    g = num / abs(den)                 # unnormalized peak gain
+    scale = 1.0 / g if g > 1e-9 else 1.0
+    b = [scale, 0.0, -scale]
     return b, a
 
 

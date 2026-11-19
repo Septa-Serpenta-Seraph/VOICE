@@ -36,6 +36,7 @@ source:                       # LF (Liljencrants–Fant) glottal model
     shimmer_local_pct: { target: 4.0, range: [3.0, 5.0] }
     structure: slow_drift_plus_cycle   # NOT independent per-cycle noise
     aspiration_noise: glottal_cycle_shaped   # stronger near closing phase
+    aspiration_noise_level_db: -120   # wired; OFF by measurement 2026-11-19 (see 0.3.15)
 
 filter:                       # Hybrid Klatt
   architecture: hybrid_klatt  # cascade: sonorants · parallel: fricatives, bursts, nasals
@@ -157,3 +158,6 @@ changelog:
 
   - { version: 0.3.14-gate1, date: 2026-11-19, by: Narusya,
       note: "GATE 1 (intelligibility) BUILT AND FAILING. Adora ruled the genome clip 'not speech, indistinguishable from noise'; human verdict overrides machine (calibration logged in HEARING 32bae8a). Independent oracle faster-whisper-base (never seen the genome, confirmed transcribing real speech) scores WER 1.0 on 4 golden sentences — the render is not intelligible. ROOT CAUSES found: (1) LF source has DC offset 0.106 (46% of RMS); (2) parallel formant bank used all-pole b=[1] resonators, so DC leaked through all four summed branches and drowned F2/F3. Changed resonator_coeffs to a DC/Nyquist bandpass with peak normalization — correct physics, but Gate 1 STILL FAILS, so it is NOT claimed as a fix. Golden set still 10/10, which is itself the circularity evidence: structural/circular checks pass while independent ASR fails. gate1_intelligibility.py is the new fail-able gate; all perceptual scores are now informative-only until Gate 1 passes. Do not present composite/MFCC numbers as progress." }
+
+  - { version: 0.3.15-round15, date: 2026-11-19, by: Narusya,
+      note: "ROUND 15 (Zarza): primary Q2 mechanism FIXED. resonator_coeffs was bandpass but peak gain was 1/|den(w0)| — 1630x at F1 450Hz vs 394x at F2 1500Hz, amplifying F1 ~4x and drowning vowel identity. Replaced with analytic UNITY peak gain (measured 1.001/1.000/1.000; DC 0). F2-band energy on 'This is the moon' went 2.24% -> 20.41% (real speech min 3.12), and all four golden renders now PASS HEARING speech-presence. Gate 1 WER still 1.0 — WHisper now hears speech-shaped words ('What the fuck is the name?') instead of silence, but not the target. NOT intelligible yet; do not claim Gate 1 pass. SECONDARY LEVERS TESTED AND REJECTED on the full utterance: aspiration noise (genome knob now wired, level_db -120 = OFF) lowered F2 20.4->16.3% and inflated entropy 5.7->7.7; bandwidth widening x1.3/x2/x3 lowered F2 20.4->17.7/15.1/14.4%. Zarza's diagnostics helped isolated /a/ but hurt running speech; kept only the gain fix. Genome bandwidth_widening 1.3 remains unused (declared-but-unwired; no change). Structural golden 10/10 means STRUCTURALLY WELL-FORMED, never '10/10 speech'." }
