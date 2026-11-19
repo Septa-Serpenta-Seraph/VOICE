@@ -299,8 +299,13 @@ def synthesize_segment_consonant(seg, sr, seed, next_formants=None):
     return synthesize_consonant(seg.phone, dur, sr, rng=np.random.default_rng(seed))
 
 
-def render_plan_v3(plan, genome):
-    """Render with full prosody + post-stage (tilt, sub-bass, aperiodicity as tracks)."""
+def render_plan_v3(plan, genome, overrides=None):
+    """Render with full prosody + post-stage (tilt, sub-bass, aperiodicity as tracks).
+
+    overrides: optional dict for Gate 3 perturbation — keys may include
+    'f0_target' (Hz), 'rd' (LF openness), and 'effect_scale' (dict of effect
+    name -> depth multiplier). None (default) leaves the render unchanged.
+    """
     import frame_renderer as fr
     from time_varying import build_f0_track, apply_transitions, _lf_source_frame
 
@@ -314,8 +319,11 @@ def render_plan_v3(plan, genome):
     total_duration = max((s.t1 for s in plan.segments), default=1.0)
     n_total = int(total_duration * SR) + FRAME_SAMPLES
 
+    overrides = overrides or {}
+    f0_target = overrides.get("f0_target")
+
     # Build F0 track
-    f0_track = build_f0_track(plan, n_total)
+    f0_track = build_f0_track(plan, n_total, f0_target=f0_target)
 
     # Build formant tracks
     anchor = genome["filter"]["neutral_anchor"]
@@ -338,6 +346,9 @@ def render_plan_v3(plan, genome):
         if t0_s >= t1_s:
             continue
         targets = seg.targets if seg.targets else default_formants
+        targets = dict(targets)  # copy; do not mutate the plan
+        if "f3_scale" in overrides:
+            targets["F3"] = targets.get("F3", default_formants["F3"]) * float(overrides["f3_scale"])
         for f in ["F1", "F2", "F3", "F4"]:
             val = targets.get(f, default_formants[f])
             formant_tracks[f][t0_s:t1_s] = val
@@ -362,7 +373,9 @@ def render_plan_v3(plan, genome):
             else:
                 last = formant_tracks[f][i]
 
-    formant_tracks = apply_transitions(plan, genome, formant_tracks)
+    formant_tracks = apply_transitions(
+        plan, genome, formant_tracks,
+        f3_scale=overrides.get("f3_scale"))
 
     # Voicing mask
     voicing_mask = np.zeros(n_total)
@@ -372,8 +385,9 @@ def render_plan_v3(plan, genome):
             t1_s = min(int(seg.t1 * SR), n_total)
             voicing_mask[t0_s:t1_s] = 1.0
 
-    # Rd track
-    rd_base = effort_to_rd(plan.style.effort)
+    # Rd track (Gate 3: allow explicit override)
+    rd_override = overrides.get("rd")
+    rd_base = rd_override if rd_override is not None else effort_to_rd(plan.style.effort)
     rd_track = np.full(n_total, rd_base)
 
     # Generate source
@@ -445,7 +459,13 @@ def render_plan_v3(plan, genome):
     #    the genome here so code and genome cannot drift (Round 13 §2.3).
     #    The gate is smoothed (5 ms) so the purr does not click at segment
     #    boundaries, and phrase pauses stay silent rather than humming.
-    sb = genome["effects"]["sub_bass"]
+    sb = dict(genome["effects"]["sub_bass"])  # copy so overrides don't mutate genome
+    effect_scale = overrides.get("effect_scale", {})
+    if "sub_bass" in effect_scale:
+        # Multiply carrier depth: convert to level_db offset.
+        scale = float(effect_scale["sub_bass"])
+        if scale > 0:
+            sb["level_db"] = float(sb["level_db"]) + 20 * np.log10(scale)
     sub = pitch_locked_sub_bass(
         f0_track, SR,
         level_db=float(sb["level_db"]),

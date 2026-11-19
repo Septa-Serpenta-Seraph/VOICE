@@ -46,12 +46,15 @@ def _f0_target():
         return 190.9
 
 
-def build_f0_track(plan, n_total, sr=SR):
+def build_f0_track(plan, n_total, sr=SR, f0_target=None):
     """Build a proper F0 track with per-phrase declination.
 
     Declination: +8% at phrase start, -15% at phrase end.
     Accents: content words get +8% on stressed syllable.
     Question: final rise 25-40% on last accented syllable.
+
+    f0_target: optional override (Hz) for Gate 3 F0 perturbation. When None,
+    the genome's measured_f0_median_hz is used. Existing callers unaffected.
     """
     # Round 14 Q1: per-utterance derivation, no fitted scalar. The contour is
     # deterministic given base: declination, accents and question rise all
@@ -61,7 +64,7 @@ def build_f0_track(plan, n_total, sr=SR):
     # declination-exposure variation per utterance, replacing the old global
     # 0.988 that was fitted to (and hidden by) the golden set. The question
     # rise is kept as a signal: it lifts the median, which is correct.
-    f0_target_median = _f0_target()  # from genome, 190.9
+    f0_target_median = f0_target if f0_target is not None else _f0_target()  # from genome, 190.9
     f0_base = 1.0 * (1.0 + 0.03 * plan.style.effort)  # effort coupling, unit base
     track = np.full(n_total, f0_base)
     sentence_type = plan.provenance.get("sentence_type", "statement")
@@ -142,7 +145,7 @@ def build_f0_track(plan, n_total, sr=SR):
     return track
 
 
-def apply_transitions(plan, genome, formant_tracks, sr=SR):
+def apply_transitions(plan, genome, formant_tracks, sr=SR, f3_scale=None):
     """Blend formant tracks at segment boundaries using CV/VC transitions.
 
     For each adjacent pair of segments, compute the transition trajectory
@@ -162,12 +165,15 @@ def apply_transitions(plan, genome, formant_tracks, sr=SR):
 
         # Get formant dicts
         def seg_formants(seg):
+            f3 = seg.targets.get("F3", 2770) if seg.targets else 2770
+            if f3_scale is not None:
+                f3 = f3 * float(f3_scale)
             if seg.targets:
                 return {"F1": seg.targets.get("F1", 450),
                         "F2": seg.targets.get("F2", 1500),
-                        "F3": seg.targets.get("F3", 2770),
+                        "F3": f3,
                         "F4": seg.targets.get("F4", default_f4)}
-            return {"F1": 450, "F2": 1500, "F3": 2770, "F4": default_f4}
+            return {"F1": 450, "F2": 1500, "F3": f3, "F4": default_f4}
 
         vf_a = seg_formants(seg_a)
         vf_b = seg_formants(seg_b)

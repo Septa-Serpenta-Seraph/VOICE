@@ -1,0 +1,154 @@
+{
+  "sentence": "This is the moon.",
+  "base_vs_base": 0.0,
+  "families": {
+    "f0": [
+      {
+        "name": "f0_-10",
+        "distance": 0.05,
+        "overrides": {
+          "f0_target": 180.9
+        }
+      },
+      {
+        "name": "f0_-5",
+        "distance": 0.0335,
+        "overrides": {
+          "f0_target": 185.9
+        }
+      },
+      {
+        "name": "f0_+5",
+        "distance": 0.0341,
+        "overrides": {
+          "f0_target": 195.9
+        }
+      },
+      {
+        "name": "f0_+10",
+        "distance": 0.0554,
+        "overrides": {
+          "f0_target": 200.9
+        }
+      }
+    ],
+    "f3": [
+      {
+        "name": "f3_-5pct",
+        "distance": 0.0232,
+        "overrides": {
+          "f3_scale": 0.95
+        }
+      },
+      {
+        "name": "f3_-2pct",
+        "distance": 0.0119,
+        "overrides": {
+          "f3_scale": 0.98
+        }
+      },
+      {
+        "name": "f3_+2pct",
+        "distance": 0.0138,
+        "overrides": {
+          "f3_scale": 1.02
+        }
+      },
+      {
+        "name": "f3_+5pct",
+        "distance": 0.0673,
+        "overrides": {
+          "f3_scale": 1.05
+        }
+      }
+    ],
+    "rd": [
+      {
+        "name": "rd_0.95",
+        "distance": 0.04,
+        "overrides": {
+          "rd": 0.95
+        }
+      },
+      {
+        "name": "rd_1.05",
+        "distance": 0.0305,
+        "overrides": {
+          "rd": 1.05
+        }
+      },
+      {
+        "name": "rd_1.25",
+        "distance": 0.0328,
+        "overrides": {
+          "rd": 1.25
+        }
+      },
+      {
+        "name": "rd_1.40",
+        "distance": 0.0587,
+        "overrides": {
+          "rd": 1.4
+        }
+      }
+    ],
+    "effects": [
+      {
+        "name": "sub_0.5x",
+        "distance": 0.0088,
+        "overrides": {
+          "effect_scale": {
+            "sub_bass": 0.5
+          }
+        }
+      },
+      {
+        "name": "sub_1.5x",
+        "distance": 0.0065,
+        "overrides": {
+          "effect_scale": {
+            "sub_bass": 1.5
+          }
+        }
+      },
+      {
+        "name": "sub_2.0x",
+        "distance": 0.0118,
+        "overrides": {
+          "effect_scale": {
+            "sub_bass": 2.0
+          }
+        }
+      },
+      {
+        "name": "sub_3.0x",
+        "distance": 0.0191,
+        "overrides": {
+          "effect_scale": {
+            "sub_bass": 3.0
+          }
+        }
+      }
+    ]
+  },
+  "corner": {
+    "name": "corner_all",
+    "distance": 0.1388,
+    "overrides": {
+      "f0_target": 200.9,
+      "f3_scale": 1.05,
+      "rd": 1.4,
+      "effect_scale": {
+        "sub_bass": 3.0
+      }
+    }
+  },
+  "sub_bass_note": "sub-bass max distance 0.0191 is below the 0.02 JND floor; at -37 dB it is a subtle purr by design, reported not gated. Do not lower the floor to force it.",
+  "checks": {
+    "base_stable": true,
+    "identity_fams_discriminable": true,
+    "corner_largest": true,
+    "sub_bass_reported": true
+  },
+  "overall": "PASS"
+}
