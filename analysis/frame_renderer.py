@@ -117,7 +117,14 @@ def lf_source_frame(f0_hz: float, rd: float, n_samples: int,
 
 
 def _lf_alpha(tp, te, ta, t0):
-    """Compute alpha for zero DC condition."""
+    """Compute alpha for the full zero-DC condition (verified).
+
+    Round 13 §2.4: the old version solved only the opening-phase integral
+    over [-100, 100]; the root sits near -630, outside the bracket, so every
+    grid point silently fell back to -10.0. Reuse phase1's verified full
+    zero-DC solution (opening + return) with the wider bracket so the frame
+    renderer and phase1 share one LF source.
+    """
     from scipy.optimize import brentq
     omega = np.pi / tp
     eps = 1.0 / ta
@@ -125,11 +132,17 @@ def _lf_alpha(tp, te, ta, t0):
     def integral_opening(alpha):
         return (np.exp(alpha * te) * (alpha * np.sin(omega * te) - omega * np.cos(omega * te)) + omega) / (alpha**2 + omega**2)
 
-    # Find alpha such that integral is zero (approximate)
+    t = np.linspace(te, t0, 1000)
+    ret = -(1.0 / (eps * ta)) * (np.exp(-eps * (t - te)) - np.exp(-eps * (t0 - te)))
+    ir = np.trapezoid(ret, t)
+
+    def f(alpha):
+        return integral_opening(alpha) + ir
+
     try:
-        alpha = brentq(integral_opening, -100, 100, xtol=1e-6, maxiter=100)
+        alpha = brentq(f, -10000, 10000, xtol=1e-10, maxiter=1000)
     except ValueError:
-        alpha = -10.0  # fallback
+        alpha = -omega / np.tan(omega * te) if abs(np.tan(omega * te)) > 1e-6 else 0.0
     return alpha
 
 

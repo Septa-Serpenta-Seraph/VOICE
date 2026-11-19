@@ -93,14 +93,15 @@ class Style:
     """Utterance-level style: register + effort."""
     register: str = "neutral"       # neutral, calm_authority, tenderness, wildfire
     register_scale: float = 1.0     # pitch range multiplier (0.7, 0.9, 1.1, 1.0)
-    effort: float = 0.5            # 0.0 (whisper) to 1.0 (full)
+    effort: float | None = None      # None = adopt register preset; explicit float honored
     rate_wpm: float = 142.5        # 135-150
     seed: int = 42
 
     def __post_init__(self):
-        # Register presets apply ONLY when the caller did not pass an
-        # explicit effort. Previously Style(effort=0.9) was silently
-        # overwritten to 0.5 by the default "neutral" register.
+        # Round 13 §2.10: use None as the "caller didn't pass effort" sentinel.
+        # The old code used 0.5, so Style(register="wildfire", effort=0.5)
+        # was silently overwritten to the wildfire preset 0.8. An explicit
+        # 0.5 is now distinguishable from an omitted effort.
         presets = {
             "neutral": (1.0, 0.5),
             "calm_authority": (0.7, 0.3),
@@ -110,9 +111,10 @@ class Style:
         if self.register in presets:
             preset_scale, preset_effort = presets[self.register]
             self.register_scale = preset_scale
-            # Only adopt preset effort when it is still the class default.
-            if self.effort == 0.5:
+            if self.effort is None:
                 self.effort = preset_effort
+        if self.effort is None:
+            self.effort = 0.5  # fallback for unknown register
 
 
 @dataclass
@@ -357,14 +359,26 @@ def plan_prosody(plan: RenderPlan) -> RenderPlan:
                 reason="declination_end",
             ))
 
-    # Phrase-final lengthening on last syllable
+    # Phrase-final lengthening (genome pre_boundary_lengthening 1.3-1.6x).
+    # Round 13 §2.7: the old code lengthened only if the LAST segment was a
+    # vowel, which is 1/10 English sentences (most end in a consonant). Find
+    # the last vowel/diphthong and lengthen it, shifting any trailing
+    # segments (e.g. coda consonants) so timing stays monotonic.
     if plan.segments:
-        last_seg = plan.segments[-1]
-        if last_seg.kind in ("vowel", "diphthong"):
-            dur = last_seg.t1 - last_seg.t0
-            last_seg.t1 = last_seg.t0 + dur * 1.4
-            # Shift subsequent (none, but good practice)
-            t = last_seg.t1
+        last_vowel_idx = None
+        for i in range(len(plan.segments) - 1, -1, -1):
+            if plan.segments[i].kind in ("vowel", "diphthong"):
+                last_vowel_idx = i
+                break
+        if last_vowel_idx is not None:
+            seg = plan.segments[last_vowel_idx]
+            dur = seg.t1 - seg.t0
+            seg.t1 = seg.t0 + dur * 1.4
+            shift = seg.t1 - (seg.t0 + dur)
+            for j in range(last_vowel_idx + 1, len(plan.segments)):
+                if plan.segments[j].kind != "silence":
+                    plan.segments[j].t0 += shift
+                    plan.segments[j].t1 += shift
 
     # Mark this plan as already planned so render_plan_v3 does not re-run
     # the planner and mutate it a second time.

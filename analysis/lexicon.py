@@ -25,8 +25,13 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 from render_plan import SR
 
-CMUDICT_PATH = "/usr/share/pocketsphinx/model/en-us/cmudict-en-us.dict"
-OVERRIDE_PATH = os.path.join(os.path.dirname(__file__), "..", "lexicon", "overrides.yaml")
+# Vendored real CMUdict (with stress digits + noun/verb variants). Round 13
+# §4.C1: the system pocketsphinx dict has no stress digits, so stress was
+# 100% algorithmic and "record" noun/verb could not contrast. Resolve paths
+# relative to this module so a fresh clone works (§2.13).
+_HERE = os.path.dirname(os.path.abspath(__file__))
+CMUDICT_PATH = os.path.normpath(os.path.join(_HERE, "..", "lexicon", "cmudict.dict"))
+OVERRIDE_PATH = os.path.normpath(os.path.join(_HERE, "..", "lexicon", "overrides.yaml"))
 
 # ── ARPAbet → IPA mapping (Appendix A from Zarza's report) ──────────────
 

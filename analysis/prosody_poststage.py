@@ -240,15 +240,17 @@ def aperiodicity_with_voicing(signal, voicing_mask, sr=SR, targets=None, seed=42
     # Apply aperiodicity to full signal
     mixed, noise = add_aperiodicity(signal, sr=sr, targets=targets, seed=seed)
 
-    # Gate noise by voicing mask
+    # Gate noise by voicing mask. Round 13 §2.11: the old code smoothed the
+    # mask (5ms) then discarded it with `np.where(mask > 0.5, ...)`, a hard
+    # threshold that reintroduced the edge and left the smoothing dead. Use
+    # the smoothed mask itself as a crossfade so noise fades in/out over 5ms
+    # and cannot click at voicing boundaries.
     if voicing_mask is not None:
-        mask = voicing_mask.astype(float)
-        # Smooth mask edges (5ms)
         from scipy.ndimage import gaussian_filter1d
-        mask = gaussian_filter1d(mask, sigma=int(0.005 * sr))
-        mixed = signal * (1 - mask) + mixed * mask + signal * mask * 0  # keep original where unvoiced
-        # Actually: where unvoiced, keep original (no aperiodicity)
-        mixed = np.where(mask > 0.5, mixed, signal)
+        mask = gaussian_filter1d(voicing_mask.astype(float),
+                                 sigma=max(1, int(0.005 * sr)))
+        mask = np.clip(mask, 0.0, 1.0)[:len(mixed)]
+        mixed = signal[:len(mixed)] * (1 - mask) + mixed * mask
 
     return mixed
 
@@ -492,9 +494,17 @@ def render_plan_v3(plan, genome):
                 seg, SR, plan.style.seed + 1000 + seg.i,
                 next_formants=next_vowel_formants.get(seg.i),
             )
-        except (ValueError, ImportError, KeyError):
+        except (ValueError, ImportError, KeyError) as exc:
+            # Round 13 §2.12: a swallowed failure is the v3/v4 no-op class.
+            # Record the drop in provenance so golden checks can assert none.
+            plan.provenance.setdefault("dropped_consonants", []).append(
+                {"phone": seg.phone, "i": seg.i, "reason": type(exc).__name__})
             cons_audio = None
         if cons_audio is None or len(cons_audio) == 0:
+            if "dropped_consonants" not in plan.provenance or \
+                    not any(d["i"] == seg.i for d in plan.provenance["dropped_consonants"]):
+                plan.provenance.setdefault("dropped_consonants", []).append(
+                    {"phone": seg.phone, "i": seg.i, "reason": "empty_audio"})
             continue
         t0_s = int(seg.t0 * SR)
         t1_s = min(t0_s + len(cons_audio), n_total)

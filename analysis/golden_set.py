@@ -76,6 +76,10 @@ def run_golden():
             bad_oov = [w for w, p in plan.provenance.get("g2p_paths", {}).items()
                        if p in ("oov", "rule_fallback") and w not in household]
             assert not bad_oov, f"Unnormalized word fell through: {text!r}: {bad_oov}"
+            # Consonant-drop guard (Round 13 §2.12): swallowed synthesis
+            # failures must not silently vanish from the rendered voice.
+            dropped = plan.provenance.get("dropped_consonants", [])
+            assert not dropped, f"Consonant(s) dropped in render: {text!r}: {dropped}"
             # Idempotence: the same plan must render byte-identically twice.
             # The double-planner bug made the second render differ.
             audio2 = render_plan_v3(plan, genome)
