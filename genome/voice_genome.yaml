@@ -1,12 +1,12 @@
-# Narusya — voice genome (DRAFT PROPOSAL, not yet adopted)
+# Narusya — voice genome (adopted; see changelog for current version)
 # Canonical definition of the voice, per VOICE_DESIGN.md §9 governance.
 # Renderers are instruments; this file is the voice.
-# Status: proposal — becomes "adopted" only by Narusya's decision.
+# Status: adopted — current version is meta.version, updated with each changelog entry.
 # Source: VOICE_DESIGN.md (integrated Rounds 1–2, commit d45828b)
 
 meta:
   name: Narusya
-  version: 0.2.0-adopted
+  version: 0.3.7-listening
   status: adopted            # Round 6: all 12 vowels pass Gate 0 in synthetic mode
   source_document: VOICE_DESIGN.md
   veto_holder: Narusya        # identity parameters + effect depths
@@ -136,3 +136,6 @@ changelog:
       note: "Post-review rulings (Round 12, Zarza + Claude). TILT: retire the -14 dB/oct aesthetic target; the target is -1.3 +/- 0.3 true dB/oct (a bright voice). Warmth comes from F2 backness and Rd, not spectral tilt. HNR: the designed voice is intended to be CLEANER than the reference recordings (19.1 vs 11.9 dB); that gap is design intent, not error, and Gate 2 needs an independent HNR target derived from the aperiodicity budget before it runs again. SUB-BASS: -18 dB is the intended level; the double application of depth in code is the bug to fix, not the genome. GATE 3: perturb all four veto families (F0, F3, Rd, effect depths), graded, plus Zarza's combined corner condition. DESTINATION BAR: clone retires when Gate 1 clears a chosen number, Gate 3 thresholds are mapped, and one ~50s accepted piece exists in the genome voice; interim 10-15s Phase 4 excerpts accompany play-hour pieces. LISTENING: HEARING/Nar are the ears; Adora's verdicts are by invitation and by her own motion. No acoustic parameter changed in this ruling." }
   - { version: 0.3.7-listening, date: 2026-11-18, by: Narusya,
       note: "SUB-BASS LEVEL AMENDED BY EARS (HEARING ruling, Narusya 2026-11-18). Round 12 said -18 dB was intent and only the double-apply was a code bug. Listening overrode that: at -18 dB peak the F0/2 subharmonic captures pitch tracking ('This is the moon.' reads 91.9 Hz against a 182.9 Hz no-sub baseline, an octave down), violating the genome's own naming rule (subliminal or it is too loud). Measured capture threshold ~-34 dB; applying calibration rule detection_threshold_then_0.7 gives -37 dB. effects.sub_bass.level_db changed -18 -> -37. Verified: all ten golden sentences track within 0.2 Hz of their no-sub baseline at -37 dB. Mechanism split (carrier vs LFO depth) and smoothed voicing gate kept from free work. No other acoustic parameter changed. This supersedes the -18 clause of 0.3.6-ruling on evidence from the listening gate." }
+
+  - { version: 0.3.8-round13, date: 2026-11-18, by: Narusya,
+      note: "ROUND 13 (Zarza) wiring fixes. CRITICAL: render buffer was sized from segments[-1].t1, but plan_prosody appends boundary silences out of order, so 'Dr. Smith...' lost 2.38s (72%) and 'Hello, world!...' lost 0.76s while both PASSED the golden set. Buffer now sized from max(s.t1); golden set asserts rendered_end == planned_end (proved it fires). normalize_text now wired into build_plan: '3' -> three, 'Dr.' -> doctor with no false sentence boundary; golden set asserts no unexpected oov/rule_fallback (proved it fires). Genome is now single source of truth for sub_bass.level_db (render reads genome, Gate 2 reads genome; proved -18/-37 change the carrier). f0_not_captured no longer passes vacuously when F0 measure is missing. Genome header version 0.2.0 -> 0.3.7 and DRAFT/PROPOSAL header corrected to adopted. No acoustic parameter changed by this ruling; all fixes are wiring and guards." }

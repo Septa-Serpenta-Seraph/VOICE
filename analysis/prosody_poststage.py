@@ -438,12 +438,18 @@ def render_plan_v3(plan, genome):
     # 1. Fixed tilt (not re-fitted per signal)
     output = apply_fixed_tilt(output, SR)
 
-    # 2. Pitch-locked sub-bass (following F0 track), at the genome's -18 dB
-    #    carrier level relative to the main signal's peak. The gate is
-    #    smoothed (5 ms) so a purr this loud does not click at segment
-    #    boundaries, and so phrase pauses stay silent rather than humming.
+    # 2. Pitch-locked sub-bass (following F0 track), at the genome's
+    #    effects.sub_bass.level_db carrier level relative to peak. Read from
+    #    the genome here so code and genome cannot drift (Round 13 §2.3).
+    #    The gate is smoothed (5 ms) so the purr does not click at segment
+    #    boundaries, and phrase pauses stay silent rather than humming.
+    sb = genome["effects"]["sub_bass"]
     sub = pitch_locked_sub_bass(
-        f0_track, SR, reference_peak=float(np.max(np.abs(output)))
+        f0_track, SR,
+        level_db=float(sb["level_db"]),
+        lfo_hz=4.0 if not isinstance(sb.get("lfo_hz"), list) else float(np.mean(sb["lfo_hz"])),
+        lfo_depth_pct=float(sb.get("lfo_depth_pct", 0.9)),
+        reference_peak=float(np.max(np.abs(output))),
     )
     sub_gate = gaussian_filter1d(voicing_mask.astype(float),
                                  sigma=max(1, int(0.005 * SR)))

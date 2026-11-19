@@ -13,14 +13,14 @@ Measures, per sentence:
   hnr        harmonics-to-noise (dB)
   f0_anchor  |realized F0 - plan anchor| / anchor, at each anchor time
   sub_bass   PSD at F0/2 relative to PSD at F0 (dB), plus a unit-level
-             assertion that the carrier sits at the genome's -18 dB
+             assertion that the carrier sits at the genome's level_db
 
 Thresholds (genome + Round 12 rulings):
   tilt      -1.30 +/- 0.30 dB/oct, judged on the sentence median
   f0        190.0 +/- 3 Hz
   hnr       reported only — Round 12: needs an independent target first
   anchor    median |err| < 5%
-  sub_bass  carrier peak ratio -18 +/- 3 dB
+  sub_bass  carrier peak ratio from genome effects.sub_bass.level_db +/- 3 dB
 
 This is an instrument, not a regression test: it reports pass/fail against
 those thresholds so the open Gate 2 questions are answered with numbers
@@ -141,11 +141,17 @@ def f0_capture_deviation(plan, audio):
         no_sub = f0_of(base_audio)
     finally:
         pp.pitch_locked_sub_bass = orig
+    # Vacuous-pass guard (Round 13 §2.8): a failed measure returns 0.0.
+    # If both F0s are 0, deviation is 0 and the check would pass on silence.
+    if with_sub < 50 or no_sub < 50:
+        raise RuntimeError(f"F0 measure missing: with_sub={with_sub}, no_sub={no_sub}")
     return with_sub - no_sub, with_sub, no_sub
 
 
 def run(quiet=False):
     genome = load_genome(os.path.join(REPO, "genome", "voice_genome.yaml"))
+    # Genome is the single source of truth for the carrier target (Round 13 §2.3).
+    sub_target = float(genome["effects"]["sub_bass"]["level_db"])
     os.makedirs(OUT_DIR, exist_ok=True)
 
     rows = []
@@ -202,9 +208,9 @@ def run(quiet=False):
             "pass": (med_anchor is not None and med_anchor <= ANCHOR_TOL_PCT),
         },
         "sub_bass_carrier": {
-            "value": round(med_carrier, 2), "target": SUB_LEVEL_TARGET,
+            "value": round(med_carrier, 2), "target": sub_target,
             "tol": SUB_LEVEL_TOL,
-            "pass": abs(med_carrier - SUB_LEVEL_TARGET) <= SUB_LEVEL_TOL,
+            "pass": abs(med_carrier - sub_target) <= SUB_LEVEL_TOL,
         },
         "f0_not_captured": {
             "value": round(worst_capture, 2) if worst_capture is not None else None,
