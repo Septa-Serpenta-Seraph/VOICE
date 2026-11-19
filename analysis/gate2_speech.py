@@ -57,7 +57,7 @@ REPORT = os.path.join(REPO, "renders", "gate2_speech_report.json")
 
 TILT_TARGET = -1.30
 TILT_TOL = 0.30
-F0_TARGET = 190.0
+F0_TARGET = 190.9   # genome measured_f0_median_hz (running-speech median)
 F0_TOL = 3.0
 ANCHOR_TOL_PCT = 5.0
 SUB_LEVEL_TARGET = -37.0
@@ -76,17 +76,37 @@ def measure(path):
     return measure_render(path)
 
 
-def anchor_errors(plan):
-    """|realized - anchor| / anchor at each anchor time, in percent."""
-    if not plan.f0_anchors:
-        return []
-    n = int(plan.segments[-1].t1 * SR) + 240
+def audio_track_fidelity(plan, audio):
+    """|F0 in rendered AUDIO - planned F0 track| at anchor times, in %.
+
+    Round 13 §2.8 / E4: the old 'anchor' check compared the F0 TRACK to the
+    planner's absolute anchors, neither of which touched audio, so it could
+    never catch a renderer that ignored the track. This measures the AUDIO
+    (via Praat) against the plan track instead — audio vs plan, which can
+    genuinely fail. Option B ruling: anchors are descriptive, so they are not
+    the reference; the composed track is.
+    """
+    import parselmouth
+    n = max(int(max((s.t1 for s in plan.segments), default=1.0) * SR) + 240, len(audio))
     track = build_f0_track(plan, n)
+    times = [a.t for a in plan.f0_anchors]
+    if not times:
+        return None
+    snd = parselmouth.Sound(audio, sampling_frequency=SR)
+    pit = snd.to_pitch(time_step=0.001, pitch_floor=75, pitch_ceiling=600)
+    vals = pit.selected_array["frequency"]
+    tt = pit.xs()
     errs = []
-    for a in plan.f0_anchors:
-        i = max(0, min(n - 1, int(a.t * SR)))
-        errs.append(100.0 * (track[i] - a.value) / a.value)
-    return errs
+    for t in times:
+        i = max(0, min(n - 1, int(round(t * SR))))
+        planned = track[i]
+        # nearest voiced frame in a ±30ms window
+        mask = (tt >= t - 0.03) & (tt <= t + 0.03) & np.isfinite(vals) & (vals > 0)
+        if not mask.any():
+            return None  # no voiced audio to compare — report as unavailable
+        realized = float(np.median(vals[mask]))
+        errs.append(abs(realized - planned) / planned * 100.0)
+    return float(np.median(errs))
 
 
 def sub_bass_levels(plan, audio):
@@ -162,17 +182,19 @@ def run(quiet=False):
         wavfile.write(path, SR, (audio * 32767).astype(np.int16))
 
         m = measure(path)
-        errs = anchor_errors(plan)
         carrier_db, spec_db = sub_bass_levels(plan, audio)
         cap_dev, f0_with, f0_base = f0_capture_deviation(plan, audio)
+        track_err = audio_track_fidelity(plan, audio)
 
         rows.append({
             "text": text,
             "tilt_db_oct": round(float(m.get("tilt", 0.0)), 3),
-            "f0_hz": round(float(m.get("f0", 0.0)), 2),
+            "f0_hz": round(float(m.get("f0", 0.0)), 2),  # mean, informational
+            "f0_median_hz": round(float(m.get("f0_median", 0.0)), 2),
+            "f0_p05_hz": round(float(m.get("f0_p05", 0.0)), 2),
+            "f0_p95_hz": round(float(m.get("f0_p95", 0.0)), 2),
             "hnr_db": round(float(m.get("hnr", 0.0)), 2),
-            "anchor_err_pct": [round(e, 2) for e in errs],
-            "anchor_err_median_pct": round(float(np.median(np.abs(errs))), 2) if errs else None,
+            "audio_track_err_pct": round(float(track_err), 2) if track_err is not None else None,
             "sub_carrier_db": round(carrier_db, 2),
             "sub_fund_db": round(spec_db, 2),
             "f0_capture_dev_hz": round(float(cap_dev), 2),
@@ -180,12 +202,12 @@ def run(quiet=False):
         })
 
     tilts = [r["tilt_db_oct"] for r in rows]
-    f0s = [r["f0_hz"] for r in rows]
+    f0s = [r["f0_median_hz"] for r in rows]  # true median, not the mean
     med_tilt = float(np.median(tilts))
     med_f0 = float(np.median(f0s))
-    anchor_medians = [r["anchor_err_median_pct"] for r in rows
-                      if r["anchor_err_median_pct"] is not None]
-    med_anchor = float(np.median(anchor_medians)) if anchor_medians else None
+    track_errs = [r["audio_track_err_pct"] for r in rows
+                  if r["audio_track_err_pct"] is not None]
+    med_track_err = float(np.median(track_errs)) if track_errs else None
     carriers = [r["sub_carrier_db"] for r in rows]
     med_carrier = float(np.median(carriers))
     cap_devs = [abs(r["f0_capture_dev_hz"]) for r in rows]
@@ -202,10 +224,10 @@ def run(quiet=False):
             "tol": F0_TOL,
             "pass": abs(med_f0 - F0_TARGET) <= F0_TOL,
         },
-        "f0_anchor_tracking": {
-            "value": round(med_anchor, 2) if med_anchor is not None else None,
+        "audio_track_fidelity": {
+            "value": round(med_track_err, 2) if med_track_err is not None else None,
             "target_max_pct": ANCHOR_TOL_PCT,
-            "pass": (med_anchor is not None and med_anchor <= ANCHOR_TOL_PCT),
+            "pass": (med_track_err is not None and med_track_err <= ANCHOR_TOL_PCT),
         },
         "sub_bass_carrier": {
             "value": round(med_carrier, 2), "target": sub_target,
@@ -235,12 +257,12 @@ def run(quiet=False):
         print("=" * 78)
         print("GATE 2 — DESCRIPTOR MATCH ON SPEECH")
         print("=" * 78)
-        print(f"{'sentence':42s} {'tilt':>7s} {'f0':>7s} {'hnr':>7s} "
-              f"{'anch%':>7s} {'subdB':>7s}")
+        print(f"{'sentence':42s} {'tilt':>7s} {'f0med':>7s} {'hnr':>7s} "
+              f"{'trk%':>7s} {'subdB':>7s}")
         for r in rows:
-            am = r["anchor_err_median_pct"]
+            am = r["audio_track_err_pct"]
             print(f"{r['text'][:40]:42s} {r['tilt_db_oct']:7.2f} "
-                  f"{r['f0_hz']:7.1f} {r['hnr_db']:7.2f} "
+                  f"{r['f0_median_hz']:7.1f} {r['hnr_db']:7.2f} "
                   f"{(am if am is not None else float('nan')):7.2f} "
                   f"{r['sub_carrier_db']:7.2f}")
         print()

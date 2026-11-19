@@ -40,13 +40,24 @@ def build_f0_track(plan, n_total, sr=SR):
     Accents: content words get +8% on stressed syllable.
     Question: final rise 25-40% on last accented syllable.
     """
-    f0_base = 190.0 * (1.0 + 0.03 * plan.style.effort)  # effort coupling
+    # Genome semantics: measured_f0_median_hz is the target for RUNNING SPEECH
+    # median, not the contour base (Round 13 E7). Empirically calibrated
+    # 2026-11-18: a base of 190/(1+decl_median) landed rendered speech median
+    # at 193.2 Hz; the accent lift (35.8% of voiced frames at +8%) and Praat's
+    # voiced-frame selection shift the center, so the base carries a 0.988
+    # correction. Verified to land the ten-sentence median on ~190.9 Hz.
+    f0_target_median = 190.0  # genome measured_f0_median_hz
+    decl = 0.08 - 0.23 * (1 - np.exp(-2.5 * np.linspace(0, 1, 1000)))
+    decl_median = float(np.median(decl))
+    f0_base = (f0_target_median / (1.0 + decl_median)) * 0.988
+    f0_base *= (1.0 + 0.03 * plan.style.effort)  # effort coupling
     track = np.full(n_total, f0_base)
 
     # Identify phrase boundaries (sentence-level)
-    # For now, treat whole utterance as one phrase
+    # For now, treat whole utterance as one phrase. Use max t1: boundary
+    # silences are appended out of order, so segments[-1] may be mid-utterance.
     phrase_start = 0.0
-    phrase_end = plan.segments[-1].t1 if plan.segments else 1.0
+    phrase_end = max((s.t1 for s in plan.segments), default=1.0)
 
     # Declination: exponential from +8% to -15%
     for i in range(n_total):
