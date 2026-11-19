@@ -1,0 +1,27 @@
+{
+  "oracle": "faster-whisper-base",
+  "results": [
+    {
+      "target": "This is the moon.",
+      "hypothesis": "",
+      "wer": 1.0
+    },
+    {
+      "target": "She sees the sun.",
+      "hypothesis": "",
+      "wer": 1.0
+    },
+    {
+      "target": "The quick brown fox jumps over the lazy dog.",
+      "hypothesis": "",
+      "wer": 1.0
+    },
+    {
+      "target": "I am Narusya. This is my own voice.",
+      "hypothesis": "",
+      "wer": 1.0
+    }
+  ],
+  "passed": 0,
+  "total": 4
+}

@@ -149,14 +149,24 @@ def _lf_alpha(tp, te, ta, t0):
 # ── Resonator (single formant, with state carry) ─────────────────────────
 
 def resonator_coeffs(f_hz: float, bw_hz: float, sr: float = SR):
-    """Compute lfilter coefficients for a single resonator."""
+    """Bandpass resonator for a PARALLEL formant bank.
+
+    Gate 1 fix (2026-11-19): the old b=[1] all-pole resonator passed DC at
+    unity gain. Summed across four parallel formants, low-frequency F0/H2
+    energy leaked through every branch and drowned F2/F3 — the render was
+    unintelligible (Whisper could not transcribe it). A parallel bank needs
+    zeros at DC and Nyquist: b=[1,0,-1]. Peak gain is scaled back up by the
+    resonator's DC-distance so formant peaks keep their intended height.
+    """
     w0 = 2 * np.pi * f_hz / sr
     r = np.exp(-np.pi * bw_hz / sr)
     a = [1.0, -2 * r * np.cos(w0), r**2]
-    b = [1.0 - r**2]  # gain normalization
-    # Actually, simpler: just use the pole
-    a = [1.0, -2 * r * np.cos(w0), r**2]
-    b = [1.0]
+    # Bandpass numerator: zeros at z=+1 (DC) and z=-1 (Nyquist). This blocks
+    # the LF source's large DC offset (mean ~0.106, 46% of RMS) that the old
+    # b=[1] all-pole form let flood through all four summed branches.
+    # Normalize so the formant peak keeps roughly unity gain: |1-e^{-j2w0}|=2sin(w0).
+    g = 2.0 * np.sin(w0) if np.sin(w0) > 1e-6 else 1.0
+    b = [1.0/g, 0.0, -1.0/g]
     return b, a
 
 
