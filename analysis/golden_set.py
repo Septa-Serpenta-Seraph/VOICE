@@ -61,6 +61,21 @@ def run_golden():
         try:
             plan = build_plan(text)
             audio = render_plan_v3(plan, genome)
+            # Truncation guard (Round 13 §2.1): the buffer must cover the
+            # whole plan. Appended boundary silences are out of temporal
+            # order, so segments[-1].t1 used to cut the utterance short.
+            planned_end = max((s.t1 for s in plan.segments), default=0.0)
+            rendered_end = len(audio) / SR
+            assert abs(rendered_end - planned_end) < 0.05, (
+                f"Truncated render: {text!r} rendered={rendered_end:.3f}s "
+                f"planned={planned_end:.3f}s")
+            # Normalization guard (Round 13 §2.2): no golden word may fall
+            # through to OOV/rule_fallback, except the household names
+            # served by the documented override dictionary.
+            household = {"Narusya", "Zarza"}
+            bad_oov = [w for w, p in plan.provenance.get("g2p_paths", {}).items()
+                       if p in ("oov", "rule_fallback") and w not in household]
+            assert not bad_oov, f"Unnormalized word fell through: {text!r}: {bad_oov}"
             # Idempotence: the same plan must render byte-identically twice.
             # The double-planner bug made the second render differ.
             audio2 = render_plan_v3(plan, genome)

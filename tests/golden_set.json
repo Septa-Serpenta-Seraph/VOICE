@@ -216,27 +216,26 @@
     {
       "text": "Dr. Smith has 3 patients today.",
       "status": "OK",
-      "duration_s": 0.93,
-      "segments": 24,
-      "anchors": 5,
+      "duration_s": 3.28,
+      "segments": 26,
+      "anchors": 6,
       "events": 0,
-      "oov": [
-        "3"
-      ],
+      "oov": [],
       "unknown_phones": [],
       "g2p_paths": {
-        "Dr": "cmudict",
+        "doctor": "cmudict",
         "Smith": "cmudict",
         "has": "cmudict",
-        "3": "oov",
+        "three": "cmudict",
         "patients": "cmudict",
         "today": "cmudict"
       },
       "phones": [
         "d",
-        "\u0279",
-        "a\u026a",
-        "v",
+        "\u0251",
+        "k",
+        "t",
+        "\u025d",
         "s",
         "m",
         "\u026a",
@@ -244,7 +243,9 @@
         "h",
         "\u00e6",
         "z",
-        "\u0259",
+        "\u03b8",
+        "\u0279",
+        "i",
         "p",
         "e\u026a",
         "\u0283",
@@ -255,8 +256,7 @@
         "t",
         "\u0259",
         "d",
-        "e\u026a",
-        ""
+        "e\u026a"
       ]
     },
     {
@@ -300,7 +300,7 @@
     {
       "text": "Hello, world! How are you?",
       "status": "OK",
-      "duration_s": 1.63,
+      "duration_s": 2.4,
       "segments": 16,
       "anchors": 4,
       "events": 0,

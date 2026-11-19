@@ -382,10 +382,13 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
 
     plan = RenderPlan(text=text, style=style)
 
-    # Normalize: split on whitespace, keep punctuation attached to words
-    import re
-    # Keep punctuation attached while planning so boundaries can be found.
-    tokens = text.split()
+    # Normalize numbers and abbreviations BEFORE tokenizing. Dr. -> doctor
+    # (so its period no longer reads as a sentence boundary) and 3 -> three
+    # (so numbers are spoken, not an OOV schwa). Punctuation that survives
+    # normalization still marks phrase boundaries.
+    import lexicon as _lex
+    normalized = _lex.normalize_text(text)
+    tokens = normalized.split()
     plan.words = [t.strip(".,!?;:'\"()") for t in tokens]
 
     # Phrase boundaries live in provenance so they survive JSON round-trip.
@@ -416,9 +419,8 @@ def build_plan(text: str, style: Optional[Style] = None) -> RenderPlan:
         ],
     }
 
-    # Lexicon imports SR from this module, so import lazily here to avoid a
-    # circular import. The dictionary is resolved by lexicon.g2p_word.
-    import lexicon as _lex
+    # _lex imported above; lexicon imports SR from this module, so the
+    # import is kept lazy. The dictionary is resolved by lexicon.g2p_word.
 
     # G2P each word
     seg_idx = 0

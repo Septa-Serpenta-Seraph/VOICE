@@ -111,9 +111,9 @@ def plan_prosody_v2(plan: RenderPlan) -> RenderPlan:
             reason="accent" if boost < 0.12 else "nuclear_accent",
         ))
 
-    # Declination end
+    # Declination end (max t1: boundary silences may be appended out of order)
     if plan.segments:
-        last_t = plan.segments[-1].t1
+        last_t = max(s.t1 for s in plan.segments)
         sentence_type = plan.provenance.get("sentence_type", "statement")
         if sentence_type == "question":
             # Question rise: floor at 25% even with register scaling
@@ -306,7 +306,10 @@ def render_plan_v3(plan, genome):
     # buffer must be sized from the planned durations, not the pre-plan ones.
     plan = plan_prosody_v2(plan)
 
-    total_duration = plan.segments[-1].t1 if plan.segments else 1.0
+    # Segments are NOT guaranteed time-ordered: plan_prosody appends boundary
+    # silences at the end of the list. Size from the max end time, or an
+    # internal pause becomes segments[-1] and the buffer is cut mid-utterance.
+    total_duration = max((s.t1 for s in plan.segments), default=1.0)
     n_total = int(total_duration * SR) + FRAME_SAMPLES
 
     # Build F0 track
