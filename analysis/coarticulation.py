@@ -72,7 +72,7 @@ def cv_transition(consonant, vowel_formants, duration_ms=CV_TRANSITION_MS, sr=SR
 
     Returns: list of formant dicts at each frame.
     """
-    n_frames = max(1, int(duration_ms * sr / 1000 / 10))  # ~10ms per frame
+    n_frames = max(1, int(round(duration_ms / 10.0)))  # ~10ms per frame
     locus = CONSONANT_LOCUS.get(consonant, CONSONANT_LOCUS["s"])
 
     # Ensure all formants present
@@ -91,7 +91,7 @@ def cv_transition(consonant, vowel_formants, duration_ms=CV_TRANSITION_MS, sr=SR
 
 def vc_transition(vowel_formants, consonant, duration_ms=VC_TRANSITION_MS, sr=SR):
     """Generate VC transition: formants move from vowel to consonant locus."""
-    n_frames = max(1, int(duration_ms * sr / 1000 / 10))
+    n_frames = max(1, int(round(duration_ms / 10.0)))
     locus = CONSONANT_LOCUS.get(consonant, CONSONANT_LOCUS["s"])
 
     locus_full = {"F1": locus.get("F1", 400), "F2": locus.get("F2", 1500),
