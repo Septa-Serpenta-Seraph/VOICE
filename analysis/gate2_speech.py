@@ -8,18 +8,19 @@ full Phase 4 pipeline — because the descriptor targets only mean something
 on the audio that will actually be heard.
 
 Measures, per sentence:
-  tilt       PSD slope 100-4000 Hz, via HEARING's measure_render (authority)
-  f0         mean F0 (Hz)
+  tilt       PSD slope 100-4000 Hz, via HEARING's measure_render (authority,
+             informational on speech — see genome changelog 0.3.11)
+  f0         true median of voiced frames (f0_median), plus mean (f0, legacy)
   hnr        harmonics-to-noise (dB)
-  f0_anchor  |realized F0 - plan anchor| / anchor, at each anchor time
+  fidelity   |F0 in AUDIO - plan track| % at anchors AND voiced-frame quartiles
   sub_bass   PSD at F0/2 relative to PSD at F0 (dB), plus a unit-level
              assertion that the carrier sits at the genome's level_db
 
-Thresholds (genome + Round 12 rulings):
-  tilt      -1.30 +/- 0.30 dB/oct, judged on the sentence median
-  f0        190.0 +/- 3 Hz
-  hnr       reported only — Round 12: needs an independent target first
-  anchor    median |err| < 5%
+Thresholds (genome + Round 12/13/14 rulings):
+  tilt      -1.30 +/- 0.30 dB/oct, INFORMATIONAL on speech, not a gate
+  f0        genome measured_f0_median_hz (190.9) +/- 3, on the true median
+  hnr       reported only — needs an independent target first
+  fidelity  median audio-vs-track err < 5%
   sub_bass  carrier peak ratio from genome effects.sub_bass.level_db +/- 3 dB
 
 This is an instrument, not a regression test: it reports pass/fail against
@@ -42,7 +43,10 @@ from scipy.io import wavfile
 from scipy.signal import welch
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-sys.path.insert(0, "/home/adora/narusya-hearing/analysis")
+# HEARING path: allow override via env, fall back to sibling checkout.
+_HEARING = os.environ.get("NARUSYA_HEARING_ANALYSIS", os.path.normpath(
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "narusya-hearing", "analysis")))
+sys.path.insert(0, _HEARING)
 
 from render_plan import build_plan, SR
 from frame_renderer import load_genome
@@ -60,7 +64,8 @@ TILT_TOL = 0.30
 F0_TARGET = 190.9   # genome measured_f0_median_hz (running-speech median)
 F0_TOL = 3.0
 ANCHOR_TOL_PCT = 5.0
-SUB_LEVEL_TARGET = -37.0
+# SUB_LEVEL_TARGET removed in Round 14: target is read from the genome
+# (sub_target in run()). Kept out to avoid a second source of truth.
 SUB_LEVEL_TOL = 3.0
 F0_CAPTURE_TOL_HZ = 2.0   # rendered F0 must stay this close to no-sub baseline
 
@@ -89,7 +94,17 @@ def audio_track_fidelity(plan, audio):
     import parselmouth
     n = max(int(max((s.t1 for s in plan.segments), default=1.0) * SR) + 240, len(audio))
     track = build_f0_track(plan, n)
+    # Round 14 Q2: anchors alone are tail-biased ("moon" has 2 anchors at
+    # 78%/86% of the utterance, first 78% unchecked). Probe a uniform grid
+    # across each voiced region too, keeping strict None-on-unvoiced.
     times = [a.t for a in plan.f0_anchors]
+    for seg in plan.segments:
+        if seg.voiced and seg.kind != "silence":
+            dur = seg.t1 - seg.t0
+            if dur > 0.05:
+                for q in (0.25, 0.5, 0.75):
+                    times.append(seg.t0 + q * dur)
+    times = sorted(set(round(t, 4) for t in times))
     if not times:
         return None
     snd = parselmouth.Sound(audio, sampling_frequency=SR)
@@ -100,18 +115,22 @@ def audio_track_fidelity(plan, audio):
     for t in times:
         i = max(0, min(n - 1, int(round(t * SR))))
         planned = track[i]
-        # nearest voiced frame in a ±30ms window
         mask = (tt >= t - 0.03) & (tt <= t + 0.03) & np.isfinite(vals) & (vals > 0)
         if not mask.any():
-            return None  # no voiced audio to compare — report as unavailable
+            continue  # this probe unvoiced; strict majority check below
         realized = float(np.median(vals[mask]))
         errs.append(abs(realized - planned) / planned * 100.0)
+    # Round 14 Q2: with a full-utterance grid, require a majority of probes to
+    # be voiced. Silence / dropped renderer -> few voiced -> None -> FAIL.
+    # A partial subset cannot sneak through (need >=60% of probes voiced).
+    if len(errs) < 0.6 * len(times):
+        return None
     return float(np.median(errs))
 
 
 def sub_bass_levels(plan, audio):
     """Spectral sub/fund ratio, plus the carrier's own peak level."""
-    n = int(plan.segments[-1].t1 * SR) + 240
+    n = max(int(max((s.t1 for s in plan.segments), default=1.0) * SR) + 240, len(audio))
     f0_track = build_f0_track(plan, n)
     f0 = 190.0 * (1.0 + 0.03 * plan.style.effort)
 

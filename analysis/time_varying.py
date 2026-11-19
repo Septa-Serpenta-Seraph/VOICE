@@ -33,6 +33,19 @@ SR = 48000
 FRAME_SAMPLES = int(5.0 * SR / 1000)  # 240
 
 
+def _f0_target():
+    """Read measured_f0_median_hz from the genome (single source of truth)."""
+    try:
+        import yaml
+        _here = os.path.dirname(os.path.abspath(__file__))
+        _gpath = os.path.normpath(os.path.join(_here, "..", "genome", "voice_genome.yaml"))
+        with open(_gpath) as _f:
+            g = yaml.safe_load(_f)
+        return float(g["measurement_status"]["measured_f0_median_hz"])
+    except Exception:
+        return 190.9
+
+
 def build_f0_track(plan, n_total, sr=SR):
     """Build a proper F0 track with per-phrase declination.
 
@@ -40,18 +53,18 @@ def build_f0_track(plan, n_total, sr=SR):
     Accents: content words get +8% on stressed syllable.
     Question: final rise 25-40% on last accented syllable.
     """
-    # Genome semantics: measured_f0_median_hz is the target for RUNNING SPEECH
-    # median, not the contour base (Round 13 E7). Empirically calibrated
-    # 2026-11-18: a base of 190/(1+decl_median) landed rendered speech median
-    # at 193.2 Hz; the accent lift (35.8% of voiced frames at +8%) and Praat's
-    # voiced-frame selection shift the center, so the base carries a 0.988
-    # correction. Verified to land the ten-sentence median on ~190.9 Hz.
-    f0_target_median = 190.0  # genome measured_f0_median_hz
-    decl = 0.08 - 0.23 * (1 - np.exp(-2.5 * np.linspace(0, 1, 1000)))
-    decl_median = float(np.median(decl))
-    f0_base = (f0_target_median / (1.0 + decl_median)) * 0.988
-    f0_base *= (1.0 + 0.03 * plan.style.effort)  # effort coupling
+    # Round 14 Q1: per-utterance derivation, no fitted scalar. The contour is
+    # deterministic given base: declination, accents and question rise all
+    # multiply it linearly. Build it once at unit base, measure its median
+    # over the same voiced frames the renderer uses, then scale so that median
+    # equals the genome target. This cancels accent-coverage and
+    # declination-exposure variation per utterance, replacing the old global
+    # 0.988 that was fitted to (and hidden by) the golden set. The question
+    # rise is kept as a signal: it lifts the median, which is correct.
+    f0_target_median = _f0_target()  # from genome, 190.9
+    f0_base = 1.0 * (1.0 + 0.03 * plan.style.effort)  # effort coupling, unit base
     track = np.full(n_total, f0_base)
+    sentence_type = plan.provenance.get("sentence_type", "statement")
 
     # Identify phrase boundaries (sentence-level)
     # For now, treat whole utterance as one phrase. Use max t1: boundary
@@ -78,8 +91,26 @@ def build_f0_track(plan, n_total, sr=SR):
                 weight = np.exp(-((i - t_mid) / (sigma / 2)) ** 2 / 2)
                 track[i] = track[i] * (1 + 0.08 * weight)
 
+    # Round 14 Q1: per-utterance calibration BEFORE the question rise. Scale
+    # the unit-base contour so its median over voiced frames equals the genome
+    # target. For a question, exclude the final rise region from the median so
+    # the rise remains a signal that lifts the median (Zar Q1 point 2). No
+    # fitted scalar: this cancels accent/declination exposure per utterance.
+    voiced = np.zeros(n_total, dtype=bool)
+    for seg in plan.segments:
+        if seg.voiced and seg.kind != "silence":
+            voiced[int(seg.t0 * SR):min(int(seg.t1 * SR), n_total)] = True
+    if sentence_type == "question":
+        for seg in reversed(plan.segments):
+            if seg.voiced and seg.stress >= 1 and seg.kind in ("vowel", "diphthong"):
+                voiced[int(seg.t0 * SR):] = False  # exclude rise region
+                break
+    if voiced.any():
+        unit_median = float(np.median(track[voiced]))
+        if unit_median > 0:
+            track *= (f0_target_median / unit_median)
+
     # Question rise: if question, rise on last accented syllable
-    sentence_type = plan.provenance.get("sentence_type", "statement")
     if sentence_type == "question":
         # Find last stressed vowel
         last_stressed = None
