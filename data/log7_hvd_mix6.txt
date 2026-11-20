@@ -1,0 +1,3 @@
+== hvd_mix6 == hVd 0/8  heed/i/->''(.)
+    {'heed': ('', '.'), 'hid': ('', '.'), 'head': ('', '.'), 'had': ('', '.'), 'hod': ('', '.'), 'hud': ('', '.'), 'hood': ('', '.'), "who'd": ('', '.')}
+SAVED /mnt/data/nar-r17/results7.json

@@ -1,0 +1,70 @@
+{
+  "oracle": "faster-whisper-base",
+  "assay": "vowel-isolation",
+  "passed": 1,
+  "total": 12,
+  "vowels": {
+    "i": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "ɪ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "e": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "ɛ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "æ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "ɑ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "ʌ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "ɔ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "o": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "ʊ": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "u": {
+      "heard": "You",
+      "pass": true,
+      "heard_vowels": [
+        "u"
+      ]
+    },
+    "ə": {
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    }
+  }
+}

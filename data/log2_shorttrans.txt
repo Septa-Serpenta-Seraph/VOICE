@@ -1,0 +1,93 @@
+{
+ "name": "shorttrans",
+ "cfg": {
+  "cv_ms": 25,
+  "vc_ms": 20
+ },
+ "golden_wer": [
+  0.0,
+  0.25,
+  1.222,
+  0.5
+ ],
+ "golden_mean": 0.493,
+ "golden_pass": 2,
+ "heard_golden": [
+  "This is the moon.",
+  "She is the sun!",
+  "I should have known that I'm so cursed to let people",
+  "I am the snorkel This is my worst"
+ ],
+ "word_mean": 0.833,
+ "heard_words": [
+  "See",
+  "",
+  "",
+  "see",
+  "So",
+  ""
+ ],
+ "ho_wer": [
+  0.75,
+  1.2,
+  0.8,
+  1.5,
+  1.333
+ ],
+ "ho_mean": 1.117,
+ "ho_pass": 0,
+ "heard_ho": [
+  "She said, she said",
+  "I'll see you at me, me, me",
+  "You're so smart today",
+  "I'll be mine, I'll be mine",
+  "B.C.S.D."
+ ],
+ "min_steady_frac": 0.528,
+ "vowel_audit_moon": [
+  [
+   "\u026a",
+   128,
+   68
+  ],
+  [
+   "\u026a",
+   128,
+   68
+  ],
+  [
+   "\u0259",
+   127,
+   67
+  ],
+  [
+   "u",
+   273,
+   213
+  ]
+ ],
+ "vowel_audit_sun": [
+  [
+   "i",
+   128,
+   68
+  ],
+  [
+   "i",
+   195,
+   135
+  ],
+  [
+   "\u0259",
+   127,
+   67
+  ],
+  [
+   "\u028c",
+   273,
+   213
+  ]
+ ],
+ "render_s": 81.8
+}
+SAVED /mnt/data/nar-r17/results2.json (3 configs)

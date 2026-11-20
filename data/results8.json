@@ -1,0 +1,388 @@
+[
+ {
+  "name": "r22_base",
+  "cfg": {},
+  "pass": 2,
+  "total": 8,
+  "heed_i_heard": "you",
+  "heed_i_pass": false,
+  "heed_F2band_db": -41.2,
+  "heed_F2flat": 0.3319,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "you",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "You're dead.",
+    "pass": true
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "Good.",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "You",
+    "pass": true
+   }
+  },
+  "render_s": 16.7
+ },
+ {
+  "name": "r22_hnr14",
+  "cfg": {
+   "hnr": 14.0
+  },
+  "pass": 1,
+  "total": 8,
+  "heed_i_heard": "you",
+  "heed_i_pass": false,
+  "heed_F2band_db": -40.4,
+  "heed_F2flat": 0.365,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "you",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "You",
+    "pass": true
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 14.2
+ },
+ {
+  "name": "r22_hnr10",
+  "cfg": {
+   "hnr": 10.0
+  },
+  "pass": 1,
+  "total": 8,
+  "heed_i_heard": "I'm sorry, I'm sorry, I'm sorry, I'm sorry.",
+  "heed_i_pass": true,
+  "heed_F2band_db": -40.0,
+  "heed_F2flat": 0.3619,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "I'm sorry, I'm sorry, I'm sorry, I'm sorry.",
+    "pass": true
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 11.7
+ },
+ {
+  "name": "r22_hnr6",
+  "cfg": {
+   "hnr": 6.0
+  },
+  "pass": 0,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "heed_F2band_db": -39.7,
+  "heed_F2flat": 0.3607,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 9.7
+ },
+ {
+  "name": "r22_hnr10t1",
+  "cfg": {
+   "hnr": 10.0,
+   "hf_tilt": 1.0
+  },
+  "pass": 0,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "heed_F2band_db": -39.4,
+  "heed_F2flat": 0.3371,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 9.9
+ },
+ {
+  "name": "r22_hnr6t1",
+  "cfg": {
+   "hnr": 6.0,
+   "hf_tilt": 1.0
+  },
+  "pass": 0,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "heed_F2band_db": -39.3,
+  "heed_F2flat": 0.3398,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": ". . . .",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 24.3
+ },
+ {
+  "name": "r22_hnr10t2",
+  "cfg": {
+   "hnr": 10.0,
+   "hf_tilt": 2.0
+  },
+  "pass": 1,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "heed_F2band_db": -42.0,
+  "heed_F2flat": 0.3315,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "You",
+    "pass": true
+   }
+  },
+  "render_s": 9.5
+ }
+]

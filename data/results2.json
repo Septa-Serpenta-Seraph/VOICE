@@ -1,0 +1,549 @@
+[
+ {
+  "name": "base",
+  "cfg": {},
+  "golden_wer": [
+   0.0,
+   1.0,
+   1.111,
+   1.0
+  ],
+  "golden_mean": 0.778,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "She is so so so",
+   "So there's no God's show, so there's no mercy, don't...",
+   ""
+  ],
+  "word_mean": 0.833,
+  "heard_words": [
+   "See.",
+   "You",
+   "",
+   "see",
+   "So",
+   ""
+  ],
+  "ho_wer": [
+   0.75,
+   1.0,
+   0.8,
+   1.5,
+   1.0
+  ],
+  "ho_mean": 1.01,
+  "ho_pass": 0,
+  "heard_ho": [
+   "She said, she said,",
+   "I see it with me, with me",
+   "You're so missed, not today",
+   "I'll be done, I'll be done",
+   "this is"
+  ],
+  "min_steady_frac": 0.134,
+  "vowel_audit_moon": [
+   [
+    "\u026a",
+    128,
+    18
+   ],
+   [
+    "\u026a",
+    128,
+    18
+   ],
+   [
+    "\u0259",
+    127,
+    17
+   ],
+   [
+    "u",
+    273,
+    163
+   ]
+  ],
+  "vowel_audit_sun": [
+   [
+    "i",
+    128,
+    18
+   ],
+   [
+    "i",
+    195,
+    85
+   ],
+   [
+    "\u0259",
+    127,
+    17
+   ],
+   [
+    "\u028c",
+    273,
+    163
+   ]
+  ],
+  "render_s": 61.8
+ },
+ {
+  "name": "slow100",
+  "cfg": {
+   "rate": 100.0
+  },
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.0,
+   0.75
+  ],
+  "golden_mean": 0.438,
+  "golden_pass": 2,
+  "heard_golden": [
+   "This is the moon",
+   "She sees the sun",
+   "",
+   "I'm the nurse, nurse This is my nurse"
+  ],
+  "word_mean": 0.833,
+  "heard_words": [
+   "See",
+   "",
+   "",
+   "So",
+   "So",
+   ""
+  ],
+  "ho_wer": [
+   1.25,
+   0.6,
+   1.2,
+   1.5,
+   1.0
+  ],
+  "ho_mean": 1.11,
+  "ho_pass": 0,
+  "heard_ho": [
+   "We said, see, see, see",
+   "I see it with me",
+   "You're so pissed not to dead",
+   "I'll be done, I'll be done",
+   "This is new"
+  ],
+  "min_steady_frac": 0.396,
+  "vowel_audit_moon": [
+   [
+    "\u026a",
+    182,
+    72
+   ],
+   [
+    "\u026a",
+    182,
+    72
+   ],
+   [
+    "\u0259",
+    182,
+    72
+   ],
+   [
+    "u",
+    389,
+    279
+   ]
+  ],
+  "vowel_audit_sun": [
+   [
+    "i",
+    182,
+    72
+   ],
+   [
+    "i",
+    278,
+    168
+   ],
+   [
+    "\u0259",
+    182,
+    72
+   ],
+   [
+    "\u028c",
+    389,
+    279
+   ]
+  ],
+  "render_s": 59.5
+ },
+ {
+  "name": "shorttrans",
+  "cfg": {
+   "cv_ms": 25,
+   "vc_ms": 20
+  },
+  "golden_wer": [
+   0.0,
+   0.25,
+   1.222,
+   0.5
+  ],
+  "golden_mean": 0.493,
+  "golden_pass": 2,
+  "heard_golden": [
+   "This is the moon.",
+   "She is the sun!",
+   "I should have known that I'm so cursed to let people",
+   "I am the snorkel This is my worst"
+  ],
+  "word_mean": 0.833,
+  "heard_words": [
+   "See",
+   "",
+   "",
+   "see",
+   "So",
+   ""
+  ],
+  "ho_wer": [
+   0.75,
+   1.2,
+   0.8,
+   1.5,
+   1.333
+  ],
+  "ho_mean": 1.117,
+  "ho_pass": 0,
+  "heard_ho": [
+   "She said, she said",
+   "I'll see you at me, me, me",
+   "You're so smart today",
+   "I'll be mine, I'll be mine",
+   "B.C.S.D."
+  ],
+  "min_steady_frac": 0.528,
+  "vowel_audit_moon": [
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "u",
+    273,
+    213
+   ]
+  ],
+  "vowel_audit_sun": [
+   [
+    "i",
+    128,
+    68
+   ],
+   [
+    "i",
+    195,
+    135
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "\u028c",
+    273,
+    213
+   ]
+  ],
+  "render_s": 81.8
+ },
+ {
+  "name": "prop",
+  "cfg": {
+   "prop": true
+  },
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.222,
+   0.625
+  ],
+  "golden_mean": 0.462,
+  "golden_pass": 2,
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun.",
+   "So this is not God's show, so there's a messy door.",
+   "I'm gonna snorke This is my choice"
+  ],
+  "word_mean": 0.833,
+  "heard_words": [
+   "See.",
+   "",
+   "Shhh!",
+   "see",
+   "So",
+   ""
+  ],
+  "ho_wer": [
+   0.75,
+   1.0,
+   1.0,
+   1.5,
+   1.0
+  ],
+  "ho_mean": 1.05,
+  "ho_pass": 0,
+  "heard_ho": [
+   "She said she said",
+   "My secret means me",
+   "You're so misguided",
+   "I'll be done, I'll be done",
+   ""
+  ],
+  "min_steady_frac": 0.506,
+  "vowel_audit_moon": [
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "u",
+    273,
+    163
+   ]
+  ],
+  "vowel_audit_sun": [
+   [
+    "i",
+    128,
+    68
+   ],
+   [
+    "i",
+    195,
+    115
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "\u028c",
+    273,
+    163
+   ]
+  ],
+  "render_s": 55.5
+ },
+ {
+  "name": "prop_g4",
+  "cfg": {
+   "prop": true,
+   "gain": 4.0
+  },
+  "golden_wer": [
+   0.0,
+   0.5,
+   1.111,
+   0.625
+  ],
+  "golden_mean": 0.559,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "She sees herself",
+   "I shouldn't have got shots, so they're gonna be good.",
+   "Oh my goodness, this is my worst"
+  ],
+  "word_mean": 1.0,
+  "heard_words": [
+   "You",
+   "",
+   "Shoo!",
+   "So",
+   "So",
+   ""
+  ],
+  "ho_wer": [
+   0.75,
+   0.8,
+   1.0,
+   1.5,
+   1.0
+  ],
+  "ho_mean": 1.01,
+  "ho_pass": 0,
+  "heard_ho": [
+   "She says she says",
+   "I see that me, me, me",
+   "You're so misguided",
+   "I'll be back, I'll be back",
+   ""
+  ],
+  "min_steady_frac": 0.506,
+  "vowel_audit_moon": [
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "u",
+    273,
+    163
+   ]
+  ],
+  "vowel_audit_sun": [
+   [
+    "i",
+    128,
+    68
+   ],
+   [
+    "i",
+    195,
+    115
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "\u028c",
+    273,
+    163
+   ]
+  ],
+  "render_s": 47.5
+ },
+ {
+  "name": "prop_g8",
+  "cfg": {
+   "prop": true,
+   "gain": 8.0
+  },
+  "golden_wer": [
+   0.0,
+   0.5,
+   1.333,
+   1.0
+  ],
+  "golden_mean": 0.708,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "She sees herself",
+   "And if not, that's true, so be sure to let me go.",
+   ""
+  ],
+  "word_mean": 1.0,
+  "heard_words": [
+   "",
+   "",
+   "",
+   "So",
+   "said.",
+   ""
+  ],
+  "ho_wer": [
+   0.75,
+   0.6,
+   1.0,
+   1.25,
+   0.667
+  ],
+  "ho_mean": 0.853,
+  "ho_pass": 0,
+  "heard_ho": [
+   "She said she said",
+   "I see that mean me",
+   "This is a misguided game",
+   "I'll be back in the end",
+   "You"
+  ],
+  "min_steady_frac": 0.506,
+  "vowel_audit_moon": [
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u026a",
+    128,
+    68
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "u",
+    273,
+    163
+   ]
+  ],
+  "vowel_audit_sun": [
+   [
+    "i",
+    128,
+    68
+   ],
+   [
+    "i",
+    195,
+    115
+   ],
+   [
+    "\u0259",
+    127,
+    67
+   ],
+   [
+    "\u028c",
+    273,
+    163
+   ]
+  ],
+  "render_s": 39.1
+ }
+]

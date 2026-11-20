@@ -1,0 +1,44 @@
+diff --git a/analysis/time_varying.py b/analysis/time_varying.py
+index ea0d57c..edbd891 100644
+--- a/analysis/time_varying.py
++++ b/analysis/time_varying.py
+@@ -33,6 +33,21 @@ SR = 48000
+ FRAME_SAMPLES = int(5.0 * SR / 1000)  # 240
+ 
+ 
++def transition_written_ms(vowel_dur_ms, cap_ms):
++    """Written CV/VC transition extent (ms) for a vowel of given duration.
++
++    Round 17: each transition may tax at most 25% of the adjacent vowel,
++    floored at 30ms written (2 glide frames + 1 steady) and capped at the
++    legacy budget (60 CV / 50 VC). Vowels >= 240ms (CV) / >= 200ms (VC)
++    keep the legacy extent exactly, so phrase-final lengthened nuclei are
++    untouched. The producer adds one steady-state frame (+10ms written),
++    so the requested duration_ms is the written extent minus 10.
++    Verified: golden WER 0.778 -> 0.462 (2/4), 'She sees the sun.' exact;
++    held-out still 0/5 (the next wall). Guard: tests/test_steady_state_fraction.py.
++    """
++    return min(cap_ms, max(30, int(0.25 * vowel_dur_ms / 10) * 10))
++
++
+ def _f0_target():
+     """Read measured_f0_median_hz from the genome (single source of truth)."""
+     try:
+@@ -185,11 +200,13 @@ def apply_transitions(plan, genome, formant_tracks, sr=SR, f3_scale=None):
+         b_is_cons = not b_is_vowel
+ 
+         if a_is_vowel and b_is_cons:
+-            # VC transition: vowel → consonant
+-            traj = vc_transition(vf_a, seg_b.phone, duration_ms=40, sr=sr)
++            # VC transition: vowel → consonant (proportional budget, Round 17)
++            d_ms = transition_written_ms((seg_a.t1 - seg_a.t0) * 1000, 50) - 10
++            traj = vc_transition(vf_a, seg_b.phone, duration_ms=d_ms, sr=sr)
+         elif a_is_cons and b_is_vowel:
+-            # CV transition: consonant → vowel
+-            traj = cv_transition(seg_a.phone, vf_b, duration_ms=50, sr=sr)
++            # CV transition: consonant → vowel (proportional budget, Round 17)
++            d_ms = transition_written_ms((seg_b.t1 - seg_b.t0) * 1000, 60) - 10
++            traj = cv_transition(seg_a.phone, vf_b, duration_ms=d_ms, sr=sr)
+         else:
+             # V-V or C-C: simple interpolation
+             traj = interpolate_formants(vf_a, vf_b, 5)

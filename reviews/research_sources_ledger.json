@@ -1,0 +1,161 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "id": 1,
+      "url": "https://en.wikipedia.org/wiki/Source%E2%80%93filter_model",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 2,
+      "url": "https://splab.net/apd/g500",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 3,
+      "url": "https://ocw.mit.edu/courses/24-915-linguistic-phonetics-fall-2015/8f4e9d5d8ea634dbbf0e2da8b92675ea_MIT24_915F15_lec4.pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 4,
+      "url": "https://www.voicescience.org/lexicon/myoelastic-aerodynamic-theory-of-voice-production",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 5,
+      "url": "https://ncvs.org/archive/ncvs/tutorials/voiceprod/tutorial/model.html",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 6,
+      "url": "https://www.surgery.medsch.ucla.edu/spl/research_fsi_phonationonset.htm",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 7,
+      "url": "https://www.fon.hum.uva.nl/david/ma_ssp/doc/Klatt-1980-JAS000971.pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 8,
+      "url": "https://github.com/espeak-ng/klatt/blob/master/README.md",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 9,
+      "url": "https://www.isca-archive.org/interspeech_2009/weenink09_interspeech.html",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 10,
+      "url": "https://ufdcimages.uflib.ufl.edu/AA/00/03/79/69/00001/flexibleformants00lalw.pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 11,
+      "url": "https://www.speech.kth.se/qpsr/1985/1985_26_4_001-013.pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 12,
+      "url": "https://www.sea-acustica.es/archivo/publicaciones/Sevilla02_spe01003.pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 13,
+      "url": "https://www.cs.cmu.edu/~pmuthuku/publications/pdfs/IterativeLF.pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 14,
+      "url": "https://github.com/tts-tutorial/survey",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 15,
+      "url": "https://arxiv.org/pdf/2106.06103",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 16,
+      "url": "https://arxiv.org/html/2412.06602v1",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 17,
+      "url": "https://en.wikipedia.org/wiki/Deep_learning_speech_synthesis",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 18,
+      "url": "https://arxiv.org/abs/2001.04643",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 19,
+      "url": "https://magenta.withgoogle.com/ddsp",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 20,
+      "url": "https://github.com/magenta/ddsp",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 21,
+      "url": "https://github.com/mmorise/World",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 22,
+      "url": "https://globals.ieice.org/en_transactions/information/10.1587/transinf.2015EDP7457/_pdf",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 23,
+      "url": "https://arxiv.org/abs/2010.05646",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 24,
+      "url": "https://arxiv.org/html/2106.15561v3",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 25,
+      "url": "https://link.springer.com/article/10.1007/s44163-026-01924-7",
+      "title": "",
+      "accessed": "2026-11-19"
+    },
+    {
+      "id": 26,
+      "url": "https://acoustics.org/pressroom/httpdocs/148th/schroeter.html",
+      "title": "",
+      "accessed": "2026-11-19"
+    }
+  ]
+}

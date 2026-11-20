@@ -1,0 +1,90 @@
+{
+ "name": "base",
+ "cfg": {},
+ "golden_wer": [
+  0.0,
+  1.0,
+  1.111,
+  1.0
+ ],
+ "golden_mean": 0.778,
+ "golden_pass": 1,
+ "heard_golden": [
+  "This is the moon.",
+  "She is so so so",
+  "So there's no God's show, so there's no mercy, don't...",
+  ""
+ ],
+ "word_mean": 0.833,
+ "heard_words": [
+  "See.",
+  "You",
+  "",
+  "see",
+  "So",
+  ""
+ ],
+ "ho_wer": [
+  0.75,
+  1.0,
+  0.8,
+  1.5,
+  1.0
+ ],
+ "ho_mean": 1.01,
+ "ho_pass": 0,
+ "heard_ho": [
+  "She said, she said,",
+  "I see it with me, with me",
+  "You're so missed, not today",
+  "I'll be done, I'll be done",
+  "this is"
+ ],
+ "min_steady_frac": 0.134,
+ "vowel_audit_moon": [
+  [
+   "\u026a",
+   128,
+   18
+  ],
+  [
+   "\u026a",
+   128,
+   18
+  ],
+  [
+   "\u0259",
+   127,
+   17
+  ],
+  [
+   "u",
+   273,
+   163
+  ]
+ ],
+ "vowel_audit_sun": [
+  [
+   "i",
+   128,
+   18
+  ],
+  [
+   "i",
+   195,
+   85
+  ],
+  [
+   "\u0259",
+   127,
+   17
+  ],
+  [
+   "\u028c",
+   273,
+   163
+  ]
+ ],
+ "render_s": 61.8
+}
+SAVED /mnt/data/nar-r17/results2.json (1 configs)

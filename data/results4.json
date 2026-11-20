@@ -1,0 +1,771 @@
+[
+ {
+  "name": "base",
+  "cfg": {},
+  "iso_pass": 1,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": "",
+  "iso_u_pass": true,
+  "iso_u_heard": "You",
+  "isolated": {
+   "i": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "You",
+    "pass": true,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.628,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.889,
+   0.625
+  ],
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun.",
+   "I'm so sorry, I'm not a goddamn shum. So, I'm so sorry, I'm not a goddamn shum.",
+   "I am the snooker, snooker This is my choice"
+  ],
+  "i_F2band": -37.9,
+  "i_F3band": -36.4,
+  "u_F2band": -41.9,
+  "i_minus_u_F2band": 4.0,
+  "render_s": 66.1
+ },
+ {
+  "name": "hf300",
+  "cfg": {
+   "highbw": {
+    "F2": 300.0,
+    "F3": 300.0
+   }
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": "You",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": "You",
+    "pass": false,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "Oh",
+    "pass": false,
+    "heard_vowels": [
+     "o\u028a"
+    ]
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.486,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.444,
+   0.5
+  ],
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun!",
+   "I shouldn't have done such a thing, so I shouldn't have done it.",
+   "I'm gonna snitch this is my own choice"
+  ],
+  "i_F2band": -37.0,
+  "i_F3band": -37.5,
+  "u_F2band": -42.0,
+  "i_minus_u_F2band": 5.0,
+  "render_s": 52.0
+ },
+ {
+  "name": "hf200",
+  "cfg": {
+   "highbw": {
+    "F2": 200.0,
+    "F3": 200.0
+   }
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": "",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.601,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.778,
+   0.625
+  ],
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun",
+   "It's not a joke, it's not a joke, it's not a joke, it's not a joke.",
+   "I'm gonna snorke This is my choice"
+  ],
+  "i_F2band": -36.5,
+  "i_F3band": -36.6,
+  "u_F2band": -41.6,
+  "i_minus_u_F2band": 5.1,
+  "render_s": 74.3
+ },
+ {
+  "name": "hf400",
+  "cfg": {
+   "highbw": {
+    "F2": 400.0,
+    "F3": 400.0
+   }
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": "You",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": "You",
+    "pass": false,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.583,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.333,
+   1.0
+  ],
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun.",
+   "I shouldn't have done such a shit, I shouldn't have been done.",
+   ""
+  ],
+  "i_F2band": -37.5,
+  "i_F3band": -38.1,
+  "u_F2band": -42.5,
+  "i_minus_u_F2band": 5.0,
+  "render_s": 50.9
+ },
+ {
+  "name": "asp20",
+  "cfg": {
+   "asp": -20.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": ". . . .",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": ". . . .",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.562,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.25,
+   0.0,
+   1.0,
+   1.0
+  ],
+  "heard_golden": [
+   "This is the most...",
+   "She sees the sun!",
+   "",
+   ""
+  ],
+  "i_F2band": -41.5,
+  "i_F3band": -33.3,
+  "u_F2band": -39.2,
+  "i_minus_u_F2band": -2.3,
+  "render_s": 57.8
+ },
+ {
+  "name": "asp30",
+  "cfg": {
+   "asp": -30.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": "You",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": "You",
+    "pass": false,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.469,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.0,
+   0.25,
+   1.0,
+   0.625
+  ],
+  "heard_golden": [
+   "This is the moon.",
+   "He sees the sun!",
+   "The moon is not watching So there's a minute before",
+   "I'm the snooker, snooker, this is my own choice."
+  ],
+  "i_F2band": -40.5,
+  "i_F3band": -34.3,
+  "u_F2band": -40.9,
+  "i_minus_u_F2band": 0.4,
+  "render_s": 76.8
+ },
+ {
+  "name": "bright20",
+  "cfg": {
+   "bright": 20.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": "You",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": "You",
+    "pass": false,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "\u026a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.406,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.0,
+   0.625
+  ],
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun!",
+   "",
+   "I'm the snorkel This is my choice"
+  ],
+  "i_F2band": -36.4,
+  "i_F3band": -34.4,
+  "u_F2band": -38.3,
+  "i_minus_u_F2band": 1.9,
+  "render_s": 43.4
+ },
+ {
+  "name": "asp20_hf300",
+  "cfg": {
+   "asp": -20.0,
+   "highbw": {
+    "F2": 300.0,
+    "F3": 300.0
+   }
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_pass": false,
+  "iso_i_heard": ". . . .",
+  "iso_u_pass": false,
+  "iso_u_heard": "",
+  "isolated": {
+   "i": {
+    "heard": ". . . .",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u026a": {
+    "heard": "You",
+    "pass": false,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "e": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u025b": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u00e6": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0251": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028c": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0254": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "o": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u028a": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "u": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "\u0259": {
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   }
+  },
+  "golden_mean": 0.562,
+  "golden_pass": 2,
+  "golden_wer": [
+   0.25,
+   0.0,
+   1.0,
+   1.0
+  ],
+  "heard_golden": [
+   "This is the most...",
+   "She sees the sun!",
+   "",
+   ""
+  ],
+  "i_F2band": -41.5,
+  "i_F3band": -35.3,
+  "u_F2band": -40.9,
+  "i_minus_u_F2band": -0.6,
+  "render_s": 78.3
+ }
+]

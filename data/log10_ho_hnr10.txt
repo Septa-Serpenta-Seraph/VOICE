@@ -1,0 +1,2 @@
+== ho_hnr10 == held-out 1.010 0/10
+   heard: ['Let me see the sea', "So that's sad, I'm so mad", 'Beep! Beep! Beep!', '', 'Just nubs me, nubs me, nubs me, nubs me']

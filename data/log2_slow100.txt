@@ -1,0 +1,92 @@
+{
+ "name": "slow100",
+ "cfg": {
+  "rate": 100.0
+ },
+ "golden_wer": [
+  0.0,
+  0.0,
+  1.0,
+  0.75
+ ],
+ "golden_mean": 0.438,
+ "golden_pass": 2,
+ "heard_golden": [
+  "This is the moon",
+  "She sees the sun",
+  "",
+  "I'm the nurse, nurse This is my nurse"
+ ],
+ "word_mean": 0.833,
+ "heard_words": [
+  "See",
+  "",
+  "",
+  "So",
+  "So",
+  ""
+ ],
+ "ho_wer": [
+  1.25,
+  0.6,
+  1.2,
+  1.5,
+  1.0
+ ],
+ "ho_mean": 1.11,
+ "ho_pass": 0,
+ "heard_ho": [
+  "We said, see, see, see",
+  "I see it with me",
+  "You're so pissed not to dead",
+  "I'll be done, I'll be done",
+  "This is new"
+ ],
+ "min_steady_frac": 0.396,
+ "vowel_audit_moon": [
+  [
+   "\u026a",
+   182,
+   72
+  ],
+  [
+   "\u026a",
+   182,
+   72
+  ],
+  [
+   "\u0259",
+   182,
+   72
+  ],
+  [
+   "u",
+   389,
+   279
+  ]
+ ],
+ "vowel_audit_sun": [
+  [
+   "i",
+   182,
+   72
+  ],
+  [
+   "i",
+   278,
+   168
+  ],
+  [
+   "\u0259",
+   182,
+   72
+  ],
+  [
+   "\u028c",
+   389,
+   279
+  ]
+ ],
+ "render_s": 59.5
+}
+SAVED /mnt/data/nar-r17/results2.json (2 configs)

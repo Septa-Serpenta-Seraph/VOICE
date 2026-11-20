@@ -1,0 +1,99 @@
+{
+ "name": "env_strong",
+ "cfg": {
+  "env": {
+   "i": {
+    "F1": 8.0,
+    "F3": 0.25
+   },
+   "\u026a": {
+    "F1": 0.7,
+    "F2": 2.0,
+    "F3": 2.0
+   }
+  }
+ },
+ "golden_wer": [
+  0.0,
+  1.0,
+  1.0,
+  1.25
+ ],
+ "golden_mean": 0.812,
+ "golden_pass": 1,
+ "heard_golden": [
+  "This is the moon.",
+  "Shhh, shhh, shhh, shhh.",
+  "",
+  "This is why I'm doing this, this is why I'm doing this."
+ ],
+ "zarza_ho_mean": 1.142,
+ "zarza_ho_pass": 0,
+ "zarza_ho_wer": [
+  1.0,
+  1.0,
+  1.0,
+  1.0,
+  1.333,
+  1.25,
+  1.0,
+  1.556
+ ],
+ "heard_zarza_ho": [
+  "",
+  "",
+  "",
+  "Oh",
+  "Just don't smoke me, just don't smoke me",
+  "This is this isn't this",
+  "",
+  "This is the last section, this is the last section, this is the last section."
+ ],
+ "my_ho_mean": 1.0,
+ "my_ho_pass": 0,
+ "heard_my_ho": [
+  "Shhh, shhh, shhh, shhh!",
+  "",
+  "You're so misguided",
+  "",
+  ""
+ ],
+ "iwords_exact": 0,
+ "heard_iwords": [
+  "",
+  "",
+  "Shhh!",
+  "",
+  "",
+  "You",
+  "",
+  "You",
+  "see you",
+  "So"
+ ],
+ "sustained_i": [
+  0.0,
+  34.6,
+  32.9
+ ],
+ "flat_i": 0.0,
+ "sustained_u": [
+  0.0,
+  -6.7,
+  -20.7
+ ],
+ "flat_u": 0.0,
+ "sustained_ji": [
+  0.0,
+  -6.4,
+  -9.4
+ ],
+ "flat_ji": 0.0,
+ "i_rel_me": [
+  0.0,
+  -1.1,
+  -2.0
+ ],
+ "render_s": 99.9
+}
+SAVED /mnt/data/nar-r17/results3.json (7 configs)

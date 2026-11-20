@@ -1,0 +1,10 @@
+== synth hVd == 2/8
+  heed   /i/ -> 'you'          fail  v=['u']
+  hid    /ɪ/ -> ''             fail  v=[]
+  head   /ɛ/ -> "You're dead." PASS  v=['eɪ', 'u', 'ɛ']
+  had    /æ/ -> ''             fail  v=[]
+  hod    /ɑ/ -> 'Good.'        fail  v=['ʊ']
+  hud    /ʌ/ -> ''             fail  v=[]
+  hood   /ʊ/ -> ''             fail  v=[]
+  who'd  /u/ -> 'You'          PASS  v=['u']
+SAVED /mnt/data/nar-r17/results6.json

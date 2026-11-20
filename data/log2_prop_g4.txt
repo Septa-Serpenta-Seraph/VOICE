@@ -1,0 +1,93 @@
+{
+ "name": "prop_g4",
+ "cfg": {
+  "prop": true,
+  "gain": 4.0
+ },
+ "golden_wer": [
+  0.0,
+  0.5,
+  1.111,
+  0.625
+ ],
+ "golden_mean": 0.559,
+ "golden_pass": 1,
+ "heard_golden": [
+  "This is the moon.",
+  "She sees herself",
+  "I shouldn't have got shots, so they're gonna be good.",
+  "Oh my goodness, this is my worst"
+ ],
+ "word_mean": 1.0,
+ "heard_words": [
+  "You",
+  "",
+  "Shoo!",
+  "So",
+  "So",
+  ""
+ ],
+ "ho_wer": [
+  0.75,
+  0.8,
+  1.0,
+  1.5,
+  1.0
+ ],
+ "ho_mean": 1.01,
+ "ho_pass": 0,
+ "heard_ho": [
+  "She says she says",
+  "I see that me, me, me",
+  "You're so misguided",
+  "I'll be back, I'll be back",
+  ""
+ ],
+ "min_steady_frac": 0.506,
+ "vowel_audit_moon": [
+  [
+   "\u026a",
+   128,
+   68
+  ],
+  [
+   "\u026a",
+   128,
+   68
+  ],
+  [
+   "\u0259",
+   127,
+   67
+  ],
+  [
+   "u",
+   273,
+   163
+  ]
+ ],
+ "vowel_audit_sun": [
+  [
+   "i",
+   128,
+   68
+  ],
+  [
+   "i",
+   195,
+   115
+  ],
+  [
+   "\u0259",
+   127,
+   67
+  ],
+  [
+   "\u028c",
+   273,
+   163
+  ]
+ ],
+ "render_s": 47.5
+}
+SAVED /mnt/data/nar-r17/results2.json (5 configs)

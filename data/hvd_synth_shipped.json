@@ -1,0 +1,67 @@
+{
+  "oracle": "faster-whisper-base",
+  "assay": "hVd-carrier",
+  "source": "synth",
+  "passed": 2,
+  "total": 8,
+  "items": {
+    "heed": {
+      "target": "i",
+      "heard": "you",
+      "pass": false,
+      "heard_vowels": [
+        "u"
+      ]
+    },
+    "hid": {
+      "target": "ɪ",
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "head": {
+      "target": "ɛ",
+      "heard": "You're dead.",
+      "pass": true,
+      "heard_vowels": [
+        "eɪ",
+        "u",
+        "ɛ"
+      ]
+    },
+    "had": {
+      "target": "æ",
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "hod": {
+      "target": "ɑ",
+      "heard": "Good.",
+      "pass": false,
+      "heard_vowels": [
+        "ʊ"
+      ]
+    },
+    "hud": {
+      "target": "ʌ",
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "hood": {
+      "target": "ʊ",
+      "heard": "",
+      "pass": false,
+      "heard_vowels": []
+    },
+    "who'd": {
+      "target": "u",
+      "heard": "You",
+      "pass": true,
+      "heard_vowels": [
+        "u"
+      ]
+    }
+  }
+}

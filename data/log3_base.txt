@@ -1,0 +1,87 @@
+{
+ "name": "base",
+ "cfg": {},
+ "golden_wer": [
+  0.0,
+  0.0,
+  1.222,
+  0.625
+ ],
+ "golden_mean": 0.462,
+ "golden_pass": 2,
+ "heard_golden": [
+  "This is the moon.",
+  "She sees the sun.",
+  "So this is not God's show, so there's a messy door.",
+  "I'm gonna snorke This is my choice"
+ ],
+ "zarza_ho_mean": 1.146,
+ "zarza_ho_pass": 0,
+ "zarza_ho_wer": [
+  1.0,
+  1.333,
+  1.333,
+  1.0,
+  1.0,
+  1.5,
+  1.0,
+  1.0
+ ],
+ "heard_zarza_ho": [
+  "B.C. to C.",
+  "I'm sure that's sad, I'm sure that's sad",
+  "Meet me, meet me",
+  "",
+  "Just know, Smith, Smith's not know",
+  "This is this, this is this",
+  "Just won't leave, not sad Don't, don't, don't, don't, don't",
+  "This isn't the last segment, this isn't the last"
+ ],
+ "my_ho_mean": 1.15,
+ "my_ho_pass": 0,
+ "heard_my_ho": [
+  "C-S-C-S-S",
+  "My secret means me",
+  "You're so misguided",
+  "I'll be done, I'll be done",
+  ""
+ ],
+ "iwords_exact": 1,
+ "heard_iwords": [
+  "See.",
+  "",
+  "Shhh!",
+  "",
+  "",
+  "You",
+  "Please",
+  "SLEEP",
+  "see",
+  "So"
+ ],
+ "sustained_i": [
+  0.0,
+  54.4,
+  51.6
+ ],
+ "flat_i": 0.0,
+ "sustained_u": [
+  0.0,
+  -6.7,
+  -20.7
+ ],
+ "flat_u": 0.0,
+ "sustained_ji": [
+  0.0,
+  -15.1,
+  -15.5
+ ],
+ "flat_ji": 0.0,
+ "i_rel_me": [
+  0.0,
+  14.1,
+  14.3
+ ],
+ "render_s": 137.7
+}
+SAVED /mnt/data/nar-r17/results3.json (1 configs)

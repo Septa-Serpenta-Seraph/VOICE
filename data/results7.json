@@ -1,0 +1,212 @@
+[
+ {
+  "name": "hvd_base",
+  "cfg": {},
+  "pass": 2,
+  "total": 8,
+  "heed_i_heard": "you",
+  "heed_i_pass": false,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "you",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "You're dead.",
+    "pass": true
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "Good.",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "You",
+    "pass": true
+   }
+  },
+  "render_s": 13.6
+ },
+ {
+  "name": "hvd_mix10",
+  "cfg": {
+   "hnr": 10.0
+  },
+  "pass": 1,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "You",
+    "pass": true
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 23.7
+ },
+ {
+  "name": "hvd_mix6",
+  "cfg": {
+   "hnr": 6.0
+  },
+  "pass": 0,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "",
+    "pass": false
+   }
+  },
+  "render_s": 16.6
+ },
+ {
+  "name": "hvd_mix0",
+  "cfg": {
+   "hnr": 0.0
+  },
+  "pass": 0,
+  "total": 8,
+  "heed_i_heard": "",
+  "heed_i_pass": false,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "",
+    "pass": false
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "",
+    "pass": false
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": ". . . .",
+    "pass": false
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false
+   },
+   "who'd": {
+    "target": "u",
+    "heard": ". . . .",
+    "pass": false
+   }
+  },
+  "render_s": 16.1
+ }
+]

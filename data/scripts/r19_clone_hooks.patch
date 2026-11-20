@@ -1,0 +1,153 @@
+diff --git a/analysis/frame_renderer.py b/analysis/frame_renderer.py
+index 4d2a2d9..834f336 100644
+--- a/analysis/frame_renderer.py
++++ b/analysis/frame_renderer.py
+@@ -25,6 +25,26 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+ from render_plan import RenderPlan, Style, Segment, PHONE_TABLE, build_plan, SR, FRAME_MS
+ from phase1_synth import lf_timing_from_rd
+ 
++# Round 18 experimental hooks (Narusya's clone only; kept in sync with
++# prosody_poststage._R18_* by the grid driver).
++_R18_ENVELOPE = None
++_R18_BW_VOWEL = None
++_R19_HIGHBW = None
++
++
++def _r18_vowel_grid(genome):
++    return [(ph, f[0], f[1]) for ph, f in genome["vowel_grid"].items()
++            if isinstance(f, list) and len(f) >= 2]
++
++
++def _r18_label(vgrid, f1, f2):
++    best, bd = None, 1e18
++    for ph, g1, g2 in vgrid:
++        d = (g1 - f1) ** 2 + ((g2 - f2) * 0.5) ** 2
++        if d < bd:
++            best, bd = ph, d
++    return best
++
+ SR = 48000
+ FRAME_SAMPLES = int(FRAME_MS * SR / 1000)  # 240 samples at 48kHz
+ 
+@@ -335,6 +355,7 @@ def render_plan(plan: RenderPlan, genome: dict) -> np.ndarray:
+     # Run resonators (per-formant, with state carry)
+     output = np.zeros(n_total)
+     resonator_state = {}  # {formant_name: zi}
++    vgrid = _r18_vowel_grid(genome) if (_R18_ENVELOPE or _R18_BW_VOWEL) else None
+ 
+     for frame_start in range(0, n_total, FRAME_SAMPLES):
+         frame_end = min(frame_start + FRAME_SAMPLES, n_total)
+@@ -351,11 +372,19 @@ def render_plan(plan: RenderPlan, genome: dict) -> np.ndarray:
+             frame_formants[f] = formant_tracks[f][mid]
+             frame_bw[f] = bw_tracks[f][mid]
+ 
++        vlabel = None
++        if vgrid is not None:
++            vlabel = _r18_label(vgrid, frame_formants["F1"], frame_formants["F2"])
++
+         # Process each formant
+         for fname, f_freq in frame_formants.items():
+             bw = frame_bw[fname]
+             if bw <= 0:
+                 bw = 100.0
++            if _R18_BW_VOWEL and vlabel in _R18_BW_VOWEL:
++                bw = float(_R18_BW_VOWEL[vlabel].get(fname, bw))
++            if _R19_HIGHBW and fname in _R19_HIGHBW:
++                bw = float(_R19_HIGHBW[fname])
+             if f_freq <= 0:
+                 continue
+ 
+@@ -371,7 +400,10 @@ def render_plan(plan: RenderPlan, genome: dict) -> np.ndarray:
+             out, zi_new = lfilter(b, a, frame_source, zi=zi)
+             resonator_state[fname] = zi_new
+ 
+-            output[frame_start:frame_end] += out
++            g = 1.0
++            if _R18_ENVELOPE and vlabel in _R18_ENVELOPE:
++                g = float(_R18_ENVELOPE[vlabel].get(fname, 1.0))
++            output[frame_start:frame_end] += out * g
+ 
+     # Radiation: +6 dB/oct high-freq boost (differentiator)
+     output = np.diff(output, prepend=output[0])
+diff --git a/analysis/prosody_poststage.py b/analysis/prosody_poststage.py
+index 79b6f3f..07a28b2 100644
+--- a/analysis/prosody_poststage.py
++++ b/analysis/prosody_poststage.py
+@@ -178,7 +178,7 @@ def apply_fixed_tilt(signal, sr=SR):
+     # bounded; filtfilt removes phase distortion.
+     sos = butter(1, 1000.0, btype="high", fs=sr, output="sos")
+     high = sosfiltfilt(sos, signal)
+-    gain = 10 ** (2.7 / 20.0) - 1.0  # ≈ 0.355 extra above the shelf
++    gain = 10 ** ((2.7 + (_R19_BRIGHT_DB or 0.0)) / 20.0) - 1.0  # shelf extra above 1kHz
+     shaped = signal + high * gain
+     peak = np.max(np.abs(shaped))
+     if peak > 0.95:
+@@ -299,6 +299,28 @@ def synthesize_segment_consonant(seg, sr, seed, next_formants=None):
+     return synthesize_consonant(seg.phone, dur, sr, rng=np.random.default_rng(seed))
+ 
+ 
++# Round 18 experimental hooks (Narusya's clone only; never committed).
++_R18_ENVELOPE = None   # {vowel_phone: {formant: gain}} per-vowel envelope
++_R18_BW_VOWEL = None   # {vowel_phone: {formant: bw_hz}} per-vowel bandwidth
++_R19_HIGHBW = None     # {formant: bw_hz} global high-formant (F2/F3/F4) bandwidth
++_R19_BRIGHT_DB = None  # extra dB added to the post-stage high shelf (brighten)
++
++
++def _r18_vowel_grid(genome):
++    return [(ph, f[0], f[1]) for ph, f in genome["vowel_grid"].items()
++            if isinstance(f, list) and len(f) >= 2]
++
++
++def _r18_label(vgrid, f1, f2):
++    """Nearest genome vowel by (F1, F2) distance; labels glides too."""
++    best, bd = None, 1e18
++    for ph, g1, g2 in vgrid:
++        d = (g1 - f1) ** 2 + ((g2 - f2) * 0.5) ** 2
++        if d < bd:
++            best, bd = ph, d
++    return best
++
++
+ def render_plan_v3(plan, genome, overrides=None):
+     """Render with full prosody + post-stage (tilt, sub-bass, aperiodicity as tracks).
+ 
+@@ -424,6 +446,7 @@ def render_plan_v3(plan, genome, overrides=None):
+     # Run resonators
+     output = np.zeros(n_total)
+     resonator_state = {}
++    vgrid = _r18_vowel_grid(genome) if (_R18_ENVELOPE or _R18_BW_VOWEL) else None
+ 
+     for frame_start in range(0, n_total, FRAME_SAMPLES):
+         frame_end = min(frame_start + FRAME_SAMPLES, n_total)
+@@ -432,11 +455,19 @@ def render_plan_v3(plan, genome, overrides=None):
+             break
+         mid = frame_start + frame_len // 2
+ 
++        vlabel = None
++        if vgrid is not None:
++            vlabel = _r18_label(vgrid, formant_tracks["F1"][mid],
++                                formant_tracks["F2"][mid])
+         for fname in ["F1", "F2", "F3", "F4"]:
+             f_freq = formant_tracks[fname][mid]
+             bw = bw_tracks[fname][mid] if fname in bw_tracks else 100.0
+             if bw <= 0:
+                 bw = 100.0
++            if _R18_BW_VOWEL and vlabel in _R18_BW_VOWEL:
++                bw = float(_R18_BW_VOWEL[vlabel].get(fname, bw))
++            if _R19_HIGHBW and fname in _R19_HIGHBW:
++                bw = float(_R19_HIGHBW[fname])
+             if f_freq <= 0:
+                 continue
+             b, a = _resonator_coeffs(f_freq, bw, SR)
+@@ -444,7 +475,10 @@ def render_plan_v3(plan, genome, overrides=None):
+             frame_source = source[frame_start:frame_end]
+             out, zi_new = _lfilter_safe(b, a, frame_source, zi)
+             resonator_state[fname] = zi_new
+-            output[frame_start:frame_end] += out
++            g = 1.0
++            if _R18_ENVELOPE and vlabel in _R18_ENVELOPE:
++                g = float(_R18_ENVELOPE[vlabel].get(fname, 1.0))
++            output[frame_start:frame_end] += out * g
+ 
+     # Radiation
+     output = np.diff(output, prepend=output[0])

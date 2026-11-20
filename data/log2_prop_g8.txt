@@ -1,0 +1,93 @@
+{
+ "name": "prop_g8",
+ "cfg": {
+  "prop": true,
+  "gain": 8.0
+ },
+ "golden_wer": [
+  0.0,
+  0.5,
+  1.333,
+  1.0
+ ],
+ "golden_mean": 0.708,
+ "golden_pass": 1,
+ "heard_golden": [
+  "This is the moon.",
+  "She sees herself",
+  "And if not, that's true, so be sure to let me go.",
+  ""
+ ],
+ "word_mean": 1.0,
+ "heard_words": [
+  "",
+  "",
+  "",
+  "So",
+  "said.",
+  ""
+ ],
+ "ho_wer": [
+  0.75,
+  0.6,
+  1.0,
+  1.25,
+  0.667
+ ],
+ "ho_mean": 0.853,
+ "ho_pass": 0,
+ "heard_ho": [
+  "She said she said",
+  "I see that mean me",
+  "This is a misguided game",
+  "I'll be back in the end",
+  "You"
+ ],
+ "min_steady_frac": 0.506,
+ "vowel_audit_moon": [
+  [
+   "\u026a",
+   128,
+   68
+  ],
+  [
+   "\u026a",
+   128,
+   68
+  ],
+  [
+   "\u0259",
+   127,
+   67
+  ],
+  [
+   "u",
+   273,
+   163
+  ]
+ ],
+ "vowel_audit_sun": [
+  [
+   "i",
+   128,
+   68
+  ],
+  [
+   "i",
+   195,
+   115
+  ],
+  [
+   "\u0259",
+   127,
+   67
+  ],
+  [
+   "\u028c",
+   273,
+   163
+  ]
+ ],
+ "render_s": 39.1
+}
+SAVED /mnt/data/nar-r17/results2.json (6 configs)

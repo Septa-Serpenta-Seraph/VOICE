@@ -1,0 +1,10 @@
+== natural hVd == 6/8
+  heed   /i/ -> 'Heat.'        PASS  v=['i']
+  hid    /ɪ/ -> 'Head.'        fail  v=['ɛ']
+  head   /ɛ/ -> 'Head.'        PASS  v=['ɛ']
+  had    /æ/ -> 'Hard.'        fail  v=['ɑ']
+  hod    /ɑ/ -> 'Hard.'        PASS  v=['ɑ']
+  hud    /ʌ/ -> 'Hard.'        PASS  v=['ɑ']
+  hood   /ʊ/ -> 'Hood.'        PASS  v=['ʊ']
+  who'd  /u/ -> "Who'd?"       PASS  v=['i', 'u']
+SAVED /mnt/data/nar-r17/results6.json

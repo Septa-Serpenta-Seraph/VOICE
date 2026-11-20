@@ -1,0 +1,3 @@
+== r22_base == hVd 2/8  heed/i/->'you'(.)  F2band -41.2dB flat 0.3319
+    {'heed': ('you', '.'), 'hid': ('', '.'), 'head': ("You're dead.", 'P'), 'had': ('', '.'), 'hod': ('Good.', '.'), 'hud': ('', '.'), 'hood': ('', '.'), "who'd": ('You', 'P')}
+SAVED /mnt/data/nar-r17/results8.json

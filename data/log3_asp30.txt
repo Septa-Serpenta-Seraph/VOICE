@@ -1,0 +1,89 @@
+{
+ "name": "asp30",
+ "cfg": {
+  "asp": -30.0
+ },
+ "golden_wer": [
+  0.0,
+  0.25,
+  1.222,
+  0.625
+ ],
+ "golden_mean": 0.524,
+ "golden_pass": 2,
+ "heard_golden": [
+  "This is the moon.",
+  "He sees the sun.",
+  "I'm not a god, I'm a soldier, I'm a baby god",
+  "I'm the snooker, snooker, this is my own choice."
+ ],
+ "zarza_ho_mean": 1.178,
+ "zarza_ho_pass": 0,
+ "zarza_ho_wer": [
+  1.25,
+  1.0,
+  1.333,
+  1.0,
+  1.667,
+  1.25,
+  0.923,
+  1.0
+ ],
+ "heard_zarza_ho": [
+  "We'll see you there, see you!",
+  "To that side, don't do that",
+  "Meet me, meet me",
+  "",
+  "Just don't smig, smig, smig, smig, smig, smig, smig, smig.",
+  "This is this isn't this",
+  "Just won't leave, not sad, I'm too old to know that you're gone.",
+  "This isn't the last segment, this isn't the last."
+ ],
+ "my_ho_mean": 1.12,
+ "my_ho_pass": 0,
+ "heard_my_ho": [
+  "B.S.N.C.L.N.",
+  "I see that meme meme",
+  "You're so misguided",
+  "I'll be done, I'll be done",
+  ""
+ ],
+ "iwords_exact": 0,
+ "heard_iwords": [
+  "You",
+  "",
+  "you",
+  "",
+  "",
+  "You",
+  "me",
+  "You",
+  "See you next time.",
+  "I said..."
+ ],
+ "sustained_i": [
+  0.0,
+  27.4,
+  25.8
+ ],
+ "flat_i": 0.0504,
+ "sustained_u": [
+  0.0,
+  -6.6,
+  -19.9
+ ],
+ "flat_u": 0.027,
+ "sustained_ji": [
+  0.0,
+  -14.8,
+  -13.1
+ ],
+ "flat_ji": 0.0334,
+ "i_rel_me": [
+  0.0,
+  14.8,
+  19.9
+ ],
+ "render_s": 122.0
+}
+SAVED /mnt/data/nar-r17/results3.json (5 configs)

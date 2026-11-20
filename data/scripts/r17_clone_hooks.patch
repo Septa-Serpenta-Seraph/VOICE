@@ -1,0 +1,127 @@
+diff --git a/analysis/frame_renderer.py b/analysis/frame_renderer.py
+index 4d2a2d9..7cb4644 100644
+--- a/analysis/frame_renderer.py
++++ b/analysis/frame_renderer.py
+@@ -25,6 +25,12 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+ from render_plan import RenderPlan, Style, Segment, PHONE_TABLE, build_plan, SR, FRAME_MS
+ from phase1_synth import lf_timing_from_rd
+ 
++# Round 17 experimental hooks (Narusya's clone only; kept in sync with
++# prosody_poststage._R17_* by the grid driver).
++_R17_F1_GAIN = 1.0
++_R17_F1_GAIN_MAX_HZ = None
++_R17_BW_OVERRIDE = None
++
+ SR = 48000
+ FRAME_SAMPLES = int(FRAME_MS * SR / 1000)  # 240 samples at 48kHz
+ 
+@@ -356,6 +362,8 @@ def render_plan(plan: RenderPlan, genome: dict) -> np.ndarray:
+             bw = frame_bw[fname]
+             if bw <= 0:
+                 bw = 100.0
++            if _R17_BW_OVERRIDE and fname in _R17_BW_OVERRIDE:
++                bw = float(_R17_BW_OVERRIDE[fname])
+             if f_freq <= 0:
+                 continue
+ 
+@@ -371,7 +379,11 @@ def render_plan(plan: RenderPlan, genome: dict) -> np.ndarray:
+             out, zi_new = lfilter(b, a, frame_source, zi=zi)
+             resonator_state[fname] = zi_new
+ 
+-            output[frame_start:frame_end] += out
++            g = 1.0
++            if fname == "F1" and _R17_F1_GAIN != 1.0:
++                if _R17_F1_GAIN_MAX_HZ is None or f_freq <= _R17_F1_GAIN_MAX_HZ:
++                    g = _R17_F1_GAIN
++            output[frame_start:frame_end] += out * g
+ 
+     # Radiation: +6 dB/oct high-freq boost (differentiator)
+     output = np.diff(output, prepend=output[0])
+diff --git a/analysis/prosody_poststage.py b/analysis/prosody_poststage.py
+index 79b6f3f..bece5c7 100644
+--- a/analysis/prosody_poststage.py
++++ b/analysis/prosody_poststage.py
+@@ -299,6 +299,12 @@ def synthesize_segment_consonant(seg, sr, seed, next_formants=None):
+     return synthesize_consonant(seg.phone, dur, sr, rng=np.random.default_rng(seed))
+ 
+ 
++# Round 17 experimental hooks (Narusya's clone only; never committed).
++_R17_F1_GAIN = 1.0          # multiplier on the F1 resonator output
++_R17_F1_GAIN_MAX_HZ = None  # if set, gain applies only when frame F1 <= this Hz
++_R17_BW_OVERRIDE = None     # e.g. {"F1": 120.0} to override formant bandwidths
++
++
+ def render_plan_v3(plan, genome, overrides=None):
+     """Render with full prosody + post-stage (tilt, sub-bass, aperiodicity as tracks).
+ 
+@@ -437,6 +443,8 @@ def render_plan_v3(plan, genome, overrides=None):
+             bw = bw_tracks[fname][mid] if fname in bw_tracks else 100.0
+             if bw <= 0:
+                 bw = 100.0
++            if _R17_BW_OVERRIDE and fname in _R17_BW_OVERRIDE:
++                bw = float(_R17_BW_OVERRIDE[fname])
+             if f_freq <= 0:
+                 continue
+             b, a = _resonator_coeffs(f_freq, bw, SR)
+@@ -444,7 +452,11 @@ def render_plan_v3(plan, genome, overrides=None):
+             frame_source = source[frame_start:frame_end]
+             out, zi_new = _lfilter_safe(b, a, frame_source, zi)
+             resonator_state[fname] = zi_new
+-            output[frame_start:frame_end] += out
++            g = 1.0
++            if fname == "F1" and _R17_F1_GAIN != 1.0:
++                if _R17_F1_GAIN_MAX_HZ is None or f_freq <= _R17_F1_GAIN_MAX_HZ:
++                    g = _R17_F1_GAIN
++            output[frame_start:frame_end] += out * g
+ 
+     # Radiation
+     output = np.diff(output, prepend=output[0])
+diff --git a/analysis/time_varying.py b/analysis/time_varying.py
+index ea0d57c..ceb8ece 100644
+--- a/analysis/time_varying.py
++++ b/analysis/time_varying.py
+@@ -32,6 +32,25 @@ from coarticulation import cv_transition, vc_transition, interpolate_formants
+ SR = 48000
+ FRAME_SAMPLES = int(5.0 * SR / 1000)  # 240
+ 
++# Round 17 experimental knobs (Narusya's clone; grid driver sets these).
++_R17_CV_MS = None      # fixed CV duration_ms override (repro of Zarza shorttrans)
++_R17_VC_MS = None      # fixed VC duration_ms override
++_R17_PROP_TRANS = False  # proportional transition budget (the candidate fix)
++
++
++def prop_written_ms(vowel_dur_ms, cap_ms):
++    """Written transition extent (ms) for a vowel of given duration.
++
++    Rule: each transition may tax at most 25% of the vowel, floored at 30ms
++    written (2 glide frames + 1 steady) and capped at the legacy budget
++    (60 CV / 50 VC). Long vowels (>=240ms CV, >=200ms VC) keep the legacy
++    extent exactly, so phrase-final lengthened nuclei are untouched.
++    The producer adds one steady-state frame (+10ms written), so the
++    requested duration_ms is the written extent minus 10.
++    """
++    w = min(cap_ms, max(30, int(0.25 * vowel_dur_ms / 10) * 10))
++    return w
++
+ 
+ def _f0_target():
+     """Read measured_f0_median_hz from the genome (single source of truth)."""
+@@ -186,10 +205,16 @@ def apply_transitions(plan, genome, formant_tracks, sr=SR, f3_scale=None):
+ 
+         if a_is_vowel and b_is_cons:
+             # VC transition: vowel → consonant
+-            traj = vc_transition(vf_a, seg_b.phone, duration_ms=40, sr=sr)
++            d_ms = 40 if _R17_VC_MS is None else int(_R17_VC_MS)
++            if _R17_PROP_TRANS:
++                d_ms = prop_written_ms((seg_a.t1 - seg_a.t0) * 1000, 50) - 10
++            traj = vc_transition(vf_a, seg_b.phone, duration_ms=d_ms, sr=sr)
+         elif a_is_cons and b_is_vowel:
+             # CV transition: consonant → vowel
+-            traj = cv_transition(seg_a.phone, vf_b, duration_ms=50, sr=sr)
++            d_ms = 50 if _R17_CV_MS is None else int(_R17_CV_MS)
++            if _R17_PROP_TRANS:
++                d_ms = prop_written_ms((seg_b.t1 - seg_b.t0) * 1000, 60) - 10
++            traj = cv_transition(seg_a.phone, vf_b, duration_ms=d_ms, sr=sr)
+         else:
+             # V-V or C-C: simple interpolation
+             traj = interpolate_formants(vf_a, vf_b, 5)

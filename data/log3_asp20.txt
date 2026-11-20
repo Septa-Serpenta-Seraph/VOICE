@@ -1,0 +1,89 @@
+{
+ "name": "asp20",
+ "cfg": {
+  "asp": -20.0
+ },
+ "golden_wer": [
+  0.25,
+  0.0,
+  1.0,
+  1.0
+ ],
+ "golden_mean": 0.562,
+ "golden_pass": 2,
+ "heard_golden": [
+  "This is the most...",
+  "She sees the sun!",
+  "",
+  ""
+ ],
+ "zarza_ho_mean": 1.152,
+ "zarza_ho_pass": 0,
+ "zarza_ho_wer": [
+  1.0,
+  1.0,
+  1.333,
+  1.0,
+  1.0,
+  1.25,
+  1.077,
+  1.556
+ ],
+ "heard_zarza_ho": [
+  "We'll be see to see",
+  "To that side, don't be mad",
+  "Me, me, me, me...",
+  "",
+  "",
+  "This is this isn't this",
+  "This won't be not sad, but it won't be good to know that the god...",
+  "This is the last segment, this is the last segment, this is the last segment."
+ ],
+ "my_ho_mean": 1.12,
+ "my_ho_pass": 0,
+ "heard_my_ho": [
+  "BZC BZC",
+  "",
+  "The sun is not the day",
+  "Be nice to me, be nice to me",
+  "This is me."
+ ],
+ "iwords_exact": 1,
+ "heard_iwords": [
+  "see",
+  "",
+  "",
+  "",
+  "",
+  "I",
+  "Beep.",
+  "You",
+  "See you.",
+  "So"
+ ],
+ "sustained_i": [
+  0.0,
+  20.7,
+  24.7
+ ],
+ "flat_i": 0.1332,
+ "sustained_u": [
+  0.0,
+  -6.5,
+  -15.5
+ ],
+ "flat_u": 0.1321,
+ "sustained_ji": [
+  0.0,
+  -12.6,
+  -5.5
+ ],
+ "flat_ji": 0.0977,
+ "i_rel_me": [
+  0.0,
+  21.4,
+  27.1
+ ],
+ "render_s": 171.0
+}
+SAVED /mnt/data/nar-r17/results3.json (2 configs)

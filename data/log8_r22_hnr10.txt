@@ -1,0 +1,3 @@
+== r22_hnr10 == hVd 1/8  heed/i/->"I'm sorry, I'm sorry, I'm sorry, I'm sorry."(P)  F2band -40.0dB flat 0.3619
+    {'heed': ("I'm sorry, I'm sorry, I'm sorry, I'm sorry.", 'P'), 'hid': ('', '.'), 'head': ('', '.'), 'had': ('', '.'), 'hod': ('', '.'), 'hud': ('', '.'), 'hood': ('', '.'), "who'd": ('', '.')}
+SAVED /mnt/data/nar-r17/results8.json

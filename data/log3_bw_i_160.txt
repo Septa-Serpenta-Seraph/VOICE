@@ -1,0 +1,98 @@
+{
+ "name": "bw_i_160",
+ "cfg": {
+  "env": {
+   "i": {
+    "F3": 0.5
+   }
+  },
+  "bwv": {
+   "i": {
+    "F1": 160.0
+   }
+  }
+ },
+ "golden_wer": [
+  0.0,
+  1.5,
+  1.0,
+  0.5
+ ],
+ "golden_mean": 0.75,
+ "golden_pass": 1,
+ "heard_golden": [
+  "This is the moon.",
+  "Shhh, shhh, shhh, shhh, shhh, shhh.",
+  "",
+  "I am the snorkel This is my choice"
+ ],
+ "zarza_ho_mean": 1.242,
+ "zarza_ho_pass": 0,
+ "zarza_ho_wer": [
+  1.25,
+  1.333,
+  1.333,
+  1.0,
+  1.0,
+  1.5,
+  1.077,
+  1.444
+ ],
+ "heard_zarza_ho": [
+  "You'll be seen, you'll see.",
+  "I'm sure that's sad, I'm sure that's sad",
+  "Meet me, meet me",
+  "",
+  "just nubs and nubs and nubs",
+  "This is this, this is this",
+  "Just won't leave, not sad, don't do it, don't do it, don't do it",
+  "This is the last segment, this is the last segment, this is the last."
+ ],
+ "my_ho_mean": 1.01,
+ "my_ho_pass": 0,
+ "heard_my_ho": [
+  "She said, she said",
+  "I see it's me, it's me",
+  "You're so misguided",
+  "I'll be done, I'll be done",
+  ""
+ ],
+ "iwords_exact": 0,
+ "heard_iwords": [
+  "You",
+  "",
+  "",
+  "",
+  "",
+  "You",
+  "You",
+  "You",
+  "see",
+  "So"
+ ],
+ "sustained_i": [
+  0.0,
+  49.7,
+  47.0
+ ],
+ "flat_i": 0.0,
+ "sustained_u": [
+  0.0,
+  -6.7,
+  -20.7
+ ],
+ "flat_u": 0.0,
+ "sustained_ji": [
+  0.0,
+  -15.1,
+  -15.5
+ ],
+ "flat_ji": 0.0,
+ "i_rel_me": [
+  0.0,
+  11.4,
+  11.6
+ ],
+ "render_s": 183.9
+}
+SAVED /mnt/data/nar-r17/results3.json (4 configs)

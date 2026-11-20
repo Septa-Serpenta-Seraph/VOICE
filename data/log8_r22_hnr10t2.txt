@@ -1,0 +1,3 @@
+== r22_hnr10t2 == hVd 1/8  heed/i/->''(.)  F2band -42.0dB flat 0.3315
+    {'heed': ('', '.'), 'hid': ('', '.'), 'head': ('', '.'), 'had': ('', '.'), 'hod': ('', '.'), 'hud': ('', '.'), 'hood': ('', '.'), "who'd": ('You', 'P')}
+SAVED /mnt/data/nar-r17/results8.json

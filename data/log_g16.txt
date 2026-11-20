@@ -1,0 +1,51 @@
+/mnt/data/nar-r17/grid.py:76: UserWarning: nperseg=4096 is greater than signal length max(len(x), len(y)) = 3427, using nperseg = 3427
+  f, P = welch(y, fs=SR, nperseg=4096)
+{
+ "name": "g16",
+ "cfg": {
+  "gain": 16.0
+ },
+ "golden_wer": [
+  1.0,
+  1.0,
+  1.0,
+  1.0
+ ],
+ "golden_mean": 1.0,
+ "golden_pass": 0,
+ "word_mean": 1.0,
+ "word_exact": 0,
+ "heard_golden": [
+  "",
+  "She's she's she said",
+  "",
+  ""
+ ],
+ "heard_words": [
+  "",
+  "",
+  "",
+  "So",
+  "So",
+  ""
+ ],
+ "sustained_i_rel": [
+  0.0,
+  29.8,
+  28.4
+ ],
+ "i_rel_me": [
+  0.0,
+  -4.9,
+  -7.5
+ ],
+ "i_rel_see": [
+  0.0,
+  1.4,
+  -1.7
+ ],
+ "cons_vowel_db_see": -8.1,
+ "cons_vowel_db_moon": -6.9,
+ "render_s": 45.9
+}
+SAVED /mnt/data/nar-r17/results.json (5 configs)

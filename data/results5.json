@@ -1,0 +1,623 @@
+[
+ {
+  "name": "cascade",
+  "cfg": {
+   "method": "cascade"
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -47.5,
+  "u_F2band": -70.6,
+  "contrast": 23.1,
+  "i_flat": 0.0,
+  "u_flat": 0.0,
+  "render_s": 93.5
+ },
+ {
+  "name": "mix10",
+  "cfg": {
+   "method": "cascade",
+   "hnr": 10.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -46.3,
+  "u_F2band": -57.1,
+  "contrast": 10.8,
+  "i_flat": 0.0012,
+  "u_flat": 0.0006,
+  "render_s": 84.0
+ },
+ {
+  "name": "mix14",
+  "cfg": {
+   "method": "cascade",
+   "hnr": 14.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -47.1,
+  "u_F2band": -60.7,
+  "contrast": 13.6,
+  "i_flat": 0.0006,
+  "u_flat": 0.0003,
+  "render_s": 71.6
+ },
+ {
+  "name": "mix6",
+  "cfg": {
+   "method": "cascade",
+   "hnr": 6.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -44.8,
+  "u_F2band": -53.3,
+  "contrast": 8.5,
+  "i_flat": 0.0024,
+  "u_flat": 0.0013,
+  "render_s": 75.0
+ },
+ {
+  "name": "mix20",
+  "cfg": {
+   "method": "cascade",
+   "hnr": 20.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -47.4,
+  "u_F2band": -65.3,
+  "contrast": 17.9,
+  "i_flat": 0.0002,
+  "u_flat": 0.0001,
+  "render_s": 86.1
+ },
+ {
+  "name": "pmix10",
+  "cfg": {
+   "method": "parallel",
+   "hnr": 10.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -57.5,
+  "u_F2band": -55.2,
+  "contrast": -2.3,
+  "i_flat": 0.0007,
+  "u_flat": 0.001,
+  "render_s": 77.9
+ },
+ {
+  "name": "mix10g",
+  "cfg": {
+   "method": "cascade",
+   "hnr": 10.0,
+   "env": "gauss"
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -45.1,
+  "u_F2band": -51.9,
+  "contrast": 6.8,
+  "i_flat": 0.0035,
+  "u_flat": 0.0022,
+  "render_s": 60.6
+ },
+ {
+  "name": "mix0",
+  "cfg": {
+   "method": "cascade",
+   "hnr": 0.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -40.8,
+  "u_F2band": -47.4,
+  "contrast": 6.6,
+  "i_flat": 0.0054,
+  "u_flat": 0.0031,
+  "render_s": 39.2
+ },
+ {
+  "name": "mixn6",
+  "cfg": {
+   "method": "cascade",
+   "hnr": -6.0
+  },
+  "iso_pass": 0,
+  "iso_total": 12,
+  "iso_i_heard": "",
+  "iso_i_pass": false,
+  "iso_u_heard": "",
+  "iso_u_pass": false,
+  "vowels": {
+   "i": {
+    "heard": "",
+    "pass": false
+   },
+   "ɪ": {
+    "heard": "",
+    "pass": false
+   },
+   "e": {
+    "heard": "",
+    "pass": false
+   },
+   "ɛ": {
+    "heard": "",
+    "pass": false
+   },
+   "æ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɑ": {
+    "heard": "",
+    "pass": false
+   },
+   "ʌ": {
+    "heard": "",
+    "pass": false
+   },
+   "ɔ": {
+    "heard": "",
+    "pass": false
+   },
+   "o": {
+    "heard": "",
+    "pass": false
+   },
+   "ʊ": {
+    "heard": "",
+    "pass": false
+   },
+   "u": {
+    "heard": "",
+    "pass": false
+   },
+   "ə": {
+    "heard": "",
+    "pass": false
+   }
+  },
+  "i_F2band": -35.4,
+  "u_F2band": -41.5,
+  "contrast": 6.1,
+  "i_flat": 0.0085,
+  "u_flat": 0.0053,
+  "render_s": 24.3
+ }
+]

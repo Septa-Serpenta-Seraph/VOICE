@@ -1,0 +1,3 @@
+== vg_close == hVd 1/8  heed/i/->''(.)
+    {'heed': ('', '.'), 'hid': ('', '.'), 'head': ('', '.'), 'had': ('', '.'), 'hod': ('', '.'), 'hud': ('', '.'), 'hood': ('', '.'), "who'd": ('You', 'P')}
+SAVED /mnt/data/nar-r17/results9.json

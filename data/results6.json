@@ -1,0 +1,143 @@
+[
+ {
+  "mode": "natural",
+  "assay": "hVd-carrier",
+  "pass": 6,
+  "total": 8,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "Heat.",
+    "pass": true,
+    "heard_vowels": [
+     "i"
+    ]
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "Head.",
+    "pass": false,
+    "heard_vowels": [
+     "ɛ"
+    ]
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "Head.",
+    "pass": true,
+    "heard_vowels": [
+     "ɛ"
+    ]
+   },
+   "had": {
+    "target": "æ",
+    "heard": "Hard.",
+    "pass": false,
+    "heard_vowels": [
+     "ɑ"
+    ]
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "Hard.",
+    "pass": true,
+    "heard_vowels": [
+     "ɑ"
+    ]
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "Hard.",
+    "pass": true,
+    "heard_vowels": [
+     "ɑ"
+    ]
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "Hood.",
+    "pass": true,
+    "heard_vowels": [
+     "ʊ"
+    ]
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "Who'd?",
+    "pass": true,
+    "heard_vowels": [
+     "i",
+     "u"
+    ]
+   }
+  },
+  "render_s": 7.0
+ },
+ {
+  "mode": "synth",
+  "assay": "hVd-carrier",
+  "pass": 2,
+  "total": 8,
+  "words": {
+   "heed": {
+    "target": "i",
+    "heard": "you",
+    "pass": false,
+    "heard_vowels": [
+     "u"
+    ]
+   },
+   "hid": {
+    "target": "ɪ",
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "head": {
+    "target": "ɛ",
+    "heard": "You're dead.",
+    "pass": true,
+    "heard_vowels": [
+     "eɪ",
+     "u",
+     "ɛ"
+    ]
+   },
+   "had": {
+    "target": "æ",
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "hod": {
+    "target": "ɑ",
+    "heard": "Good.",
+    "pass": false,
+    "heard_vowels": [
+     "ʊ"
+    ]
+   },
+   "hud": {
+    "target": "ʌ",
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "hood": {
+    "target": "ʊ",
+    "heard": "",
+    "pass": false,
+    "heard_vowels": []
+   },
+   "who'd": {
+    "target": "u",
+    "heard": "You",
+    "pass": true,
+    "heard_vowels": [
+     "u"
+    ]
+   }
+  },
+  "render_s": 15.8
+ }
+]

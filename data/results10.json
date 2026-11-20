@@ -1,0 +1,97 @@
+[
+ {
+  "name": "ho_base",
+  "cfg": {},
+  "ho_mean": 1.092,
+  "ho_pass": 0,
+  "ho_wer": [
+   1.0,
+   1.333,
+   1.333,
+   1.0,
+   1.0,
+   1.5,
+   0.75,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "heard": [
+   "B.C. to C.",
+   "I'm sure that's sad, I'm sure that's sad",
+   "Meet me, meet me",
+   "",
+   "Just nub smig, smig, snag, nub",
+   "This is this, this is this",
+   "She said she said",
+   "My secret means me",
+   "You're so misguided",
+   ""
+  ]
+ },
+ {
+  "name": "ho_hnr10",
+  "cfg": {
+   "hnr": 10.0
+  },
+  "ho_mean": 1.01,
+  "ho_pass": 0,
+  "ho_wer": [
+   0.5,
+   1.0,
+   1.0,
+   1.0,
+   1.5,
+   1.25,
+   1.25,
+   1.0,
+   0.6,
+   1.0
+  ],
+  "heard": [
+   "Let me see the sea",
+   "So that's sad, I'm so mad",
+   "Beep! Beep! Beep!",
+   "",
+   "Just nubs me, nubs me, nubs me, nubs me",
+   "This is this isn't this",
+   "She said she said she said",
+   "",
+   "So some is not today",
+   ""
+  ]
+ },
+ {
+  "name": "ho_hnr10t1",
+  "cfg": {
+   "hnr": 10.0,
+   "hf_tilt": 1.0
+  },
+  "ho_mean": 1.133,
+  "ho_pass": 1,
+  "ho_wer": [
+   0.0,
+   1.167,
+   2.0,
+   1.0,
+   1.667,
+   1.25,
+   1.25,
+   1.0,
+   1.0,
+   1.0
+  ],
+  "heard": [
+   "we see the sea",
+   "So that's how it comes to mad!",
+   "Meet me, meet me, meet me",
+   "",
+   "It's just not me, it's not me, it's not me",
+   "This is this isn't this",
+   "These are C's, C's, C's...",
+   "",
+   "",
+   "This is me."
+  ]
+ }
+]

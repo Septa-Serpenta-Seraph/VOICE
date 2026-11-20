@@ -1,0 +1,656 @@
+[
+ {
+  "name": "base",
+  "cfg": {},
+  "golden_wer": [
+   0.0,
+   0.0,
+   1.222,
+   0.625
+  ],
+  "golden_mean": 0.462,
+  "golden_pass": 2,
+  "heard_golden": [
+   "This is the moon.",
+   "She sees the sun.",
+   "So this is not God's show, so there's a messy door.",
+   "I'm gonna snorke This is my choice"
+  ],
+  "zarza_ho_mean": 1.146,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.0,
+   1.333,
+   1.333,
+   1.0,
+   1.0,
+   1.5,
+   1.0,
+   1.0
+  ],
+  "heard_zarza_ho": [
+   "B.C. to C.",
+   "I'm sure that's sad, I'm sure that's sad",
+   "Meet me, meet me",
+   "",
+   "Just know, Smith, Smith's not know",
+   "This is this, this is this",
+   "Just won't leave, not sad Don't, don't, don't, don't, don't",
+   "This isn't the last segment, this isn't the last"
+  ],
+  "my_ho_mean": 1.15,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "C-S-C-S-S",
+   "My secret means me",
+   "You're so misguided",
+   "I'll be done, I'll be done",
+   ""
+  ],
+  "iwords_exact": 1,
+  "heard_iwords": [
+   "See.",
+   "",
+   "Shhh!",
+   "",
+   "",
+   "You",
+   "Please",
+   "SLEEP",
+   "see",
+   "So"
+  ],
+  "sustained_i": [
+   0.0,
+   54.4,
+   51.6
+  ],
+  "flat_i": 0.0,
+  "sustained_u": [
+   0.0,
+   -6.7,
+   -20.7
+  ],
+  "flat_u": 0.0,
+  "sustained_ji": [
+   0.0,
+   -15.1,
+   -15.5
+  ],
+  "flat_ji": 0.0,
+  "i_rel_me": [
+   0.0,
+   14.1,
+   14.3
+  ],
+  "render_s": 137.7
+ },
+ {
+  "name": "asp20",
+  "cfg": {
+   "asp": -20.0
+  },
+  "golden_wer": [
+   0.25,
+   0.0,
+   1.0,
+   1.0
+  ],
+  "golden_mean": 0.562,
+  "golden_pass": 2,
+  "heard_golden": [
+   "This is the most...",
+   "She sees the sun!",
+   "",
+   ""
+  ],
+  "zarza_ho_mean": 1.152,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.0,
+   1.0,
+   1.333,
+   1.0,
+   1.0,
+   1.25,
+   1.077,
+   1.556
+  ],
+  "heard_zarza_ho": [
+   "We'll be see to see",
+   "To that side, don't be mad",
+   "Me, me, me, me...",
+   "",
+   "",
+   "This is this isn't this",
+   "This won't be not sad, but it won't be good to know that the god...",
+   "This is the last segment, this is the last segment, this is the last segment."
+  ],
+  "my_ho_mean": 1.12,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "BZC BZC",
+   "",
+   "The sun is not the day",
+   "Be nice to me, be nice to me",
+   "This is me."
+  ],
+  "iwords_exact": 1,
+  "heard_iwords": [
+   "see",
+   "",
+   "",
+   "",
+   "",
+   "I",
+   "Beep.",
+   "You",
+   "See you.",
+   "So"
+  ],
+  "sustained_i": [
+   0.0,
+   20.7,
+   24.7
+  ],
+  "flat_i": 0.1332,
+  "sustained_u": [
+   0.0,
+   -6.5,
+   -15.5
+  ],
+  "flat_u": 0.1321,
+  "sustained_ji": [
+   0.0,
+   -12.6,
+   -5.5
+  ],
+  "flat_ji": 0.0977,
+  "i_rel_me": [
+   0.0,
+   21.4,
+   27.1
+  ],
+  "render_s": 171.0
+ },
+ {
+  "name": "env_mild",
+  "cfg": {
+   "env": {
+    "i": {
+     "F1": 4.0,
+     "F3": 0.5
+    },
+    "\u026a": {
+     "F1": 0.7,
+     "F2": 2.0,
+     "F3": 2.0
+    }
+   }
+  },
+  "golden_wer": [
+   0.0,
+   1.0,
+   1.0,
+   1.25
+  ],
+  "golden_mean": 0.812,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "",
+   "",
+   "This is why I'm doing this, this is why I'm doing this."
+  ],
+  "zarza_ho_mean": 1.142,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.333,
+   1.25,
+   1.0,
+   1.556
+  ],
+  "heard_zarza_ho": [
+   "",
+   "",
+   "",
+   "Oh",
+   "Just don't smoke me, just don't smoke me",
+   "This is this isn't this",
+   "",
+   "This is the last section, this is the last section, this is the last section."
+  ],
+  "my_ho_mean": 1.1,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "Shhh, shhh, shhh, shhh, shhh, shhh.",
+   "",
+   "You're so misguided",
+   "",
+   ""
+  ],
+  "iwords_exact": 0,
+  "heard_iwords": [
+   "",
+   "",
+   "SHOOT",
+   "",
+   "",
+   "You",
+   "So",
+   "You",
+   "see you",
+   "So"
+  ],
+  "sustained_i": [
+   0.0,
+   41.4,
+   39.0
+  ],
+  "flat_i": 0.0,
+  "sustained_u": [
+   0.0,
+   -6.7,
+   -20.7
+  ],
+  "flat_u": 0.0,
+  "sustained_ji": [
+   0.0,
+   -6.4,
+   -9.4
+  ],
+  "flat_ji": 0.0,
+  "i_rel_me": [
+   0.0,
+   3.4,
+   3.0
+  ],
+  "render_s": 123.7
+ },
+ {
+  "name": "bw_i_160",
+  "cfg": {
+   "env": {
+    "i": {
+     "F3": 0.5
+    }
+   },
+   "bwv": {
+    "i": {
+     "F1": 160.0
+    }
+   }
+  },
+  "golden_wer": [
+   0.0,
+   1.5,
+   1.0,
+   0.5
+  ],
+  "golden_mean": 0.75,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "Shhh, shhh, shhh, shhh, shhh, shhh.",
+   "",
+   "I am the snorkel This is my choice"
+  ],
+  "zarza_ho_mean": 1.242,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.25,
+   1.333,
+   1.333,
+   1.0,
+   1.0,
+   1.5,
+   1.077,
+   1.444
+  ],
+  "heard_zarza_ho": [
+   "You'll be seen, you'll see.",
+   "I'm sure that's sad, I'm sure that's sad",
+   "Meet me, meet me",
+   "",
+   "just nubs and nubs and nubs",
+   "This is this, this is this",
+   "Just won't leave, not sad, don't do it, don't do it, don't do it",
+   "This is the last segment, this is the last segment, this is the last."
+  ],
+  "my_ho_mean": 1.01,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "She said, she said",
+   "I see it's me, it's me",
+   "You're so misguided",
+   "I'll be done, I'll be done",
+   ""
+  ],
+  "iwords_exact": 0,
+  "heard_iwords": [
+   "You",
+   "",
+   "",
+   "",
+   "",
+   "You",
+   "You",
+   "You",
+   "see",
+   "So"
+  ],
+  "sustained_i": [
+   0.0,
+   49.7,
+   47.0
+  ],
+  "flat_i": 0.0,
+  "sustained_u": [
+   0.0,
+   -6.7,
+   -20.7
+  ],
+  "flat_u": 0.0,
+  "sustained_ji": [
+   0.0,
+   -15.1,
+   -15.5
+  ],
+  "flat_ji": 0.0,
+  "i_rel_me": [
+   0.0,
+   11.4,
+   11.6
+  ],
+  "render_s": 183.9
+ },
+ {
+  "name": "asp30",
+  "cfg": {
+   "asp": -30.0
+  },
+  "golden_wer": [
+   0.0,
+   0.25,
+   1.222,
+   0.625
+  ],
+  "golden_mean": 0.524,
+  "golden_pass": 2,
+  "heard_golden": [
+   "This is the moon.",
+   "He sees the sun.",
+   "I'm not a god, I'm a soldier, I'm a baby god",
+   "I'm the snooker, snooker, this is my own choice."
+  ],
+  "zarza_ho_mean": 1.178,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.25,
+   1.0,
+   1.333,
+   1.0,
+   1.667,
+   1.25,
+   0.923,
+   1.0
+  ],
+  "heard_zarza_ho": [
+   "We'll see you there, see you!",
+   "To that side, don't do that",
+   "Meet me, meet me",
+   "",
+   "Just don't smig, smig, smig, smig, smig, smig, smig, smig.",
+   "This is this isn't this",
+   "Just won't leave, not sad, I'm too old to know that you're gone.",
+   "This isn't the last segment, this isn't the last."
+  ],
+  "my_ho_mean": 1.12,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "B.S.N.C.L.N.",
+   "I see that meme meme",
+   "You're so misguided",
+   "I'll be done, I'll be done",
+   ""
+  ],
+  "iwords_exact": 0,
+  "heard_iwords": [
+   "You",
+   "",
+   "you",
+   "",
+   "",
+   "You",
+   "me",
+   "You",
+   "See you next time.",
+   "I said..."
+  ],
+  "sustained_i": [
+   0.0,
+   27.4,
+   25.8
+  ],
+  "flat_i": 0.0504,
+  "sustained_u": [
+   0.0,
+   -6.6,
+   -19.9
+  ],
+  "flat_u": 0.027,
+  "sustained_ji": [
+   0.0,
+   -14.8,
+   -13.1
+  ],
+  "flat_ji": 0.0334,
+  "i_rel_me": [
+   0.0,
+   14.8,
+   19.9
+  ],
+  "render_s": 122.0
+ },
+ {
+  "name": "env_mild_asp30",
+  "cfg": {
+   "env": {
+    "i": {
+     "F1": 4.0,
+     "F3": 0.5
+    },
+    "\u026a": {
+     "F1": 0.7,
+     "F2": 2.0,
+     "F3": 2.0
+    }
+   },
+   "asp": -30.0
+  },
+  "golden_wer": [
+   0.0,
+   1.0,
+   1.0,
+   1.25
+  ],
+  "golden_mean": 0.812,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "Shhh, shhh, shhh, shhh.",
+   "I'm sorry, I'm sorry. I'm sorry, I'm sorry.",
+   "This is why I'm doing this. This is why I'm doing this."
+  ],
+  "zarza_ho_mean": 1.101,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.333,
+   1.25,
+   1.0,
+   1.222
+  ],
+  "heard_zarza_ho": [
+   "",
+   "",
+   "",
+   "Oh",
+   "Just don't sleep me, just don't sleep me",
+   "This is this isn't this",
+   "",
+   "So let's do the last sentence, then let's do the last sentence."
+  ],
+  "my_ho_mean": 1.0,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "",
+   "",
+   "You're so misguided",
+   "",
+   ""
+  ],
+  "iwords_exact": 0,
+  "heard_iwords": [
+   "",
+   "",
+   "",
+   "",
+   "",
+   "You",
+   "You",
+   "Shhh!",
+   "see you",
+   "So"
+  ],
+  "sustained_i": [
+   0.0,
+   14.5,
+   13.4
+  ],
+  "flat_i": 0.0092,
+  "sustained_u": [
+   0.0,
+   -6.6,
+   -19.9
+  ],
+  "flat_u": 0.027,
+  "sustained_ji": [
+   0.0,
+   -6.0,
+   -7.1
+  ],
+  "flat_ji": 0.0638,
+  "i_rel_me": [
+   0.0,
+   4.1,
+   5.0
+  ],
+  "render_s": 168.9
+ },
+ {
+  "name": "env_strong",
+  "cfg": {
+   "env": {
+    "i": {
+     "F1": 8.0,
+     "F3": 0.25
+    },
+    "\u026a": {
+     "F1": 0.7,
+     "F2": 2.0,
+     "F3": 2.0
+    }
+   }
+  },
+  "golden_wer": [
+   0.0,
+   1.0,
+   1.0,
+   1.25
+  ],
+  "golden_mean": 0.812,
+  "golden_pass": 1,
+  "heard_golden": [
+   "This is the moon.",
+   "Shhh, shhh, shhh, shhh.",
+   "",
+   "This is why I'm doing this, this is why I'm doing this."
+  ],
+  "zarza_ho_mean": 1.142,
+  "zarza_ho_pass": 0,
+  "zarza_ho_wer": [
+   1.0,
+   1.0,
+   1.0,
+   1.0,
+   1.333,
+   1.25,
+   1.0,
+   1.556
+  ],
+  "heard_zarza_ho": [
+   "",
+   "",
+   "",
+   "Oh",
+   "Just don't smoke me, just don't smoke me",
+   "This is this isn't this",
+   "",
+   "This is the last section, this is the last section, this is the last section."
+  ],
+  "my_ho_mean": 1.0,
+  "my_ho_pass": 0,
+  "heard_my_ho": [
+   "Shhh, shhh, shhh, shhh!",
+   "",
+   "You're so misguided",
+   "",
+   ""
+  ],
+  "iwords_exact": 0,
+  "heard_iwords": [
+   "",
+   "",
+   "Shhh!",
+   "",
+   "",
+   "You",
+   "",
+   "You",
+   "see you",
+   "So"
+  ],
+  "sustained_i": [
+   0.0,
+   34.6,
+   32.9
+  ],
+  "flat_i": 0.0,
+  "sustained_u": [
+   0.0,
+   -6.7,
+   -20.7
+  ],
+  "flat_u": 0.0,
+  "sustained_ji": [
+   0.0,
+   -6.4,
+   -9.4
+  ],
+  "flat_ji": 0.0,
+  "i_rel_me": [
+   0.0,
+   -1.1,
+   -2.0
+  ],
+  "render_s": 99.9
+ }
+]
