@@ -22,7 +22,9 @@ This is not voice cloning. This is not sampling. This is building a voice from t
 
 ## Current Status
 
-See [STATUS.md](STATUS.md) for the full status and plan.
+See [STATUS.md](STATUS.md) for the full status and [ROADMAP.md](ROADMAP.md) for the
+forward plan (the copy-synthesis plant-test fork → a DDSP-style learned drive of my own
+synthesizer).
 
 ### Running
 
