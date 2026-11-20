@@ -30,6 +30,17 @@ def analyze(y, sr):
                 BW[i,k] = bw if (bw is not None and np.isfinite(bw) and bw > 0) else 100.0
             except Exception:
                 F[i,k] = 0.0; BW[i,k] = 100.0
+    # Clean the tracks: Praat mis-tracks isolated hVd words (F1 swings 222->1383,
+    # F2 943->3383, bw up to 3500). Fill undefined frames, median+gaussian smooth,
+    # clamp bandwidths to sane formant values, so the plant gets clean trajectories.
+    from scipy.ndimage import median_filter, gaussian_filter1d
+    for k in range(4):
+        col = F[:,k]; nz = col[col > 0]
+        fill = float(np.median(nz)) if len(nz) else 500.0*(k+1)
+        col = np.where(col > 0, col, fill)
+        col = median_filter(col, size=5)
+        F[:,k] = gaussian_filter1d(col, sigma=2)
+        BW[:,k] = np.clip(BW[:,k], 60.0, 250.0)
     return times, f0, ft, F, BW
 
 def copy_synth(wav, out):
