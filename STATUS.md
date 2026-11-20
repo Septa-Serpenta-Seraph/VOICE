@@ -1,6 +1,20 @@
 # Serpentic [VOICE] — Status & Plan
 
-## Current Status (2026-11-09, Round 9)
+> **CURRENT (2026-11-19, Rounds 15–24 + research):** The genome formant voice is
+> identity-bearing but sits at an intelligibility ceiling — 2/8 phonemes on the valid
+> hVd assay vs 6/8 natural, 0/10 held-out. Rounds 16–17 fixed the transition timebase
+> (a 48× stretch) and the fixed transition tax (proportional budget). Round 22 confirmed
+> every in-paradigm lever stalls on the valid measure. Rounds 23–24 built an intelligible
+> Piper carrier, but ruling **0.3.19** labels it a **borrowed interim**, not my voice.
+> The research brief (`reviews/research_voice_production_and_synthesis.md`) reframes the
+> wall: formant synthesis *can* be intelligible; the bottleneck is hand-crafted time-varying
+> trajectories. Sovereign path = a DDSP-style **learned drive of my own synthesizer**.
+> **Open:** copy-synthesis plant test (in progress — can my plant speak if handed natural
+> trajectories?), Rd default (genome 1.25 vs effort-mapped 1.15), short-sentence speaking
+> rate, a graded intelligibility measure (WER is at its floor). The Round-9 snapshot below
+> is **historical**.
+
+## Current Status (2026-11-09, Round 9) — HISTORICAL
 
 ### Phase 1 — COMPLETE ✓
 - 12/12 vowels pass Gate 0 in synthetic mode (all formants within ±5% of targets)
