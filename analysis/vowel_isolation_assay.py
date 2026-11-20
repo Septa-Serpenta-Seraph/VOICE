@@ -1,28 +1,30 @@
 #!/usr/bin/env python3
-"""Vowel isolation assay — phoneme-level intelligibility floor (Round 19).
+"""Vowel phoneme assay — hVd carrier-frame intelligibility floor (Round 21).
 
-Before sentence WER, require each vowel to be recognizable in isolation as
-itself. Renders each of the 12 genome vowels alone (250 ms, no onset) through
-the full render_plan_v3 chain, transcribes with the independent gate1 oracle
-(faster-whisper-base), and judges via the vendored CMUdict g2p: the heard
-word's vowel must match the target's front/back + height category. The collapse
-mode /i/ -> "You" (/u/) scores FAIL, not pass.
+CORRECTION (Round 21): the original Round 19 "bare-vowel isolation" gate (250 ms
+vowel, no onset) is INVALID as an intelligibility floor. A natural-speech control
+showed the Nar clone ALSO fails it: natural /i/ -> "", natural /u/ -> "" at
+250 ms. Whisper is a WORD recognizer; a bare 250 ms vowel is not a word, so the
+oracle fails on natural speech too. A gate that natural speech fails cannot grade
+the synth. The bare-vowel render is kept only as a spectral diagnostic (--bare),
+never as the intelligibility gate.
 
-Why this gate: sentence WER averages the deficit across a whole utterance and
-Whisper's language model rescues canonical phrases from weak acoustics (the
-"golden island"). The isolation assay is cheap, absolute, and localizes the
-deficit to specific phonemes. If a vowel is not a phoneme alone, no bridge or
-prosody will make it a phoneme in company.
+VALID floor: the Hillenbrand hVd carrier frame (heed/hid/head/had/hod/hud/hood/
+who'd). The vowel sits in a real word with a constant h_d consonant frame, so the
+oracle can transcribe it and recognition differences are attributable to the
+vowel. Judge the heard word's vowel phoneme (vendored CMUdict g2p) against the
+target's front/back + height category; /i/ -> "you" (/u/) scores FAIL.
 
-Baseline (791ce3a, Round 17): 1/12 — only /u/ -> "You" passes; the other 11
-vowels transcribe as silence. Every static spectral lever tested in Round 19
-(F2/F3 bandwidth 200-400 Hz, aspiration -14..-30 dB, high-shelf brightening
-+20 dB, and combinations) scored 0/12 and broke /u/. See
-reviews/round_19_isolation_assay.md.
+Validated: natural Nar clone 6/8 categories; genome synth (5caa7ec) 2/8. The
+deficit is real (synth well below natural) but NOT "0/12, no vowel is a phoneme"
+— that was the invalid instrument. Synth /ɛ/ and /u/ pass in context; /i/ shows
+the front-vowel back-collapse (heed -> "you"). See reviews/round_21_assay_correction.md.
 
 Usage:
-    python vowel_isolation_assay.py            # report to stdout
-    python vowel_isolation_assay.py --json P   # also write JSON report
+    python vowel_isolation_assay.py                 # synth hVd gate
+    python vowel_isolation_assay.py --json P        # also write JSON report
+    python vowel_isolation_assay.py --natural DIR   # judge natural hVd refs in DIR
+    python vowel_isolation_assay.py --bare          # bare-vowel SPECTRAL diagnostic (not a gate)
 """
 import argparse
 import json
@@ -36,7 +38,7 @@ from scipy.io import wavfile
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-from render_plan import Style, SR, RenderPlan, Segment
+from render_plan import Style, SR, RenderPlan, Segment, build_plan
 from prosody_poststage import render_plan_v3
 import gate1_intelligibility as g1
 from lexicon import g2p_word, _is_vowel_ipa
@@ -62,6 +64,10 @@ LETTER_V = {'a': 'e', 'b': 'i', 'c': 'i', 'd': 'i', 'e': 'i', 'f': '\u025b',
             'r': '\u0251', 's': '\u025b', 't': 'i', 'u': 'u', 'v': 'i',
             'w': '\u028c', 'x': '\u025b', 'y': 'a', 'z': 'i'}
 _VCHARS = 'i\u026ae\u025b\u00e6\u0251\u028c\u0254o\u028au\u0259'
+
+# Hillenbrand hVd carrier word -> target vowel phoneme.
+HVD = [('heed', 'i'), ('hid', '\u026a'), ('head', '\u025b'), ('had', '\u00e6'),
+       ('hod', '\u0251'), ('hud', '\u028c'), ('hood', '\u028a'), ("who'd", 'u')]
 
 
 def heard_vowels(heard):
@@ -93,6 +99,7 @@ def iso_pass(vp, heard):
 
 
 def render_iso(vp, genome, outdir, tag='iso'):
+    """Bare-vowel render — SPECTRAL DIAGNOSTIC ONLY, not the intelligibility gate."""
     g = genome['vowel_grid'][vp]
     seg = Segment(i=0, phone=vp, kind='vowel', t0=0.0, t1=0.25, word=0, syll=0,
                   stress=1, voiced=True,
@@ -104,26 +111,63 @@ def render_iso(vp, genome, outdir, tag='iso'):
     return p
 
 
+def run_hvd(genome, outdir, natural_dir=None):
+    paths, words, targets = [], [], []
+    for w, vp in HVD:
+        if natural_dir:
+            p = os.path.join(natural_dir, f"nat_{w.replace(chr(39), '')}.wav")
+            if not os.path.exists(p):
+                continue
+        else:
+            a = render_plan_v3(build_plan(w, style=Style(seed=42)), genome)
+            p = os.path.join(outdir, f"hvd_{w.replace(chr(39), '')}.wav")
+            wavfile.write(p, SR, (np.clip(a, -1, 1) * 32767).astype('int16'))
+        paths.append(p); words.append(w); targets.append(vp)
+    hyps = g1.transcribe(paths)
+    rows, npass = {}, 0
+    for w, vp, h in zip(words, targets, hyps):
+        ok, vs = iso_pass(vp, h)
+        npass += ok
+        rows[w] = {'target': vp, 'heard': h, 'pass': ok, 'heard_vowels': sorted(vs)}
+        print(f"  {w:6s} /{vp}/ -> {h!r:16s} {'PASS' if ok else 'fail'}  v={sorted(vs)}")
+    return npass, len(words), rows
+
+
+def run_bare(genome, outdir):
+    paths = [render_iso(vp, genome, outdir) for vp in VOWELS]
+    hyps = g1.transcribe(paths)
+    rows, npass = {}, 0
+    for vp, h in zip(VOWELS, hyps):
+        ok, vs = iso_pass(vp, h)
+        npass += ok
+        rows[vp] = {'heard': h, 'pass': ok}
+        print(f"  /{vp}/ -> {h!r:14s} {'PASS' if ok else 'fail'}")
+    print("  (bare-vowel diagnostic: NOT a valid intelligibility gate; natural speech fails it too)")
+    return npass, len(VOWELS), rows
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--json', help='write JSON report to this path')
     ap.add_argument('--outdir', default='/tmp/vowel_iso')
+    ap.add_argument('--natural', help='directory of natural nat_<word>.wav hVd references')
+    ap.add_argument('--bare', action='store_true', help='bare-vowel spectral diagnostic (not a gate)')
     args = ap.parse_args()
     os.makedirs(args.outdir, exist_ok=True)
     with open(os.path.join(HERE, '..', 'genome', 'voice_genome.yaml')) as f:
         genome = yaml.safe_load(f)
-    paths = [render_iso(vp, genome, args.outdir) for vp in VOWELS]
-    hyps = g1.transcribe(paths)
-    res, npass = {}, 0
-    for vp, h in zip(VOWELS, hyps):
-        ok, vs = iso_pass(vp, h)
-        npass += ok
-        res[vp] = {'heard': h, 'pass': ok, 'heard_vowels': sorted(vs)}
-        print(f"  /{vp}/ -> {h!r:14s} {'PASS' if ok else 'fail'}  vowels={sorted(vs)}")
-    report = {'oracle': 'faster-whisper-base', 'assay': 'vowel-isolation',
-              'passed': npass, 'total': len(VOWELS), 'vowels': res}
-    print(f"Vowel isolation: {npass}/{len(VOWELS)} recognizable as themselves.")
-    print("OVERALL:", "PASS" if npass == len(VOWELS) else "FAIL")
+    if args.bare:
+        npass, total, rows = run_bare(genome, args.outdir)
+        assay = 'bare-vowel-diagnostic'
+    else:
+        npass, total, rows = run_hvd(genome, args.outdir, args.natural)
+        assay = 'hVd-carrier'
+    label = 'natural' if args.natural else ('bare' if args.bare else 'synth')
+    print(f"Vowel phoneme assay ({assay}, {label}): {npass}/{total}.")
+    if not args.bare:
+        print("OVERALL:", "PASS" if npass == total else "FAIL")
+    report = {'oracle': 'faster-whisper-base', 'assay': assay, 'source': label,
+              'passed': npass, 'total': total, 'items': rows}
     if args.json:
         os.makedirs(os.path.dirname(os.path.abspath(args.json)), exist_ok=True)
         with open(args.json, 'w') as f:

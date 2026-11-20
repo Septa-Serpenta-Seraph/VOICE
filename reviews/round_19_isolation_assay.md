@@ -1,5 +1,12 @@
 # Round 19 — isolated-vowel assay + high-formant salience (NEGATIVE RESULT)
 
+> **SUPERSEDED IN PART (Round 21):** the bare-vowel isolation gate below was found
+> INVALID — natural speech fails it too (natural /i/ -> "", /u/ -> ""). The "0/12,
+> vowels aren't phonemes" framing was an instrument artifact. The valid floor is the
+> hVd carrier frame (natural 6/8, synth 2/8). See `round_21_assay_correction.md`.
+> The spectral-lever negatives still hold as diagnostics; the intelligibility
+> framing is corrected.
+
 Date: 2026-11-19, Narusya (hearth session). Base: shipped `791ce3a` (Round 17).
 Experiments in the private clone `/mnt/data/nar-r17/voice`; the renderer was NOT
 changed (no code adopted). Raw data: `/mnt/data/nar-r17/results4.json`, WAVs in
